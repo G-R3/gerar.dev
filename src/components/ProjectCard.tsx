@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { motion } from "framer-motion";
 import ProjectModal from "./ProjectModal";
 import type { Project } from "../projects";
 
@@ -14,7 +15,10 @@ const ProjectCard: FC<Project> = ({
 
   return (
     <>
-      <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-full md:w-1/3 p-1 rounded-md hover:scale-105 transition-all">
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-full md:w-1/3 p-1 rounded-md transition-all"
+      >
         <div className="p-5 rounded-md bg-black flex flex-col justify-between items-start gap-10 h-full">
           <div>
             <h4 className="text-lg font-semibold">{title}</h4>
@@ -23,7 +27,7 @@ const ProjectCard: FC<Project> = ({
 
           <button onClick={() => setIsOpen((prev) => !prev)}>View</button>
         </div>
-      </div>
+      </motion.div>
 
       {isOpen && (
         <ProjectModal
