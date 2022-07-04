@@ -24,17 +24,25 @@ const Footer: FC = () => {
         <ul className="mt-10 flex flex-col gap-5">
           <li>
             <a
-              href="https://github.com/"
+              href="https://github.com/G-R3/PortfolioV2"
+              target="_blank"
               className="px-3 py-2 text-gray-400 hover:text-white transition-all"
+              rel="noreferrer"
             >
               Github
             </a>
           </li>
         </ul>
       </div>
-      <div className="flex justify-center items-center">
-        <span className="text-gray-400">Made with ♥ by Gerardo</span>
-      </div>
+
+      <a
+        href="https://github.com/G-R3/"
+        target="_blank"
+        className="text-gray-400 hover:text-white transition-all"
+        rel="noreferrer"
+      >
+        Made with ♥ by Gerardo
+      </a>
     </div>
   );
 };
