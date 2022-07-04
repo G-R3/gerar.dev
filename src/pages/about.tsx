@@ -19,9 +19,9 @@ const About: NextPage = () => {
           After high school I moved onto to university to study CS and I'll be
           honest I was not really enjoying it. That is until I began reading
           more about web development stuff and oh man did something ⚡spark⚡ in
-          me. I was so entralled by the things you can do within the web I
+          me. I was so enthralled by the things you can do within the web I
           immediately began to read and learn more about it. I started watching
-          all these youtube videos and I even ended up purchasing a{" "}
+          all these Youtube videos and I even ended up purchasing a{" "}
           <Anchor
             text="course"
             href="https://www.udemy.com/course/the-web-developer-bootcamp/"
@@ -38,7 +38,7 @@ const About: NextPage = () => {
         <p>
           Skipping ahead, I graduated with a bachelors in CS and I have never
           been more excited. At the moment I'm looking to get hired by someone
-          but in the meantime I'm spending my time learning how to build with{" "}
+          but in the meantime, I'm spending my time learning how to build with{" "}
           <Anchor text="Next.js" href="https://nextjs.org/" /> and{" "}
           <Anchor text="TypeScript" href="https://www.typescriptlang.org/" />
         </p>
