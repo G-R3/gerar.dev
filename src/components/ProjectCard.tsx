@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import ProjectModal from "./ProjectModal";
 import type { Project } from "../projects";
 
@@ -29,18 +29,20 @@ const ProjectCard: FC<Project> = ({
         </div>
       </motion.div>
 
-      {isOpen && (
-        <ProjectModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          image={image}
-          title={title}
-          description={description}
-          longDescription={longDescription}
-          tags={tags}
-          externals={externals}
-        />
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <ProjectModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            image={image}
+            title={title}
+            description={description}
+            longDescription={longDescription}
+            tags={tags}
+            externals={externals}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };
