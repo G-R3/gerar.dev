@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProjectModal from "./ProjectModal";
 import type { Project } from "../projects";
@@ -16,7 +16,15 @@ const ProjectCard: FC<Project> = ({
   return (
     <>
       <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        transition={{ duration: 0.3 }}
         whileHover={{ scale: 1.05 }}
+        variants={{
+          visible: { opacity: 1, scale: 1 },
+          hidden: { opacity: 0, scale: 0 },
+        }}
         className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-full md:w-1/3 p-1 rounded-md transition-all"
       >
         <div className="p-5 rounded-md bg-black flex flex-col justify-between items-start gap-10 h-full">

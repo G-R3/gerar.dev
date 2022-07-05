@@ -36,6 +36,7 @@ const tagContainer = {
     transition: {
       duration: 0.4,
       staggerChildren: 0.1,
+      delayChildren: 0.1,
     },
   },
 };
@@ -63,14 +64,14 @@ const ProjectModal: FC<Props> = ({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0, transition: { duration: 0.3 } }}
+        exit={{ opacity: 0, transition: { duration: 0.2 } }}
         className="bg-black inset-0 fixed bg-opacity-80 py-5 px-5"
       >
         <Dialog.Panel
           as={motion.div}
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 100 }}
+          exit={{ opacity: 0, y: 100, transition: { duration: 0.2 } }}
           className="bg-neutral-900 rounded-md max-w-2xl mx-auto flex flex-col gap-3 p-5"
         >
           <motion.div
@@ -133,30 +134,38 @@ const ProjectModal: FC<Props> = ({
               </Dialog.Description>
             </motion.div>
 
-            <div className="flex justify-end gap-2">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={tagContainer}
+              className="flex justify-end gap-2 w-fit ml-auto"
+            >
               {!!externals.github && (
-                <button
+                <motion.button
+                  variants={scaleIn}
                   onClick={() => setIsOpen(false)}
-                  className="self-end p-1 w-20"
+                  className="self-end p-1 w-20 block"
                 >
                   Source
-                </button>
+                </motion.button>
               )}
               {!!externals.demo && (
-                <button
+                <motion.button
+                  variants={scaleIn}
                   onClick={() => setIsOpen(false)}
-                  className="self-end p-1 w-20"
+                  className="self-end p-1 w-20 block"
                 >
                   Demo
-                </button>
+                </motion.button>
               )}
-              <button
+              <motion.button
+                variants={scaleIn}
                 onClick={() => setIsOpen(false)}
-                className="self-end p-1 w-20"
+                className="self-end p-1 w-20 block"
               >
                 Close
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </div>
         </Dialog.Panel>
       </motion.div>
