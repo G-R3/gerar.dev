@@ -4,13 +4,14 @@ import { FiGithub, FiArrowRight } from "react-icons/fi";
 import { motion } from "framer-motion";
 import ProjectCard from "../components/ProjectCard";
 import { projects } from "../projects";
+import Project from "../components/Project";
 
 const container = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.3,
       delayChildren: 0.3,
     },
   },
@@ -72,8 +73,28 @@ const Home: NextPage = () => {
         variants={container}
         className="my-20"
       >
-        <motion.h3 variants={fadeIn} className="text-4xl font-bold mb-8">
+        <motion.h3
+          variants={fadeIn}
+          className="text-4xl font-bold mb-8 md:mb-0"
+        >
           Featured Projects
+        </motion.h3>
+
+        <div className="flex flex-col gap-24">
+          {projects.map((project) => (
+            <Project key={project.title} {...project} />
+          ))}
+        </div>
+      </motion.section>
+
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={container}
+        className="my-20"
+      >
+        <motion.h3 variants={fadeIn} className="text-4xl font-bold mb-8">
+          My other other stuff
         </motion.h3>
         <div className="flex flex-col md:flex-row gap-4">
           {projects.map((project) => (

@@ -1,9 +1,9 @@
 import { FC, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProjectModal from "./ProjectModal";
-import type { Project } from "../projects";
+import type { ProjectType } from "../projects";
 
-const ProjectCard: FC<Project> = ({
+const ProjectCard: FC<ProjectType> = ({
   image,
   title,
   description,
