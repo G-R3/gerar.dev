@@ -1,4 +1,4 @@
-export type Project = {
+export type ProjectType = {
   image: string;
   title: string;
   description: string;
@@ -12,19 +12,19 @@ export type Project = {
 };
 
 export const projects = [
-  {
-    image: "",
-    title: "Cosmo",
-    description: "A reddit like application.",
-    longDescription:
-      "Cosmo is a reddit like application where you can post to a community revolving around a particular topic or create a community of your own.",
-    tags: ["Next.js", "TailwindCSS", "Prisma", "tRPC"],
-    externals: {
-      github: "https://github.com/G-R3/cosmo",
-      demo: "aa",
-    },
-    isFeatured: false,
-  },
+  // {
+  //   image: "",
+  //   title: "Cosmo",
+  //   description: "A reddit like application.",
+  //   longDescription:
+  //     "Cosmo is a reddit like application where you can post to a community revolving around a particular topic or create a community of your own.",
+  //   tags: ["Next.js", "TailwindCSS", "Prisma", "tRPC"],
+  //   externals: {
+  //     github: "https://github.com/G-R3/cosmo",
+  //     demo: "aa",
+  //   },
+  //   isFeatured: false,
+  // },
   {
     image: "spotify-profile.png ",
     title: "Spotify Profiles",
