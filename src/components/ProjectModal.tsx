@@ -65,7 +65,7 @@ const ProjectModal: FC<Props> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0, transition: { duration: 0.2 } }}
-        className="bg-black inset-0 fixed bg-opacity-80 py-5 px-5"
+        className="bg-black inset-0 fixed bg-opacity-80 py-6 px-5"
       >
         <Dialog.Panel
           as={motion.div}
@@ -84,13 +84,11 @@ const ProjectModal: FC<Props> = ({
               scale: 1,
               transition: { duration: 0.5 },
             }}
-            className="border border-neutral-800 w-full min-h-[400px] relative rounded-sm overflow-hidden"
+            className="border border-neutral-800 w-full flex flex-col min-h-[200px] sm:min-h-[320px] relative"
           >
             <Image
               src={`/images/${image}`}
               alt={title}
-              // width="100%"
-              // height="100%"
               layout="fill"
               objectFit="cover"
             />
@@ -98,7 +96,7 @@ const ProjectModal: FC<Props> = ({
 
           <div className="flex flex-col gap-8 mt-2">
             <motion.div initial="hidden" animate="visible" variants={container}>
-              <div className="flex items-center justify-between flex-wrap mb-6">
+              <div className="flex items-center justify-between gap-2 flex-wrap mb-6">
                 <Dialog.Title
                   as={motion.h5}
                   variants={fadeIn}
@@ -111,7 +109,7 @@ const ProjectModal: FC<Props> = ({
                   initial="hidden"
                   animate="visible"
                   variants={tagContainer}
-                  className="flex gap-2 bg-neutral-800 rounded-md py-px px-1 mt-1 sm:mt-0"
+                  className="flex flex-wrap gap-2 bg-neutral-800 rounded-md py-px px-1 mt-1 sm:mt-0"
                 >
                   {tags.map((tag: string) => (
                     <motion.span
