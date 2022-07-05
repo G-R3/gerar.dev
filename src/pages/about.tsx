@@ -1,12 +1,42 @@
 /* eslint-disable react/no-unescaped-entities */
 import { NextPage } from "next";
+import { motion } from "framer-motion";
 import Anchor from "../components/Anchor";
 
 const About: NextPage = () => {
   return (
-    <>
-      <h1 className="text-5xl font-bold mb-10">About Me</h1>
-      <div className="text-lg text-gray-400 flex flex-col gap-8">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            duration: 0.5,
+            type: "spring",
+            bounce: 0.5,
+            staggerChildren: 0.1,
+          },
+        },
+      }}
+    >
+      <motion.h1
+        variants={{
+          hidden: { opacity: 0, y: -100 },
+          visible: { opacity: 1, y: 0 },
+        }}
+        className="text-5xl font-bold mb-10"
+      >
+        About Me
+      </motion.h1>
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: -100 },
+          visible: { opacity: 1, y: 0 },
+        }}
+        className="text-lg text-gray-400 flex flex-col gap-8"
+      >
         <p>
           Hey, I'm Gerardo Rodriguez and I'm currently trying to get myself a
           job 😁. I got started with this computer science and programming thing
@@ -50,8 +80,8 @@ const About: NextPage = () => {
           a two scarred legs later, I can confidently and with consistency land
           Ollies, Nollies, FS-180s, and Pop-Shuvits.
         </p>
-      </div>
-    </>
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -25,7 +25,7 @@ const fadeIn = {
 
 const Home: NextPage = () => {
   return (
-    <>
+    <motion.div initial="hidden" animate="visible" variants={container}>
       <motion.section initial="hidden" animate="visible" variants={container}>
         <motion.h1 variants={fadeIn} className="text-5xl font-bold">
           Gerardo Rodriguez
@@ -66,11 +66,24 @@ const Home: NextPage = () => {
           </motion.a>
         </motion.div>
       </motion.section>
-      <section className="mt-20">
-        <h3 className="text-4xl font-bold mb-8">Featured Projects</h3>
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={container}
+        className="my-20"
+      >
+        <motion.h3 variants={fadeIn} className="text-4xl font-bold mb-8">
+          Featured Projects
+        </motion.h3>
         <div className="flex flex-col md:flex-row gap-4">
           {projects.map((project) => (
-            <ProjectCard key={project.title} {...project} />
+            <motion.div
+              key={project.title}
+              variants={fadeIn}
+              className="w-full md:w-1/3"
+            >
+              <ProjectCard {...project} />
+            </motion.div>
           ))}
         </div>
 
@@ -80,8 +93,8 @@ const Home: NextPage = () => {
           </a>
           <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
         </div>
-      </section>
-    </>
+      </motion.section>
+    </motion.div>
   );
 };
 
