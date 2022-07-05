@@ -61,14 +61,14 @@ const About: NextPage = () => {
         <p>
           While I continued to learn more about the fundamentals of Computer
           Science at university, in my spare time I would play around with HTML,
-          CSS, and JavaScript and recreate really horrible websites, but man was
-          it fun messing around (especially with the frontend).
+          CSS, and JavaScript and create some really terrible stuff, but man did
+          I have a blast messing around (especially with the frontend).
         </p>
 
         <p>
           Skipping ahead, I graduated with a bachelors in CS and I have never
-          been more excited. At the moment I'm looking to get hired by someone
-          but in the meantime, I'm spending my time learning how to build with{" "}
+          been more excited. At the moment I'm looking to get hired but in the
+          meantime, I'm spending my time learning how to build with{" "}
           <Anchor text="Next.js" href="https://nextjs.org/" /> and{" "}
           <Anchor text="TypeScript" href="https://www.typescriptlang.org/" />
         </p>
@@ -77,8 +77,8 @@ const About: NextPage = () => {
           What about hobbies? well.... I like to play video games on my
           computer. Though I'm seeing that I do that less and less now. I also
           skate and I have been learning how to do tricks. After many falls and
-          a two scarred legs later, I can confidently and with consistency land
-          Ollies, Nollies, FS-180s, and Pop-Shuvits.
+          two scarred legs later, I can confidently and with consistency land
+          Ollies, Nollies, FS-180s, and Pop-Shuvits. Wicked right? 😎.
         </p>
       </motion.div>
     </motion.div>
