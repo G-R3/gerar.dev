@@ -73,14 +73,11 @@ const Home: NextPage = () => {
         variants={container}
         className="my-20"
       >
-        <motion.h3
-          variants={fadeIn}
-          className="text-4xl font-bold mb-8 md:mb-0"
-        >
+        <motion.h3 variants={fadeIn} className="text-4xl font-bold mb-8">
           Featured Projects
         </motion.h3>
 
-        <div className="flex flex-col gap-24">
+        <div className="flex flex-col gap-36">
           {projects.map((project) => (
             <Project key={project.title} {...project} />
           ))}
@@ -96,7 +93,12 @@ const Home: NextPage = () => {
         <motion.h3 variants={fadeIn} className="text-4xl font-bold mb-8">
           My other other stuff
         </motion.h3>
-        <div className="flex flex-col md:flex-row gap-4">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={container}
+          className="flex flex-col md:flex-row gap-4"
+        >
           {projects.map((project) => (
             <motion.div
               key={project.title}
@@ -106,7 +108,7 @@ const Home: NextPage = () => {
               <ProjectCard {...project} />
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <div className="flex justify-end items-center gap-2 mt-8 text-gray-400 transition-colors group hover:text-white">
           <a href="https://github.com/G-R3" target="_blank" rel="noreferrer">
