@@ -84,13 +84,12 @@ const ProjectModal: FC<Props> = ({
               scale: 1,
               transition: { duration: 0.5 },
             }}
-            className="border border-neutral-800 w-full flex flex-col min-h-[200px] sm:min-h-[320px] relative"
           >
             <Image
               src={`/images/${image}`}
               alt={title}
-              layout="fill"
-              objectFit="cover"
+              width={2400}
+              height={1350}
             />
           </motion.div>
 
