@@ -3,7 +3,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { FiGithub, FiArrowRight } from "react-icons/fi";
 import { motion } from "framer-motion";
 import ProjectCard from "../components/ProjectCard";
-import { projects } from "../projects";
+import { featuredProjects, otherProjects } from "../projects";
 import Project from "../components/Project";
 
 const container = {
@@ -87,7 +87,7 @@ const Home: NextPage = () => {
         </motion.h3>
 
         <div className="flex flex-col gap-20 md:gap-32">
-          {projects.map((project) => (
+          {featuredProjects.map((project) => (
             <Project key={project.title} {...project} />
           ))}
         </div>
@@ -103,7 +103,7 @@ const Home: NextPage = () => {
           variants={fadeIn}
           className="text-2xl md:text-4xl font-bold mb-8"
         >
-          My other other stuff
+          While learning, I made these
         </motion.h3>
         <motion.div
           initial="hidden"
@@ -111,7 +111,7 @@ const Home: NextPage = () => {
           variants={container}
           className="flex flex-col md:flex-row gap-4"
         >
-          {projects.map((project) => (
+          {otherProjects.map((project) => (
             <motion.div
               key={project.title}
               variants={fadeIn}
