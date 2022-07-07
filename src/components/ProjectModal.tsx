@@ -1,10 +1,10 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
-import type { Project } from "../projects";
+import type { ProjectType } from "../projects";
 import { motion } from "framer-motion";
 
-interface Props extends Project {
+interface Props extends ProjectType {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
