@@ -95,11 +95,11 @@ const ProjectModal: FC<Props> = ({
 
           <div className="flex flex-col gap-8 mt-2">
             <motion.div initial="hidden" animate="visible" variants={container}>
-              <div className="flex items-center justify-between gap-2 flex-wrap mb-6">
+              <div className="flex items-center justify-between gap-2 flex-wrap mb-3 md:mb-6">
                 <Dialog.Title
                   as={motion.h5}
                   variants={fadeIn}
-                  className="text-lg sm:text-xl font-bold"
+                  className="text-lg font-semibold"
                 >
                   {title}
                 </Dialog.Title>
@@ -108,13 +108,13 @@ const ProjectModal: FC<Props> = ({
                   initial="hidden"
                   animate="visible"
                   variants={tagContainer}
-                  className="flex flex-wrap gap-2 bg-neutral-800 rounded-md py-px px-1 mt-1 sm:mt-0"
+                  className="text-xs flex flex-wrap gap-2 text-gray-400 py-1 rounded-md shadow-lg md:bg-neutral-800 md:px-3"
                 >
                   {tags.map((tag: string) => (
                     <motion.span
                       variants={scaleIn}
                       key={tag}
-                      className="text-xs rounded-md p-1 text-gray-400 hover:text-white hover:bg-neutral-900 transition-all cursor-default"
+                      className="rounded-md p-1 text-gray-400 hover:text-white hover:bg-neutral-900 transition-all cursor-default"
                     >
                       {tag}
                     </motion.span>
@@ -135,7 +135,7 @@ const ProjectModal: FC<Props> = ({
               initial="hidden"
               animate="visible"
               variants={tagContainer}
-              className="flex justify-end gap-2 w-fit ml-auto"
+              className="flex justify-end gap-2 w-fit ml-auto text-sm md:text-base"
             >
               {!!externals.github && (
                 <motion.button

@@ -32,7 +32,7 @@ const Project: FC<ProjectType> = ({
   externals,
 }) => {
   return (
-    <div className="flex gap-5 flex-col group border-2 border-neutral-800 rounded-md p-2 md:flex-row md:relative md:border-none md:p-0">
+    <div className="flex gap-3 flex-col group border-2 border-neutral-900 rounded-md p-2 md:flex-row md:relative md:border-none md:p-0">
       <motion.div
         initial={{ scale: 1.1, opacity: 0 }}
         viewport={{ once: true }}
@@ -51,12 +51,12 @@ const Project: FC<ProjectType> = ({
           priority
         />
       </motion.div>
-      <div className="flex flex-col px-2 md:items-end md:absolute md:right-0 md:mt-10">
+      <div className="flex flex-col px-2 md:items-end md:absolute md:right-0 md:mt-12">
         <motion.h4
           initial={{ opacity: 0, y: 100 }}
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-2xl font-bold"
+          className="text-xl font-semibold"
         >
           {title}
         </motion.h4>
@@ -64,7 +64,7 @@ const Project: FC<ProjectType> = ({
           initial={{ opacity: 0, y: 100 }}
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-gray-400 md:bg-neutral-800 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5"
+          className="text-sm md:text-base text-gray-400 md:bg-neutral-800 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5"
         >
           {longDescription}
         </motion.p>
@@ -73,7 +73,7 @@ const Project: FC<ProjectType> = ({
           viewport={{ once: true }}
           whileInView="visible"
           variants={tagContainer}
-          className="text-sm flex flex-wrap gap-2 text-gray-400 py-1 rounded-md shadow-lg md:bg-neutral-800 md:px-3"
+          className="text-xs flex flex-wrap gap-2 text-gray-400 py-1 rounded-md shadow-lg md:bg-neutral-800 md:px-3"
         >
           {tags.map((tag: string) => (
             <motion.span

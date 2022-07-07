@@ -27,10 +27,15 @@ const ProjectCard: FC<ProjectType> = ({
         <div className="p-5 rounded-md bg-black flex flex-col justify-between items-start gap-10 h-full">
           <div>
             <h4 className="text-lg font-semibold">{title}</h4>
-            <p className="mt-3">{description}</p>
+            <p className="mt-3 text-sm md:text-base">{description}</p>
           </div>
 
-          <button onClick={() => setIsOpen((prev) => !prev)}>View</button>
+          <button
+            onClick={() => setIsOpen((prev) => !prev)}
+            className="text-sm md:text-base"
+          >
+            View
+          </button>
         </div>
       </motion.div>
 

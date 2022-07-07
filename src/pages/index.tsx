@@ -28,14 +28,20 @@ const Home: NextPage = () => {
   return (
     <motion.div initial="hidden" animate="visible" variants={container}>
       <motion.section initial="hidden" animate="visible" variants={container}>
-        <motion.h1 variants={fadeIn} className="text-5xl font-bold">
+        <motion.h1 variants={fadeIn} className="text-2xl md:text-5xl font-bold">
           Gerardo Rodriguez
         </motion.h1>
-        <motion.h2 variants={fadeIn} className="text-gray-200 text-xl mt-3">
+        <motion.h2
+          variants={fadeIn}
+          className="text-gray-200 text-base md:text-xl mt-3"
+        >
           Web developer and amateur skateboarder
         </motion.h2>
 
-        <motion.p variants={fadeIn} className="text-gray-400 text-xl my-10">
+        <motion.p
+          variants={fadeIn}
+          className="text-gray-400 text-base md:text-xl my-10"
+        >
           Highly motivated developer trying to learn and build wicked insane
           things for the web.
         </motion.p>
@@ -73,11 +79,14 @@ const Home: NextPage = () => {
         variants={container}
         className="my-20"
       >
-        <motion.h3 variants={fadeIn} className="text-4xl font-bold mb-8">
+        <motion.h3
+          variants={fadeIn}
+          className="text-2xl md:text-4xl font-bold mb-8"
+        >
           Featured Projects
         </motion.h3>
 
-        <div className="flex flex-col gap-36">
+        <div className="flex flex-col gap-20 md:gap-32">
           {projects.map((project) => (
             <Project key={project.title} {...project} />
           ))}
@@ -90,7 +99,10 @@ const Home: NextPage = () => {
         variants={container}
         className="my-20"
       >
-        <motion.h3 variants={fadeIn} className="text-4xl font-bold mb-8">
+        <motion.h3
+          variants={fadeIn}
+          className="text-2xl md:text-4xl font-bold mb-8"
+        >
           My other other stuff
         </motion.h3>
         <motion.div

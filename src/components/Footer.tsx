@@ -3,7 +3,7 @@ import { FC } from "react";
 
 const Footer: FC = () => {
   return (
-    <div className="max-w-4xl mx-auto px-5 mt-20 mb-10 border-t-2 border-neutral-800 flex justify-between items-center">
+    <div className="max-w-4xl mx-auto px-5 mt-20 mb-10 border-t-2 border-neutral-800 flex justify-between flex-col md:flex-row md:items-center gap-10">
       <div className="flex gap-10 justify-evenly">
         <ul className="mt-10 flex flex-col gap-5">
           <li>
@@ -38,7 +38,7 @@ const Footer: FC = () => {
       <a
         href="https://github.com/G-R3/"
         target="_blank"
-        className="text-gray-400 hover:text-white transition-all"
+        className="text-center text-gray-400 hover:text-white transition-all"
         rel="noreferrer"
       >
         Made with ♥ by Gerardo
