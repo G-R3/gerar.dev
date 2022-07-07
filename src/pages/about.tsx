@@ -37,7 +37,7 @@ const About: NextPage = () => {
         }}
         className=" text-gray-400 text-base md:text-lg flex flex-col gap-8"
       >
-        <p className="bg-neutral-800 p-2 rounded-md">
+        <p className="bg-neutral-800 p-2 px-4 rounded-md">
           TL;DR: I like to do the programming and skating.
         </p>
         <p>
