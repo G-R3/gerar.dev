@@ -2,39 +2,19 @@
 import { NextPage } from "next";
 import { motion } from "framer-motion";
 import Anchor from "../components/Anchor";
+import { container, fadeInFromTop } from "../animations";
 
 const About: NextPage = () => {
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: { opacity: 0 },
-        visible: {
-          opacity: 1,
-          transition: {
-            duration: 0.5,
-            type: "spring",
-            bounce: 0.5,
-            staggerChildren: 0.1,
-          },
-        },
-      }}
-    >
+    <motion.div initial="hidden" animate="visible" variants={container}>
       <motion.h1
-        variants={{
-          hidden: { opacity: 0, y: -100 },
-          visible: { opacity: 1, y: 0 },
-        }}
+        variants={fadeInFromTop}
         className="text-2xl md:text-5xl font-bold mb-10"
       >
         About Me
       </motion.h1>
       <motion.div
-        variants={{
-          hidden: { opacity: 0, y: -100 },
-          visible: { opacity: 1, y: 0 },
-        }}
+        variants={fadeInFromTop}
         className=" text-gray-400 text-base md:text-lg flex flex-col gap-8"
       >
         <p className="bg-neutral-800 p-2 px-4 rounded-md">

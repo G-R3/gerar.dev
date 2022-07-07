@@ -3,51 +3,11 @@ import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import type { ProjectType } from "../projects";
 import { motion } from "framer-motion";
-
+import { container, fadeInFromTop, tagContainer, scaleIn } from "../animations";
 interface Props extends ProjectType {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
-
-const container = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const fadeIn = {
-  hidden: { opacity: 0, y: -50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-  },
-};
-
-const tagContainer = {
-  hidden: { opacity: 0, scale: 0 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.4,
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
-  },
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-  },
-};
 
 const ProjectModal: FC<Props> = ({
   isOpen,
@@ -98,7 +58,7 @@ const ProjectModal: FC<Props> = ({
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <Dialog.Title
                   as={motion.h5}
-                  variants={fadeIn}
+                  variants={fadeInFromTop}
                   className="text-lg font-semibold"
                 >
                   {title}
@@ -124,7 +84,7 @@ const ProjectModal: FC<Props> = ({
 
               <Dialog.Description
                 as={motion.p}
-                variants={fadeIn}
+                variants={fadeInFromTop}
                 className="text-gray-400 mt-3 mb-8"
               >
                 {longDescription}

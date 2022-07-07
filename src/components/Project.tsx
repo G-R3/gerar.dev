@@ -2,26 +2,12 @@ import React, { FC } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { ProjectType } from "../projects";
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-  },
-};
-const tagContainer = {
-  hidden: { opacity: 0, scale: 0 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.4,
-      staggerChildren: 0.1,
-      delayChildren: 0.1,
-    },
-  },
-};
+import {
+  tagContainer,
+  scaleIn,
+  scaleOut,
+  fadeInFromBottom,
+} from "../animations";
 
 const Project: FC<ProjectType> = ({
   image,
@@ -34,13 +20,10 @@ const Project: FC<ProjectType> = ({
   return (
     <div className="flex gap-3 flex-col group border-2 border-neutral-900 rounded-md p-2 md:flex-row md:relative md:border-none md:p-0">
       <motion.div
-        initial={{ scale: 1.1, opacity: 0 }}
+        initial={"hidden"}
         viewport={{ once: true }}
-        whileInView={{
-          opacity: 1,
-          scale: 1,
-          transition: { duration: 0.5 },
-        }}
+        whileInView={"visible"}
+        variants={scaleOut}
         className="w-full md:w-[65%] h-full"
       >
         <Image
@@ -53,17 +36,19 @@ const Project: FC<ProjectType> = ({
       </motion.div>
       <div className="flex flex-col px-2 md:items-end md:absolute md:right-0 md:mt-8">
         <motion.h4
-          initial={{ opacity: 0, y: 100 }}
+          initial={"hidden"}
           viewport={{ once: true }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView={"visible"}
+          variants={fadeInFromBottom}
           className="text-xl font-semibold"
         >
           {title}
         </motion.h4>
         <motion.p
-          initial={{ opacity: 0, y: 100 }}
+          initial={"hidden"}
           viewport={{ once: true }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView={"visible"}
+          variants={fadeInFromBottom}
           className=" text-gray-400 md:bg-neutral-800 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5"
         >
           {longDescription}

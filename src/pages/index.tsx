@@ -4,41 +4,27 @@ import { motion } from "framer-motion";
 import ProjectCard from "../components/ProjectCard";
 import { featuredProjects, otherProjects } from "../projects";
 import Project from "../components/Project";
-
-const container = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.3,
-      delayChildren: 0.3,
-    },
-  },
-};
-const fadeIn = {
-  hidden: { opacity: 0, y: -50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-  },
-};
+import { container, fadeInFromTop } from "../animations";
 
 const Home: NextPage = () => {
   return (
     <motion.div initial="hidden" animate="visible" variants={container}>
       <motion.section initial="hidden" animate="visible" variants={container}>
-        <motion.h1 variants={fadeIn} className="text-2xl md:text-5xl font-bold">
+        <motion.h1
+          variants={fadeInFromTop}
+          className="text-2xl md:text-5xl font-bold"
+        >
           Gerardo Rodriguez
         </motion.h1>
         <motion.h2
-          variants={fadeIn}
+          variants={fadeInFromTop}
           className="text-gray-200 text-base md:text-xl mt-3"
         >
           Web developer and amateur skateboarder
         </motion.h2>
 
         <motion.p
-          variants={fadeIn}
+          variants={fadeInFromTop}
           className="text-gray-400 text-base md:text-xl my-10"
         >
           Highly motivated developer trying to learn and build wicked insane
@@ -52,7 +38,7 @@ const Home: NextPage = () => {
           className="flex gap-5"
         >
           <motion.a
-            variants={fadeIn}
+            variants={fadeInFromTop}
             href="https://github.com/G-R3"
             target="_blank"
             className="text-gray-400 hover:text-white transition-all block"
@@ -62,7 +48,7 @@ const Home: NextPage = () => {
           </motion.a>
 
           <motion.a
-            variants={fadeIn}
+            variants={fadeInFromTop}
             href="https://linkedin.com/in/gerardo-rodriguez-823551213"
             target="_blank"
             className="text-gray-400 hover:text-white transition-all block"
@@ -79,7 +65,7 @@ const Home: NextPage = () => {
         className="my-20"
       >
         <motion.h3
-          variants={fadeIn}
+          variants={fadeInFromTop}
           className="text-2xl md:text-4xl font-bold mb-8"
         >
           Featured Projects
@@ -99,7 +85,7 @@ const Home: NextPage = () => {
         className="my-20"
       >
         <motion.h3
-          variants={fadeIn}
+          variants={fadeInFromTop}
           className="text-2xl md:text-4xl font-bold mb-8"
         >
           While learning, I made these
@@ -113,7 +99,7 @@ const Home: NextPage = () => {
           {otherProjects.map((project) => (
             <motion.div
               key={project.title}
-              variants={fadeIn}
+              variants={fadeInFromTop}
               className="w-full"
             >
               <ProjectCard {...project} />

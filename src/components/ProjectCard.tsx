@@ -2,6 +2,7 @@ import { FC, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ProjectModal from "./ProjectModal";
 import type { ProjectType } from "../projects";
+import { scaleIn } from "../animations";
 
 const ProjectCard: FC<ProjectType> = ({
   image,
@@ -16,12 +17,14 @@ const ProjectCard: FC<ProjectType> = ({
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        whileInView={{ opacity: 1, scale: 1, transition: { duration: 0.1 } }}
+        initial={"hidden"}
+        whileInView={"visible"}
         viewport={{ once: true }}
         whileHover={{
           scale: 1.05,
         }}
+        transition={{ duration: 0.1 }}
+        variants={scaleIn}
         className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full p-1 rounded-md transition-all"
       >
         <div className="p-5 rounded-md bg-black flex flex-col justify-between items-start gap-10 h-full">
