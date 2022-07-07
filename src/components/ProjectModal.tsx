@@ -74,7 +74,7 @@ const ProjectModal: FC<Props> = ({
           exit={{ opacity: 0, y: 100, transition: { duration: 0.2 } }}
           className="bg-neutral-900 rounded-md max-w-2xl mx-auto flex flex-col gap-3 p-5"
         >
-          <motion.div
+          {/* <motion.div
             initial={{
               scale: 1.1,
               opacity: 0,
@@ -91,7 +91,7 @@ const ProjectModal: FC<Props> = ({
               width={2400}
               height={1350}
             />
-          </motion.div>
+          </motion.div> */}
 
           <div className="flex flex-col gap-8 mt-2">
             <motion.div initial="hidden" animate="visible" variants={container}>
@@ -135,13 +135,13 @@ const ProjectModal: FC<Props> = ({
               initial="hidden"
               animate="visible"
               variants={tagContainer}
-              className="flex justify-end gap-2 w-fit ml-auto text-sm md:text-base"
+              className="flex flex-col gap-2 text-sm md:text-base sm:justify-end sm:flex-row sm:w-fit sm:ml-auto"
             >
               {!!externals.github && (
                 <motion.button
                   variants={scaleIn}
                   onClick={() => setIsOpen(false)}
-                  className="self-end p-1 w-20 block"
+                  className="bg-neutral-800 rounded-[4px] p-1 sm:w-20 block"
                 >
                   Source
                 </motion.button>
@@ -150,7 +150,7 @@ const ProjectModal: FC<Props> = ({
                 <motion.button
                   variants={scaleIn}
                   onClick={() => setIsOpen(false)}
-                  className="self-end p-1 w-20 block"
+                  className="bg-neutral-800 rounded-[4px] p-1 sm:w-20 block"
                 >
                   Demo
                 </motion.button>
@@ -158,7 +158,7 @@ const ProjectModal: FC<Props> = ({
               <motion.button
                 variants={scaleIn}
                 onClick={() => setIsOpen(false)}
-                className="self-end p-1 w-20 block"
+                className="bg-neutral-800 rounded-[4px] p-1 sm:w-20 block"
               >
                 Close
               </motion.button>

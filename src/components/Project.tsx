@@ -41,7 +41,7 @@ const Project: FC<ProjectType> = ({
           scale: 1,
           transition: { duration: 0.5 },
         }}
-        className="w-full md:w-[75%] h-full"
+        className="w-full md:w-[65%] h-full"
       >
         <Image
           src={`/images/${image}`}
@@ -51,7 +51,7 @@ const Project: FC<ProjectType> = ({
           priority
         />
       </motion.div>
-      <div className="flex flex-col px-2 md:items-end md:absolute md:right-0 md:mt-12">
+      <div className="flex flex-col px-2 md:items-end md:absolute md:right-0 md:mt-8">
         <motion.h4
           initial={{ opacity: 0, y: 100 }}
           viewport={{ once: true }}
