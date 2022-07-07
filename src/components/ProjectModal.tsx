@@ -125,7 +125,7 @@ const ProjectModal: FC<Props> = ({
               <Dialog.Description
                 as={motion.p}
                 variants={fadeIn}
-                className="text-gray-400 text-sm sm:text-base mt-3 mb-6"
+                className="text-gray-400 mt-3 mb-8"
               >
                 {longDescription}
               </Dialog.Description>
@@ -135,7 +135,7 @@ const ProjectModal: FC<Props> = ({
               initial="hidden"
               animate="visible"
               variants={tagContainer}
-              className="flex flex-col gap-2 text-sm md:text-base sm:justify-end sm:flex-row sm:w-fit sm:ml-auto"
+              className="flex flex-col gap-2 sm:justify-end sm:flex-row sm:w-fit sm:ml-auto"
             >
               {!!externals.github && (
                 <motion.button

@@ -64,7 +64,7 @@ const Project: FC<ProjectType> = ({
           initial={{ opacity: 0, y: 100 }}
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-sm md:text-base text-gray-400 md:bg-neutral-800 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5"
+          className=" text-gray-400 md:bg-neutral-800 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5"
         >
           {longDescription}
         </motion.p>
