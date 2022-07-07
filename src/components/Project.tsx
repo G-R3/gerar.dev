@@ -1,8 +1,10 @@
 import React, { FC } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { FiGithub, FiExternalLink } from "react-icons/fi";
 import type { ProjectType } from "../projects";
 import {
+  container,
   tagContainer,
   scaleIn,
   scaleOut,
@@ -57,18 +59,54 @@ const Project: FC<ProjectType> = ({
           initial="hidden"
           viewport={{ once: true }}
           whileInView="visible"
-          variants={tagContainer}
-          className="text-xs flex flex-wrap gap-2 text-gray-400 py-1 rounded-md shadow-lg md:bg-neutral-800 md:px-3"
+          variants={container}
+          className="flex flex-col gap-3 md:items-end"
         >
-          {tags.map((tag: string) => (
-            <motion.span
-              key={tag}
-              variants={scaleIn}
-              className="cursor-default rounded-md hover:bg-neutral-900 p-1 transition"
+          <motion.div
+            initial="hidden"
+            viewport={{ once: true }}
+            whileInView="visible"
+            variants={tagContainer}
+            className="text-xs flex flex-wrap gap-2 text-gray-400 py-1 rounded-md shadow-lg md:bg-neutral-800 md:px-3"
+          >
+            {tags.map((tag: string) => (
+              <motion.span
+                key={tag}
+                variants={scaleIn}
+                className="cursor-default rounded-md hover:bg-neutral-900 p-1 transition"
+              >
+                {tag}
+              </motion.span>
+            ))}
+          </motion.div>
+          <div className="flex gap-5">
+            <motion.a
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1 },
+              }}
+              href={externals.github}
+              target="_blank"
+              className="w-fit text-gray-400 hover:text-white transition-all block"
+              rel="noreferrer"
             >
-              {tag}
-            </motion.span>
-          ))}
+              <FiGithub size={23} />
+            </motion.a>
+            {!!externals.demo && (
+              <motion.a
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { opacity: 1 },
+                }}
+                href={externals.demo}
+                target="_blank"
+                className="w-fit text-gray-400 hover:text-white transition-all block"
+                rel="noreferrer"
+              >
+                <FiExternalLink size={23} />
+              </motion.a>
+            )}
+          </div>
         </motion.div>
       </div>
     </div>
