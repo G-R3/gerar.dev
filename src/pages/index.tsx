@@ -109,20 +109,20 @@ const Home: NextPage = () => {
           initial="hidden"
           animate="visible"
           variants={container}
-          className="flex flex-col md:flex-row gap-4"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4"
         >
           {otherProjects.map((project) => (
             <motion.div
               key={project.title}
               variants={fadeIn}
-              className="w-full md:w-1/3"
+              className="w-full"
             >
               <ProjectCard {...project} />
             </motion.div>
           ))}
         </motion.div>
 
-        <div className="flex justify-end items-center gap-2 mt-8 text-gray-400 transition-colors group hover:text-white">
+        <div className="w-fit ml-auto flex items-center gap-2 mt-8 text-gray-400 transition-colors group hover:text-white">
           <a href="https://github.com/G-R3" target="_blank" rel="noreferrer">
             More of my stuff
           </a>
