@@ -26,7 +26,7 @@ const About: NextPage = () => {
           hidden: { opacity: 0, y: -100 },
           visible: { opacity: 1, y: 0 },
         }}
-        className="text-5xl font-bold mb-10"
+        className="text-2xl md:text-5xl font-bold mb-10"
       >
         About Me
       </motion.h1>
@@ -35,8 +35,11 @@ const About: NextPage = () => {
           hidden: { opacity: 0, y: -100 },
           visible: { opacity: 1, y: 0 },
         }}
-        className="text-lg text-gray-400 flex flex-col gap-8"
+        className=" text-gray-400 text-base md:text-lg flex flex-col gap-8"
       >
+        <p className="bg-neutral-800 p-2 rounded-md">
+          TL;DR: I like to do the programming and skating.
+        </p>
         <p>
           Hey, I'm Gerardo Rodriguez and I'm currently trying to get myself a
           job 😁. I got started with this computer science and programming thing
