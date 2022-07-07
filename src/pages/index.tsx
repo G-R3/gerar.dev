@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
-import { HiOutlineMail } from "react-icons/hi";
-import { FiGithub, FiArrowRight } from "react-icons/fi";
+import { FiGithub, FiArrowRight, FiLinkedin } from "react-icons/fi";
 import { motion } from "framer-motion";
 import ProjectCard from "../components/ProjectCard";
 import { featuredProjects, otherProjects } from "../projects";
@@ -64,12 +63,12 @@ const Home: NextPage = () => {
 
           <motion.a
             variants={fadeIn}
-            href="https://github.com/G-R3"
+            href="https://linkedin.com/in/gerardo-rodriguez-823551213"
             target="_blank"
             className="text-gray-400 hover:text-white transition-all block"
             rel="noreferrer"
           >
-            <HiOutlineMail size={25} />
+            <FiLinkedin size={25} />
           </motion.a>
         </motion.div>
       </motion.section>
