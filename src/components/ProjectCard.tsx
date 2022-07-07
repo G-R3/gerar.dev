@@ -34,7 +34,7 @@ const ProjectCard: FC<ProjectType> = ({
             onClick={() => setIsOpen((prev) => !prev)}
             className="text-sm md:text-base"
           >
-            View
+            Learn more
           </button>
         </div>
       </motion.div>

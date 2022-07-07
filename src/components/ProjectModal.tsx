@@ -135,25 +135,27 @@ const ProjectModal: FC<Props> = ({
               initial="hidden"
               animate="visible"
               variants={tagContainer}
-              className="flex flex-col gap-2 sm:justify-end sm:flex-row sm:w-fit sm:ml-auto"
+              className="flex flex-col text-center gap-2 sm:justify-end sm:flex-row sm:w-fit sm:ml-auto"
             >
               {!!externals.github && (
-                <motion.button
+                <motion.a
                   variants={scaleIn}
-                  onClick={() => setIsOpen(false)}
-                  className="bg-neutral-800 rounded-[4px] p-1 sm:w-20 block"
+                  href={externals.github}
+                  target="_blank"
+                  className="bg-neutral-800 rounded-[4px] p-1 sm:w-20"
                 >
                   Source
-                </motion.button>
+                </motion.a>
               )}
               {!!externals.demo && (
-                <motion.button
+                <motion.a
                   variants={scaleIn}
-                  onClick={() => setIsOpen(false)}
-                  className="bg-neutral-800 rounded-[4px] p-1 sm:w-20 block"
+                  href={externals.demo}
+                  target="_blank"
+                  className="bg-neutral-800 rounded-[4px] p-1 sm:w-20"
                 >
                   Demo
-                </motion.button>
+                </motion.a>
               )}
               <motion.button
                 variants={scaleIn}
