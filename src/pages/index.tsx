@@ -122,12 +122,15 @@ const Home: NextPage = () => {
           ))}
         </motion.div>
 
-        <div className="w-fit ml-auto flex items-center gap-2 mt-8 text-gray-400 transition-colors group hover:text-white">
-          <a href="https://github.com/G-R3" target="_blank" rel="noreferrer">
-            More of my stuff
-          </a>
+        <a
+          href="https://github.com/G-R3"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center justify-end w-fit ml-auto gap-2 mt-8 text-gray-400 transition-colors group hover:text-white"
+        >
+          More of my stuff
           <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-        </div>
+        </a>
       </motion.section>
     </motion.div>
   );
