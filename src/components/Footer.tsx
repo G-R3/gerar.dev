@@ -24,7 +24,7 @@ const Footer: FC = () => {
         <ul className="mt-10 flex flex-col gap-5">
           <li>
             <a
-              href="https://github.com/G-R3/PortfolioV2"
+              href="https://github.com/G-R3/"
               target="_blank"
               className="px-3 py-2 text-gray-400 hover:text-white transition-all"
               rel="noreferrer"
@@ -36,7 +36,7 @@ const Footer: FC = () => {
       </div>
 
       <a
-        href="https://github.com/G-R3/"
+        href="https://github.com/G-R3/PortfolioV2"
         target="_blank"
         className="text-center text-gray-400 hover:text-white transition-all"
         rel="noreferrer"
