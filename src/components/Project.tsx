@@ -29,7 +29,7 @@ const Project: FC<ProjectType> = ({
         className="w-full md:w-[65%] h-full"
       >
         <Image
-          src={`/images/${image}`}
+          src={`/static/images/${image}`}
           alt={title}
           width={2400}
           height={1350}
