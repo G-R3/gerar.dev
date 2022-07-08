@@ -10,6 +10,10 @@ const About: NextPage = () => {
     <>
       <Head>
         <title>Gerardo Rodriguez | About</title>
+        <meta
+          name="description"
+          content="Web developer and skateboarding enthusiast"
+        />
       </Head>
       <motion.div initial="hidden" animate="visible" variants={container}>
         <motion.h1

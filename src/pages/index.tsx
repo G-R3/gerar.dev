@@ -12,6 +12,11 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Gerardo Rodriguez | Home</title>
+        <meta name="robots" content="index,follow" />
+        <meta
+          name="description"
+          content="The personal website for Gerardo Rodriguez"
+        />
       </Head>
       <motion.div initial="hidden" animate="visible" variants={container}>
         <motion.section initial="hidden" animate="visible" variants={container}>
