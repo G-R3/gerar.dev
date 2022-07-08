@@ -26,7 +26,7 @@ export const featuredProjects = [
   //   isFeatured: false,
   // },
   {
-    image: "spotify-profile.png ",
+    image: "spotify-profiles.png ",
     title: "Spotify Profiles",
     description:
       "View your spotify top tracks and top artists. Create new playlist and follow artists.",
