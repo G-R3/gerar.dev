@@ -26,7 +26,7 @@ export const featuredProjects = [
   //   isFeatured: false,
   // },
   {
-    image: "spotify-profile.png ",
+    image: "spotifyProfiles.png ",
     title: "Spotify Profiles",
     description:
       "View your spotify top tracks and top artists. Create new playlist and follow artists.",
@@ -40,7 +40,7 @@ export const featuredProjects = [
     isFeatured: true,
   },
   {
-    image: "movie-manager.png",
+    image: "movieManager.png",
     title: "Movie Manager",
     description:
       "Browse movies and create lists to track your favorite movies.",
