@@ -48,6 +48,7 @@ const Home: NextPage = () => {
             className="flex gap-5"
           >
             <motion.a
+              aria-label="Github"
               variants={fadeInFromTop}
               href="https://github.com/G-R3"
               target="_blank"
@@ -58,6 +59,7 @@ const Home: NextPage = () => {
             </motion.a>
 
             <motion.a
+              aria-label="LinkedIn"
               variants={fadeInFromTop}
               href="https://linkedin.com/in/gerardo-rodriguez-823551213"
               target="_blank"

@@ -81,6 +81,7 @@ const Project: FC<ProjectType> = ({
           </motion.div>
           <div className="flex gap-5">
             <motion.a
+              aria-label="Github"
               variants={{
                 hidden: { opacity: 0 },
                 visible: { opacity: 1 },
@@ -94,6 +95,7 @@ const Project: FC<ProjectType> = ({
             </motion.a>
             {!!externals.demo && (
               <motion.a
+                aria-label="See demo"
                 variants={{
                   hidden: { opacity: 0 },
                   visible: { opacity: 1 },
