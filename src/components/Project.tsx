@@ -10,6 +10,7 @@ import {
   scaleOut,
   fadeInFromBottom,
 } from "../animations";
+import ProjectTags from "./ProjectTags";
 
 type Props = ProjectType & {
   flipCard: boolean;
@@ -78,23 +79,7 @@ const Project: FC<Props> = ({
             flipCard ? "md:items-end" : "md:items-start"
           }`}
         >
-          <motion.div
-            initial="hidden"
-            viewport={{ once: true }}
-            whileInView="visible"
-            variants={tagContainer}
-            className="text-xs flex flex-wrap text-gray-400 p-1 rounded-md shadow-lg border border-neutral-800 md:bg-neutral-900"
-          >
-            {tags.map((tag: string) => (
-              <motion.span
-                key={tag}
-                variants={scaleIn}
-                className="cursor-default rounded-md hover:bg-neutral-800 p-1 transition px-3"
-              >
-                {tag}
-              </motion.span>
-            ))}
-          </motion.div>
+          <ProjectTags tags={tags} />
           <div className="flex gap-5">
             <motion.a
               aria-label="Github"

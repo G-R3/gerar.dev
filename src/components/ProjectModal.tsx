@@ -48,13 +48,13 @@ const ProjectModal: FC<Props> = ({
                   initial="hidden"
                   animate="visible"
                   variants={tagContainer}
-                  className="text-xs flex flex-wrap gap-2 text-gray-400 py-1 rounded-md shadow-lg md:bg-neutral-800 md:px-3"
+                  className="text-xs flex flex-wrap p-1 text-gray-400 rounded-md shadow-lg md:bg-neutral-800"
                 >
                   {tags.map((tag: string) => (
                     <motion.span
                       variants={scaleIn}
                       key={tag}
-                      className="rounded-md p-1 text-gray-400 hover:text-white hover:bg-neutral-900 transition-all cursor-default"
+                      className="rounded-md py-1 px-3 text-gray-400 hover:text-white hover:bg-neutral-700 transition-all cursor-default"
                     >
                       {tag}
                     </motion.span>

@@ -21,7 +21,8 @@ const ProjectCardGrid: FC = () => {
       </motion.h3>
       <motion.div
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true }}
         variants={container}
         className="grid grid-cols-1 sm:grid-cols-3 gap-4"
       >
