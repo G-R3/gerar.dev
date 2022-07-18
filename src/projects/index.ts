@@ -31,7 +31,7 @@ export const featuredProjects = [
     description:
       "View your spotify top tracks and top artists. Create new playlist and follow artists.",
     longDescription:
-      "A React application for viewing personalized spotify data such as your top artist, songs,and playlists. Additionally, you can create playlists and follow artists.",
+      "A React application for viewing personalized spotify data such as your top artist, songs, and playlists. Additionally, you can create playlists and follow artists.",
     tags: ["React", "TailwindCSS", "Spotify"],
     externals: {
       github: "https://github.com/G-R3/spotify-profile",
