@@ -11,16 +11,23 @@ import {
   fadeInFromBottom,
 } from "../animations";
 
-const Project: FC<ProjectType> = ({
+type Props = ProjectType & {
+  flipCard: boolean;
+};
+
+const Project: FC<Props> = ({
   image,
   title,
   description,
   longDescription,
   tags,
   externals,
+  flipCard,
 }) => {
   return (
-    <div className="flex gap-3 flex-col group border-2 border-neutral-900 rounded-md p-2 md:flex-row md:relative md:border-none md:p-0">
+    <div
+      className={`flex flex-col gap-3 group border-2 border-neutral-900 rounded-md p-2 md:flex-row md:relative md:border-none md:p-0 md:justify-between`}
+    >
       <motion.div
         initial={"hidden"}
         viewport={{ once: true }}
@@ -36,7 +43,14 @@ const Project: FC<ProjectType> = ({
           priority
         />
       </motion.div>
-      <div className="flex flex-col px-2 md:items-end md:absolute md:right-0 md:mt-8">
+
+      <div
+        className={`flex flex-col px-2 md:justify-center md:z-10 md:px-0 ${
+          flipCard
+            ? "md:-ml-48 order-last md:items-end"
+            : "md:-mr-48 md:order-first md:items-start"
+        }`}
+      >
         <motion.h4
           initial={"hidden"}
           viewport={{ once: true }}
@@ -51,7 +65,7 @@ const Project: FC<ProjectType> = ({
           viewport={{ once: true }}
           whileInView={"visible"}
           variants={fadeInFromBottom}
-          className=" text-gray-400 md:bg-neutral-800 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5"
+          className="border border-neutral-800 text-gray-400 md:bg-neutral-900 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5"
         >
           {longDescription}
         </motion.p>
@@ -60,20 +74,22 @@ const Project: FC<ProjectType> = ({
           viewport={{ once: true }}
           whileInView="visible"
           variants={container}
-          className="flex flex-col gap-3 md:items-end"
+          className={`flex flex-col gap-3 ${
+            flipCard ? "md:items-end" : "md:items-start"
+          }`}
         >
           <motion.div
             initial="hidden"
             viewport={{ once: true }}
             whileInView="visible"
             variants={tagContainer}
-            className="text-xs flex flex-wrap gap-2 text-gray-400 py-1 rounded-md shadow-lg md:bg-neutral-800 md:px-3"
+            className="text-xs flex flex-wrap text-gray-400 p-1 rounded-md shadow-lg border border-neutral-800 md:bg-neutral-900"
           >
             {tags.map((tag: string) => (
               <motion.span
                 key={tag}
                 variants={scaleIn}
-                className="cursor-default rounded-md hover:bg-neutral-900 p-1 transition"
+                className="cursor-default rounded-md hover:bg-neutral-800 p-1 transition px-3"
               >
                 {tag}
               </motion.span>

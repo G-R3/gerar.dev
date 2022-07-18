@@ -84,9 +84,12 @@ const Home: NextPage = () => {
           </motion.h3>
 
           <div className="flex flex-col gap-20 md:gap-32">
-            {featuredProjects.map((project) => (
-              <Project key={project.title} {...project} />
-            ))}
+            {featuredProjects.map((project, idx) => {
+              const flipCard = idx % 2 === 0;
+              return (
+                <Project key={project.title} flipCard={flipCard} {...project} />
+              );
+            })}
           </div>
         </motion.section>
 

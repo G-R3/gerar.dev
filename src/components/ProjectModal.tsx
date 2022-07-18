@@ -25,7 +25,7 @@ const ProjectModal: FC<Props> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0, transition: { duration: 0.2 } }}
-        className="bg-black inset-0 fixed bg-opacity-80 py-6 px-5"
+        className="bg-black inset-0 fixed bg-opacity-80 py-6 px-5 z-20"
       >
         <Dialog.Panel
           as={motion.div}
