@@ -6,12 +6,7 @@ import Project from "./Project";
 
 const FeaturedProjects: FC = () => {
   return (
-    <motion.section
-      initial="hidden"
-      animate="visible"
-      variants={container}
-      className="my-20"
-    >
+    <motion.section initial="hidden" animate="visible" variants={container}>
       <motion.h3
         variants={fadeInFromTop}
         className="text-2xl md:text-4xl font-bold mb-8"
