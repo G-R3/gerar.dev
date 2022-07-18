@@ -1,6 +1,5 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { Dialog } from "@headlessui/react";
-import Image from "next/image";
 import type { ProjectType } from "../projects";
 import { motion } from "framer-motion";
 import { container, fadeInFromTop, tagContainer, scaleIn } from "../animations";
@@ -34,25 +33,6 @@ const ProjectModal: FC<Props> = ({
           exit={{ opacity: 0, y: 100, transition: { duration: 0.2 } }}
           className="bg-neutral-900 rounded-md max-w-lg mx-auto flex flex-col gap-3 p-5"
         >
-          {/* <motion.div
-            initial={{
-              scale: 1.1,
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              transition: { duration: 0.5 },
-            }}
-          >
-            <Image
-              src={`/images/${image}`}
-              alt={title}
-              width={2400}
-              height={1350}
-            />
-          </motion.div> */}
-
           <div className="flex flex-col mt-2">
             <motion.div initial="hidden" animate="visible" variants={container}>
               <div className="flex items-center justify-between gap-2 flex-wrap">
