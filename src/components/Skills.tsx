@@ -46,7 +46,7 @@ const Skill: FC<{ label: string }> = ({ label }) => {
     <motion.span
       key={label}
       variants={scaleIn}
-      className="cursor-default text-gray-400 bg-neutral-900 p-2 border border-neutral-800 rounded-[4px] hover:bg-neutral-800"
+      className="cursor-default text-gray-600 bg-neutral-50 hover:bg-neutral-100 dark:text-gray-400 dark:bg-neutral-900 p-2 border border-neutral-200 dark:border-neutral-800 rounded-[4px] dark:hover:bg-neutral-800 transition-colors"
     >
       {label}
     </motion.span>

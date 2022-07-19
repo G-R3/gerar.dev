@@ -19,7 +19,7 @@ const ThemeToggler = () => {
   return (
     <button
       onClick={() => (theme === "dark" ? setTheme("light") : setTheme("dark"))}
-      className={`bg-neutral-900 p-2 rounded-[4px] hover:bg-neutral-800 transition-color`}
+      className="bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 p-2 rounded-[4px] dark:hover:bg-neutral-800 transition-all"
     >
       {theme === "dark" ? <FiSun /> : <FiMoon />}
     </button>

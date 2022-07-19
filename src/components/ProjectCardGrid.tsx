@@ -33,7 +33,7 @@ const ProjectCardGrid: FC = () => {
         href="https://github.com/G-R3"
         target="_blank"
         rel="noreferrer"
-        className="flex items-center justify-end w-fit ml-auto gap-2 mt-8 text-gray-400 transition-colors group hover:text-white"
+        className="flex items-center justify-end w-fit ml-auto gap-2 mt-8 text-gray-600 hover:text-black dark:text-gray-400 transition-colors group dark:hover:text-white"
       >
         More of my stuff
         <FiArrowRight className="group-hover:translate-x-1 transition-transform" />

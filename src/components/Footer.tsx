@@ -8,14 +8,14 @@ const Footer: FC = () => {
         <ul className="mt-10 flex flex-col gap-5">
           <li>
             <Link href="/">
-              <a className="px-3 py-2 text-gray-400 hover:text-white transition-all">
+              <a className="px-3 py-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-all">
                 Home
               </a>
             </Link>
           </li>
           <li>
             <Link href="/about">
-              <a className="px-3 py-2 text-gray-400 hover:text-white transition-all">
+              <a className="px-3 py-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-all">
                 About
               </a>
             </Link>
@@ -26,7 +26,7 @@ const Footer: FC = () => {
             <a
               href="https://github.com/G-R3/"
               target="_blank"
-              className="px-3 py-2 text-gray-400 hover:text-white transition-all"
+              className="px-3 py-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-all"
               rel="noreferrer"
             >
               Github
@@ -38,10 +38,10 @@ const Footer: FC = () => {
       <a
         href="https://github.com/G-R3/PortfolioV2"
         target="_blank"
-        className="text-center text-gray-400 hover:text-white transition-all"
+        className="text-center text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white  transition-all"
         rel="noreferrer"
       >
-        Made with ♥ by Gerardo
+        Made with ❤ by Gerardo
       </a>
     </div>
   );

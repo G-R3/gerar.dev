@@ -66,7 +66,7 @@ const Project: FC<Props> = ({
         <motion.p
           variants={fadeInFromBottom}
           transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
-          className="text-gray-400 md:bg-neutral-900 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5 md:border md:border-neutral-800"
+          className="text-gray-600 md:bg-neutral-50 dark:text-gray-400 dark:md:bg-neutral-900 py-3 rounded-md md:shadow-lg md:w-[450px] md:px-5 md:my-5 md:border md:border-neutral-200 dark:md:border-neutral-800"
         >
           {longDescription}
         </motion.p>
@@ -89,7 +89,7 @@ const Project: FC<Props> = ({
               }}
               href={externals.github}
               target="_blank"
-              className="w-fit text-gray-400 hover:text-white transition-all block"
+              className="w-fit text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-all block"
               rel="noreferrer"
             >
               <FiGithub size={23} />

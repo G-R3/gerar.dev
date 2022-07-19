@@ -9,8 +9,10 @@ const NavLink: FC<{ label: string; href: string }> = ({ label, href }) => {
   return (
     <Link href={href}>
       <a
-        className={`text-lg font-normal px-3 py-2 relative rounded-[4px] transition-all ${
-          isActive ? "text-white bg-neutral-900 font-bold" : "text-gray-400"
+        className={`text-lg px-3 py-2 relative rounded-[4px] transition-all ${
+          isActive
+            ? " text-black bg-neutral-100 dark:text-white dark:bg-neutral-900 font-semibold"
+            : "text-gray-600 dark:text-gray-400"
         }`}
       >
         {label}
@@ -27,7 +29,7 @@ const Header: FC = () => {
           <NavLink label={"Home"} href="/" />
           <NavLink label={"About"} href="/about" />
         </div>
-        {/* TODO: theme toggler */}
+
         <ThemeToggler />
       </nav>
     </header>
