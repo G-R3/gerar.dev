@@ -3,13 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import type { ProjectType } from "../projects";
-import {
-  container,
-  tagContainer,
-  scaleIn,
-  scaleOut,
-  fadeInFromBottom,
-} from "../animations";
+import { container, scaleOut, fadeInFromBottom } from "../animations";
 import ProjectTags from "./ProjectTags";
 
 type Props = ProjectType & {
@@ -27,7 +21,7 @@ const Project: FC<Props> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col gap-3 group border-2 border-neutral-900 rounded-md p-2 md:flex-row md:relative md:border-none md:p-0 md:justify-between`}
+      className={`flex flex-col gap-3 group border-2 border-neutral-200 dark:border-neutral-900 rounded-md p-2 md:flex-row md:relative md:border-none md:p-0 md:justify-between`}
     >
       <motion.div
         initial={"hidden"}
@@ -66,7 +60,7 @@ const Project: FC<Props> = ({
         <motion.p
           variants={fadeInFromBottom}
           transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
-          className="text-gray-400 md:bg-neutral-900 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5 md:border md:border-neutral-800"
+          className="text-gray-600 md:bg-neutral-50 dark:text-gray-400 dark:md:bg-neutral-900 py-3 rounded-md md:shadow-lg md:w-[450px] md:px-5 md:my-5 md:border md:border-neutral-200 dark:md:border-neutral-800"
         >
           {longDescription}
         </motion.p>
@@ -89,7 +83,7 @@ const Project: FC<Props> = ({
               }}
               href={externals.github}
               target="_blank"
-              className="w-fit text-gray-400 hover:text-white transition-all block"
+              className="w-fit text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-all block"
               rel="noreferrer"
             >
               <FiGithub size={23} />

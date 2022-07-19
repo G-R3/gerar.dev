@@ -11,14 +11,14 @@ const Intro: FC = () => {
       </motion.h1>
       <motion.h2
         variants={fadeInFromTop}
-        className="text-gray-200 text-xl mt-3"
+        className="text-gray-800 dark:text-gray-200 text-xl mt-3"
       >
         Web developer and amateur skateboarder
       </motion.h2>
 
       <motion.p
         variants={fadeInFromTop}
-        className="text-gray-400 text-xl my-10"
+        className="text-gray-600 text-xl my-10 dark:text-gray-400"
       >
         Highly motivated developer trying to learn and build wicked insane
         things for the web.
@@ -35,7 +35,7 @@ const Intro: FC = () => {
           variants={fadeInFromTop}
           href="https://github.com/G-R3"
           target="_blank"
-          className="text-gray-400 hover:text-white transition-all block"
+          className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-all block"
           rel="noreferrer"
         >
           <FiGithub size={25} />
@@ -46,7 +46,7 @@ const Intro: FC = () => {
           variants={fadeInFromTop}
           href="https://linkedin.com/in/gerardo-rodriguez-823551213"
           target="_blank"
-          className="text-gray-400 hover:text-white transition-all block"
+          className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white transition-all block"
           rel="noreferrer"
         >
           <FiLinkedin size={25} />

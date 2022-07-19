@@ -27,7 +27,7 @@ const ProjectCard: FC<ProjectType> = ({
         variants={scaleIn}
         className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full p-1 rounded-md transition-all"
       >
-        <div className="p-5 rounded-md bg-black flex flex-col justify-between items-start gap-10 h-full">
+        <div className="p-5 rounded-md bg-white dark:bg-black flex flex-col justify-between items-start gap-10 h-full">
           <div>
             <h4 className="text-lg font-semibold">{title}</h4>
             <p className="mt-3">{description}</p>

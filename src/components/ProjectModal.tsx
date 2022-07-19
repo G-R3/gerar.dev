@@ -31,7 +31,7 @@ const ProjectModal: FC<Props> = ({
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 100, transition: { duration: 0.2 } }}
-          className="bg-neutral-900 rounded-md max-w-lg mx-auto flex flex-col gap-3 p-5"
+          className="bg-neutral-50 dark:bg-neutral-900 rounded-md max-w-lg mx-auto flex flex-col gap-3 p-5"
         >
           <div className="flex flex-col mt-2">
             <motion.div initial="hidden" animate="visible" variants={container}>
@@ -48,13 +48,13 @@ const ProjectModal: FC<Props> = ({
                   initial="hidden"
                   animate="visible"
                   variants={tagContainer}
-                  className="text-xs flex flex-wrap p-1 text-gray-400 rounded-md shadow-lg md:bg-neutral-800"
+                  className="text-xs flex flex-wrap gap-2 md:gap-0 dark:text-gray-400 rounded-md md:border md:border-neutral-200 dark:md:border-neutral-800 dark:md:bg-neutral-900 md:p-1"
                 >
                   {tags.map((tag: string) => (
                     <motion.span
                       variants={scaleIn}
                       key={tag}
-                      className="rounded-md py-1 px-3 text-gray-400 hover:bg-neutral-700 transition-all cursor-default"
+                      className="cursor-default rounded-[4px] text-gray-600 dark:text-gray-400 hover:bg-neutral-200 dark:md:hover:bg-neutral-800 transition md:px-3 py-1"
                     >
                       {tag}
                     </motion.span>
@@ -65,7 +65,7 @@ const ProjectModal: FC<Props> = ({
               <Dialog.Description
                 as={motion.p}
                 variants={fadeInFromTop}
-                className="text-gray-400 mt-3 mb-8"
+                className="text-gray-600 dark:text-gray-400 mt-3 mb-8"
               >
                 {longDescription}
               </Dialog.Description>
@@ -82,7 +82,7 @@ const ProjectModal: FC<Props> = ({
                   variants={scaleIn}
                   href={externals.github}
                   target="_blank"
-                  className="bg-neutral-800 rounded-[4px] p-1 sm:w-20"
+                  className="bg-neutral-100 dark:bg-neutral-800 rounded-[4px] p-1 sm:w-20"
                 >
                   Source
                 </motion.a>
@@ -92,7 +92,7 @@ const ProjectModal: FC<Props> = ({
                   variants={scaleIn}
                   href={externals.demo}
                   target="_blank"
-                  className="bg-neutral-800 rounded-[4px] p-1 sm:w-20"
+                  className="bg-neutral-100 dark:bg-neutral-800 rounded-[4px] p-1 sm:w-20"
                 >
                   Demo
                 </motion.a>
@@ -100,7 +100,7 @@ const ProjectModal: FC<Props> = ({
               <motion.button
                 variants={scaleIn}
                 onClick={() => setIsOpen(false)}
-                className="bg-neutral-800 rounded-[4px] p-1 sm:w-20 block"
+                className="bg-neutral-100 dark:bg-neutral-800 rounded-[4px] p-1 sm:w-20 block"
               >
                 Close
               </motion.button>

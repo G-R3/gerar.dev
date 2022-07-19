@@ -21,9 +21,9 @@ const About: NextPage = () => {
         </motion.h1>
         <motion.div
           variants={fadeInFromTop}
-          className=" text-gray-400 text-base md:text-lg flex flex-col gap-8"
+          className="text-gray-600 dark:text-gray-400 text-base md:text-lg flex flex-col gap-8"
         >
-          <p className="bg-neutral-800 py-2 px-4 rounded-md">
+          <p className="bg-neutral-100 dark:bg-neutral-800 py-2 px-4 rounded-md">
             TL;DR: I like do web stuff and skateboard.
           </p>
           <p>

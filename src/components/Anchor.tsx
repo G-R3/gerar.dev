@@ -6,7 +6,7 @@ const Anchor: FC<{ text: string; href: string }> = ({ text, href }) => {
       <a
         href={href}
         target="_blank"
-        className="relative text-white z-10"
+        className="relative text-black dark:text-white z-10"
         rel="noreferrer"
       >
         {text}
