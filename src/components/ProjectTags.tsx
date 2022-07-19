@@ -9,13 +9,13 @@ const ProjectTags: FC<{ tags: string[] }> = ({ tags }) => {
       viewport={{ once: true }}
       whileInView="visible"
       variants={tagContainer}
-      className="text-xs flex flex-wrap text-gray-400 p-1 rounded-md shadow-lg border border-neutral-800 md:bg-neutral-900"
+      className="text-xs flex flex-wrap gap-2 text-gray-400 rounded-md shadow-lg md:border md:border-neutral-800 md:bg-neutral-900 md:p-1 "
     >
       {tags.map((tag: string) => (
         <motion.span
           key={tag}
           variants={scaleIn}
-          className="cursor-default rounded-md hover:bg-neutral-800 py-1 transition px-3"
+          className="cursor-default rounded-md md:hover:bg-neutral-800 transition md:px-3 py-1"
         >
           {tag}
         </motion.span>

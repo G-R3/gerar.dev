@@ -6,22 +6,19 @@ import { fadeInFromTop, container } from "../animations";
 const Intro: FC = () => {
   return (
     <motion.section initial="hidden" animate="visible" variants={container}>
-      <motion.h1
-        variants={fadeInFromTop}
-        className="text-2xl md:text-5xl font-bold"
-      >
+      <motion.h1 variants={fadeInFromTop} className="text-5xl font-bold">
         Gerardo Rodriguez
       </motion.h1>
       <motion.h2
         variants={fadeInFromTop}
-        className="text-gray-200 text-base md:text-xl mt-3"
+        className="text-gray-200 text-xl mt-3"
       >
         Web developer and amateur skateboarder
       </motion.h2>
 
       <motion.p
         variants={fadeInFromTop}
-        className="text-gray-400 text-base md:text-xl my-10"
+        className="text-gray-400 text-xl my-10"
       >
         Highly motivated developer trying to learn and build wicked insane
         things for the web.

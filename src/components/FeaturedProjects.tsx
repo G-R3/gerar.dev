@@ -9,7 +9,7 @@ const FeaturedProjects: FC = () => {
     <motion.section initial="hidden" animate="visible" variants={container}>
       <motion.h3
         variants={fadeInFromTop}
-        className="text-2xl md:text-4xl font-bold mb-8 font-sans"
+        className="text-3xl font-bold mb-8 font-sans"
       >
         Featured Projects
       </motion.h3>
