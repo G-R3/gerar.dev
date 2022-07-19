@@ -13,6 +13,7 @@ This is my second iteration of my porfolio. If you stumble upon it and like it, 
 - [x] Animations
   - [ ] add reduced motion settings
 - [ ] Favicon
-- [ ] Get custom domain
+- [x] Get custom domain
+- [x] Add font
 - [ ] add toggle themes (light - dark)
 - [ ] More SEO stuff
