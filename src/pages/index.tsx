@@ -22,7 +22,7 @@ const Home: NextPage = () => {
         initial="hidden"
         animate="visible"
         variants={container}
-        className="flex flex-col gap-14"
+        className="flex flex-col gap-20"
       >
         <Intro />
         <Skills />

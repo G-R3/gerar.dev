@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
@@ -31,9 +31,10 @@ const Project: FC<Props> = ({
     >
       <motion.div
         initial={"hidden"}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "0px 0px -150px 0px" }}
         whileInView={"visible"}
         variants={scaleOut}
+        transition={{ delay: 1 }}
         className="w-full md:w-[65%] h-full"
       >
         <Image
@@ -45,7 +46,10 @@ const Project: FC<Props> = ({
         />
       </motion.div>
 
-      <div
+      <motion.div
+        initial={"hidden"}
+        viewport={{ once: true, margin: "0px 0px -130px 0px" }}
+        whileInView={"visible"}
         className={`flex flex-col px-2 md:justify-center md:z-10 md:px-0 ${
           flipCard
             ? "md:-ml-48 order-last md:items-end"
@@ -53,19 +57,15 @@ const Project: FC<Props> = ({
         }`}
       >
         <motion.h4
-          initial={"hidden"}
-          viewport={{ once: true }}
-          whileInView={"visible"}
           variants={fadeInFromBottom}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
           className="text-xl font-semibold"
         >
           {title}
         </motion.h4>
         <motion.p
-          initial={"hidden"}
-          viewport={{ once: true }}
-          whileInView={"visible"}
           variants={fadeInFromBottom}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
           className="text-gray-400 md:bg-neutral-900 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5 md:border md:border-neutral-800"
         >
           {longDescription}
@@ -111,7 +111,7 @@ const Project: FC<Props> = ({
             )}
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 };

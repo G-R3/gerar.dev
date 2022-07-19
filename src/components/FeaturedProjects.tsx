@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { motion } from "framer-motion";
 import { fadeInFromTop, container } from "../animations";
 import { featuredProjects } from "../projects";
@@ -6,7 +6,12 @@ import Project from "./Project";
 
 const FeaturedProjects: FC = () => {
   return (
-    <motion.section initial="hidden" animate="visible" variants={container}>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={container}
+    >
       <motion.h3
         variants={fadeInFromTop}
         className="text-3xl font-bold mb-8 font-sans"
