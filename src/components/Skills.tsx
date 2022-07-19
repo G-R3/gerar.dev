@@ -56,10 +56,7 @@ const Skill: FC<{ label: string }> = ({ label }) => {
 const Skills: FC = () => {
   return (
     <motion.section initial="hidden" animate="visible" variants={container}>
-      <motion.h3
-        variants={fadeInFromTop}
-        className="text-2xl md:text-4xl font-bold mb-8"
-      >
+      <motion.h3 variants={fadeInFromTop} className="text-3xl font-bold mb-8">
         Lets talk about
       </motion.h3>
 

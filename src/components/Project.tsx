@@ -66,7 +66,7 @@ const Project: FC<Props> = ({
           viewport={{ once: true }}
           whileInView={"visible"}
           variants={fadeInFromBottom}
-          className="border border-neutral-800 text-gray-400 md:bg-neutral-900 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5"
+          className="text-gray-400 md:bg-neutral-900 py-3 rounded-md shadow-lg md:w-[450px] md:px-5 md:my-5 md:border md:border-neutral-800"
         >
           {longDescription}
         </motion.p>

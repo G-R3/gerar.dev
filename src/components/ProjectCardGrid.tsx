@@ -8,10 +8,7 @@ import ProjectCard from "./ProjectCard";
 const ProjectCardGrid: FC = () => {
   return (
     <motion.section initial="hidden" animate="visible" variants={container}>
-      <motion.h3
-        variants={fadeInFromTop}
-        className="text-2xl md:text-4xl font-bold mb-8"
-      >
+      <motion.h3 variants={fadeInFromTop} className="text-3xl font-bold mb-8">
         While learning, I made these
       </motion.h3>
       <motion.div
