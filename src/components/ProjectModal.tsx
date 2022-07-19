@@ -3,6 +3,7 @@ import { Dialog } from "@headlessui/react";
 import type { ProjectType } from "../projects";
 import { motion } from "framer-motion";
 import { container, fadeInFromTop, tagContainer, scaleIn } from "../animations";
+import Tag from "./Tag";
 interface Props extends ProjectType {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -51,13 +52,7 @@ const ProjectModal: FC<Props> = ({
                   className="text-xs flex flex-wrap gap-2 md:gap-0 dark:text-gray-400 rounded-md md:border md:border-neutral-200 dark:md:border-neutral-800 dark:md:bg-neutral-900 md:p-1"
                 >
                   {tags.map((tag: string) => (
-                    <motion.span
-                      variants={scaleIn}
-                      key={tag}
-                      className="cursor-default rounded-[4px] text-gray-600 dark:text-gray-400 hover:bg-neutral-200 dark:md:hover:bg-neutral-800 transition md:px-3 py-1"
-                    >
-                      {tag}
-                    </motion.span>
+                    <Tag key={tag} label={tag} />
                   ))}
                 </motion.div>
               </div>
