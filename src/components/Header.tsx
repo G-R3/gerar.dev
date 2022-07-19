@@ -24,7 +24,7 @@ const NavLink: FC<{ label: string; href: string }> = ({ label, href }) => {
 const Header: FC = () => {
   return (
     <header>
-      <nav className="flex items-center justify-between max-w-4xl mx-auto px-5 pt-8 pb-8 md:pb-16">
+      <nav className="flex items-center justify-between pt-8 pb-8 md:pb-16">
         <div className="-ml-[0.7rem]">
           <NavLink label={"Home"} href="/" />
           <NavLink label={"About"} href="/about" />

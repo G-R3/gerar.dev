@@ -5,9 +5,11 @@ import Header from "./Header";
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <>
-      <Header />
-      <main className="max-w-4xl mx-auto px-5">{children}</main>
-      <Footer />
+      <div className="max-w-4xl mx-auto px-5">
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </div>
     </>
   );
 };
