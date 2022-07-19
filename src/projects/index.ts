@@ -74,15 +74,7 @@ export const otherProjects = [
     description: "Easily browse and search for your next campground.",
     longDescription:
       "Camp is a traditional server-side rendered fullstack web app. It allows users to create or view campgrounds via search or map. It also supports image upload, a rating and comment system, and authentication.",
-    tags: [
-      "Bootstrap 5",
-      "JavaScript",
-      "EJS",
-      "Express",
-      "MongoDB",
-      "Heroku",
-      "Passport",
-    ],
+    tags: ["Bootstrap 5", "JavaScript", "Express", "MongoDB"],
     externals: {
       github: "https://github.com/G-R3/Github-Profiles",
       demo: "https://yelpcamp-gr.herokuapp.com/",
