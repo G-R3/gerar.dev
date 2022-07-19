@@ -60,7 +60,7 @@ const Project: FC<Props> = ({
         <motion.p
           variants={fadeInFromBottom}
           transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
-          className="text-gray-600 md:bg-neutral-50 dark:text-gray-400 dark:md:bg-neutral-900 py-3 rounded-md md:shadow-lg md:w-[450px] md:px-5 md:my-5 md:border md:border-neutral-200 dark:md:border-neutral-800"
+          className="text-gray-600 md:bg-neutral-50 dark:text-gray-400 dark:md:bg-neutral-900 py-3 rounded-[4px] md:shadow-lg md:w-[450px] md:px-5 md:my-5 md:border md:border-neutral-200 dark:md:border-neutral-800"
         >
           {longDescription}
         </motion.p>
