@@ -15,5 +15,5 @@ This is my second iteration of my porfolio. If you stumble upon it and like it, 
 - [ ] Favicon
 - [x] Get custom domain
 - [x] Add font
-- [ ] add toggle themes (light - dark)
+- [x] add toggle themes (light - dark)
 - [ ] More SEO stuff
