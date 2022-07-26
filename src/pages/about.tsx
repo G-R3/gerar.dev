@@ -35,7 +35,7 @@ const About: NextPage = () => {
             Science 🎓.
           </p>
           <div>
-            <h2 className="text-white font-bold text-2xl mb-1">
+            <h2 className="text-black dark:text-white font-bold text-2xl mb-1">
               What I'm upto
             </h2>
             Currently, I'm learning{" "}
@@ -47,7 +47,9 @@ const About: NextPage = () => {
           </div>
 
           <div>
-            <h2 className="text-white font-bold text-2xl mb-1">Hobbies</h2>
+            <h2 className="text-black dark:text-white font-bold text-2xl mb-1">
+              Hobbies
+            </h2>
             Outside programming, I like to listen to psychedelic rock and
             skateboard 🛹. I can confidently and with consistency land Ollies,
             Nollies, FS-180s, and Pop-Shuvits. Wicked right? 😎. I'm working on
