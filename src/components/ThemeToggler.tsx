@@ -1,3 +1,4 @@
+"use client";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
@@ -19,7 +20,7 @@ const ThemeToggler = () => {
   return (
     <button
       onClick={() => (theme === "dark" ? setTheme("light") : setTheme("dark"))}
-      className="bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 p-2 rounded-[4px] dark:hover:bg-neutral-800 transition-all"
+      className="rounded-[4px] bg-neutral-100 p-2 transition-all hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800"
     >
       {theme === "dark" ? <FiSun /> : <FiMoon />}
     </button>
