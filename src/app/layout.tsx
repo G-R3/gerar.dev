@@ -21,7 +21,7 @@ export default async function RootLayout({
     <html className="dark" lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `mx-auto flex min-h-screen max-w-2xl flex-col bg-background selection:bg-selection`,
+          `mx-auto flex min-h-screen max-w-2xl flex-col bg-background text-fg selection:bg-selection`,
           inter.className,
         )}
       >
