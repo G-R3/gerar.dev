@@ -1,8 +1,7 @@
 "use client";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { FiMoon, FiSun } from "react-icons/fi";
-
+import { Sun, Moon } from "lucide-react";
 const ThemeToggler = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -20,9 +19,12 @@ const ThemeToggler = () => {
   return (
     <button
       onClick={() => (theme === "dark" ? setTheme("light") : setTheme("dark"))}
-      className="rounded-[4px] bg-neutral-100 p-2 transition-all hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800"
+      className="rounded-md text-gray11 transition-all duration-200 ease-out hover:text-gray12"
     >
-      {theme === "dark" ? <FiSun /> : <FiMoon />}
+      <Moon className="hidden h-4 w-4 dark:block" />
+      <Sun className="block: h-4 w-4 dark:hidden" />
+
+      <span className="sr-only">Toggle theme</span>
     </button>
   );
 };
