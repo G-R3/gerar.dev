@@ -8,7 +8,7 @@ export const Navigation = () => {
       <div className="flex">
         <Link
           href="/"
-          className="rounded-md text-gray11 transition-all duration-200 ease-out hover:text-gray12"
+          className="rounded-md text-fg-muted transition-all duration-200 ease-out hover:text-fg"
           title="Home"
         >
           <Home className="h-4 w-4" />
@@ -17,7 +17,7 @@ export const Navigation = () => {
       <div className="flex items-center gap-4">
         <Link
           href="/projects"
-          className="rounded-md text-gray11 transition-all duration-200 ease-out hover:text-gray12"
+          className="rounded-md text-fg-muted transition-all duration-200 ease-out hover:text-fg"
           title="Projects"
         >
           <Lightbulb className="h-4 w-4" />

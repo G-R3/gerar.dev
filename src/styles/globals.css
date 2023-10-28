@@ -65,6 +65,8 @@
     --gray10: #838383;
     --gray11: #646464;
     --gray12: #202020;
+
+    --grayA4: #00000017;
   }
 
   .dark {
@@ -79,5 +81,7 @@
     --gray9: #6e6e6e;
     --gray11: #b4b4b4;
     --gray12: #eeeeee;
+
+    --grayA4: #ffffff1b;
   }
 }

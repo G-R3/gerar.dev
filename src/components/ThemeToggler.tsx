@@ -19,7 +19,7 @@ const ThemeToggler = () => {
   return (
     <button
       onClick={() => (theme === "dark" ? setTheme("light") : setTheme("dark"))}
-      className="rounded-md text-gray11 transition-all duration-200 ease-out hover:text-gray12"
+      className="rounded-md text-fg-muted transition-all duration-200 ease-out hover:text-fg"
     >
       <Moon className="hidden h-4 w-4 dark:block" />
       <Sun className="block: h-4 w-4 dark:hidden" />
