@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import { cn } from "@/utils/cn";
 import { Metadata } from "next";
 import { Navigation } from "@/components/navigation";
+import { Footsies } from "@/components/footsies";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default async function RootLayout({
         <Providers>
           <Navigation />
           {children}
+          <Footsies />
         </Providers>
       </body>
     </html>

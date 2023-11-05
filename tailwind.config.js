@@ -14,6 +14,7 @@ module.exports = {
         fg: "var(--gray12)",
         "fg-muted": "var(--gray11)",
         selection: "var(--grayA4)",
+        border: "var(--gray6)",
         gray1: "var(--gray1)",
         gray2: "var(--gray2)",
         gray3: "var(--gray3)",
