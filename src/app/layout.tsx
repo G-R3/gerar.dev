@@ -27,7 +27,7 @@ export default async function RootLayout({
         )}
       >
         <Providers>
-          <Navigation />
+          {/* <Navigation /> */}
           {children}
           <Footsies />
         </Providers>
