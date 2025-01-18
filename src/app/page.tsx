@@ -31,7 +31,7 @@ export default function Home() {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://linkedin.com"
+              href="https://gerar.dev/www.linkedin.com/in/gerardo-rodriguez-823551213"
               className="text-sm text-zinc-400 hover:text-white transition-colors"
             >
               linkedin
