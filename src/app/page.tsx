@@ -17,8 +17,26 @@ export default function Home() {
           </p>
         </section>
 
-        <section>
-          <h2 className="text-lg font-bold text-white">Experience</h2>
+        <section className="space-y-4">
+          <h2 className="text-lg font-bold text-white">links</h2>
+          <div className="flex gap-4">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/G-R3"
+              className="text-sm text-zinc-400 hover:text-white transition-colors"
+            >
+              github
+            </a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://linkedin.com"
+              className="text-sm text-zinc-400 hover:text-white transition-colors"
+            >
+              linkedin
+            </a>
+          </div>
         </section>
       </div>
     </main>
