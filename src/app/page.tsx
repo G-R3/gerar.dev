@@ -4,9 +4,7 @@ export default function Home() {
       <div className="max-w-4xl mx-auto space-y-16 py-16">
         <section className="space-y-4">
           <h1 className="text-xl font-bold text-white">gerardo rodriguez</h1>
-          <p className="text-zinc-400 text-sm">
-            Software Engineer based in new jersey
-          </p>
+          <p className="text-zinc-400 text-sm">Software Engineer</p>
 
           <p className="text-sm text-zinc-400 leading-relaxed">
             welcome to my little corner of the internet. i love{" "}
