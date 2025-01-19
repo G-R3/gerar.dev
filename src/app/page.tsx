@@ -3,7 +3,7 @@ export default function Home() {
     <main className="space-y-16 py-16">
       <section className="space-y-4">
         <h1 className="text-xl font-bold text-white">gerardo rodriguez</h1>
-        <p className="text-gray-400 text-sm">Software Engineer</p>
+        <p className="text-gray-400 text-sm">software engineer</p>
 
         <p className="text-sm text-gray-400 leading-relaxed">
           welcome to my little corner of the internet. i love{" "}
