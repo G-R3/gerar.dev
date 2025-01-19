@@ -1,1 +1,1 @@
-## My corner of the internet
+My corner of the internet
