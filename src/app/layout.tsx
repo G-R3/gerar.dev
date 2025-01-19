@@ -25,9 +25,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col max-w-4xl mx-auto  min-h-screen bg-neutral-950 text-gray-100 p-8 font-mono`}
       >
         {children}
+
+        <footer className="mt-auto flex h-12 w-full items-center justify-between border-t border-t-neutral-800">
+          <p className="text-sm text-gray-400">undefined</p>
+          <p className="text-sm text-gray-400">new Date().getFullYear()</p>
+        </footer>
       </body>
     </html>
   );
