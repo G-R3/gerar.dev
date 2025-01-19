@@ -9,7 +9,7 @@ export default function Home() {
           welcome to my little corner of the internet. i love{" "}
           <span className="line-through">breaking</span> building cool things on
           the web, learning as much as possible, and obessing over pixels. when
-          i'm not staring at a screen, i'm jamming to jazz fusion,
+          i&apos;m not staring at a screen, i&apos;m jamming to jazz fusion,
           skateboarding, or learning film photography.
         </p>
       </section>
