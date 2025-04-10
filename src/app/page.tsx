@@ -6,7 +6,7 @@ export default function Home() {
         <p className="text-gray-400 text-sm">software engineer</p>
 
         <p className="text-sm text-gray-400 leading-relaxed">
-          welcome to my little corner of the internet. i love{" "}
+          welcome to my little corner on the internet. i love{" "}
           <span className="line-through">breaking</span> building cool things on
           the web, learning as much as possible, and obessing over pixels. when
           i&apos;m not staring at a screen, i&apos;m jamming to jazz fusion,
