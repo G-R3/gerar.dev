@@ -82,13 +82,13 @@ export default function LazyImage({
             />
           )}
           {!isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center text-gray-600 text-xs">
+            <div className="absolute inset-0 flex items-center justify-center text-neutral-600 text-xs">
               Loading...
             </div>
           )}
         </>
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-gray-600 text-xs">
+        <div className="w-full h-full flex items-center justify-center text-neutral-600 text-xs">
           Loading...
         </div>
       )}

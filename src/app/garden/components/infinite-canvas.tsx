@@ -103,163 +103,16 @@ const RAW_WINDOWS = [
   {
     id: "13",
     width: 645,
-    height: 360, // Scaled down from 1290x720
+    height: 360,
     title: "Snaplytics 2",
     imageUrl: "/garden/snaplytics.io_1290x720.mp4",
   },
   {
     id: "14",
     width: 484,
-    height: 270, // Scaled down from 1936x1080
-    title: "Snaplytics 3",
-    imageUrl: "/garden/snaplytics.io_1936x1080.mp4",
-  },
-  {
-    id: "15",
-    width: 300,
-    height: 400,
-    title: "Inspiration 1",
-    imageUrl: "/garden/inspo-1.jpg",
-  },
-  {
-    id: "16",
-    width: 300,
-    height: 300,
-    title: "Inspiration 3",
-    imageUrl: "/garden/inspo-3.gif",
-  },
-  {
-    id: "17",
-    width: 400,
-    height: 225,
-    title: "Inspiration 6",
-    imageUrl: "/garden/inspo-6.mp4",
-  },
-  {
-    id: "18",
-    width: 380,
-    height: 280,
-    title: "Inspiration 11",
-    imageUrl: "/garden/inspo-11.jpg",
-  },
-  {
-    id: "19",
-    width: 350,
-    height: 350,
-    title: "Inspiration 4",
-    imageUrl: "/garden/inspo-4.gif",
-  },
-  {
-    id: "20",
-    width: 400,
-    height: 300,
-    title: "Inspiration 2",
-    imageUrl: "/garden/inspo-2.jpg",
-  },
-  {
-    id: "21",
-    width: 320,
-    height: 240,
-    title: "Inspiration 5",
-    imageUrl: "/garden/inspo-5.jpg",
-  },
-  {
-    id: "22",
-    width: 360,
-    height: 260,
-    title: "Inspiration 7",
-    imageUrl: "/garden/inspo-7.jpg",
-  },
-  {
-    id: "23",
-    width: 300,
-    height: 300,
-    title: "Inspiration 8",
-    imageUrl: "/garden/inspo-8.jpg",
-  },
-  {
-    id: "24",
-    width: 260,
-    height: 340,
-    title: "Inspiration 9",
-    imageUrl: "/garden/inspo-9.jpg",
-  },
-  {
-    id: "25",
-    width: 340,
-    height: 220,
-    title: "Inspiration 10",
-    imageUrl: "/garden/inspo-10.png",
-  },
-  {
-    id: "26",
-    width: 644,
-    height: 360,
-    title: "Snaplytics 1",
-    imageUrl: "/garden/snaplytics.io_644x360.mp4",
-  },
-  {
-    id: "27",
-    width: 645,
-    height: 360,
-    title: "Snaplytics 2",
-    imageUrl: "/garden/snaplytics.io_1290x720.mp4",
-  },
-  {
-    id: "28",
-    width: 484,
     height: 270,
     title: "Snaplytics 3",
     imageUrl: "/garden/snaplytics.io_1936x1080.mp4",
-  },
-  {
-    id: "29",
-    width: 300,
-    height: 400,
-    title: "Inspiration 1",
-    imageUrl: "/garden/inspo-1.jpg",
-  },
-  {
-    id: "30",
-    width: 400,
-    height: 300,
-    title: "Inspiration 2",
-    imageUrl: "/garden/inspo-2.jpg",
-  },
-  {
-    id: "31",
-    width: 300,
-    height: 300,
-    title: "Inspiration 3",
-    imageUrl: "/garden/inspo-3.gif",
-  },
-  {
-    id: "32",
-    width: 400,
-    height: 225,
-    title: "Inspiration 6",
-    imageUrl: "/garden/inspo-6.mp4",
-  },
-  {
-    id: "33",
-    width: 360,
-    height: 260,
-    title: "Inspiration 7",
-    imageUrl: "/garden/inspo-7.jpg",
-  },
-  {
-    id: "34",
-    width: 380,
-    height: 280,
-    title: "Inspiration 11",
-    imageUrl: "/garden/inspo-11.jpg",
-  },
-  {
-    id: "35",
-    width: 350,
-    height: 350,
-    title: "Inspiration 4",
-    imageUrl: "/garden/inspo-4.gif",
   },
 ];
 
@@ -325,12 +178,13 @@ export function InfiniteCanvas() {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isDraggingCanvas, setIsDraggingCanvas] = useState(false);
   const [windows, setWindows] = useState<WindowData[]>([]);
-  const [, setMaxZIndex] = useState(RAW_WINDOWS.length);
+  const [maxZIndex, setMaxZIndex] = useState(RAW_WINDOWS.length);
   const [loadedCount, setLoadedCount] = useState(0);
   const totalItems = RAW_WINDOWS.length;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dragStartRef = useRef({ x: 0, y: 0 });
+  const initialOffsetRef = useRef({ x: 0, y: 0 });
 
   const lastMousePosRef = useRef({ x: 0, y: 0 });
   const velocityRef = useRef({ x: 0, y: 0 });
@@ -340,10 +194,12 @@ export function InfiniteCanvas() {
     const layout = generateLayout(RAW_WINDOWS);
     setWindows(layout);
 
-    setOffset({
+    const initialOffset = {
       x: window.innerWidth / 2,
       y: window.innerHeight / 2,
-    });
+    };
+    setOffset(initialOffset);
+    initialOffsetRef.current = initialOffset;
 
     return () => {
       if (rAFRef.current) {
@@ -448,13 +304,11 @@ export function InfiniteCanvas() {
   };
 
   const bringToFront = (id: string) => {
-    setMaxZIndex((prev) => {
-      const newMax = prev + 1;
-      setWindows((windows) =>
-        windows.map((w) => (w.id === id ? { ...w, zIndex: newMax } : w))
-      );
-      return newMax;
-    });
+    const newMax = maxZIndex + 1;
+    setMaxZIndex(newMax);
+    setWindows((windows) =>
+      windows.map((w) => (w.id === id ? { ...w, zIndex: newMax } : w))
+    );
   };
 
   const handleMediaLoad = () => {
@@ -510,8 +364,8 @@ export function InfiniteCanvas() {
         </button>
         <button
           onClick={() => {
-            setScale(1);
-            setOffset({ x: 0, y: 0 });
+            setScale(0.75);
+            setOffset(initialOffsetRef.current);
           }}
           className="rounded p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700"
           aria-label="Reset view"

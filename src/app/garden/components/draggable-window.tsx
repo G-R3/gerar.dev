@@ -38,7 +38,6 @@ export function DraggableWindow({
   const dragStartRef = useRef({ x: 0, y: 0 });
   const initialPosRef = useRef({ x: 0, y: 0 });
   const windowRef = useRef<HTMLDivElement | null>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     e.stopPropagation(); // Prevent canvas panning
@@ -108,11 +107,9 @@ export function DraggableWindow({
     );
 
     observer.observe(node);
-    observerRef.current = observer;
 
     return () => {
       observer.disconnect();
-      observerRef.current = null;
     };
   }, [isVisible]);
 
