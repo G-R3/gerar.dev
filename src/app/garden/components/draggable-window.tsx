@@ -116,26 +116,35 @@ export function DraggableWindow({
   return (
     <div
       ref={windowRef}
-      className="absolute flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-xl select-none cursor-grab active:cursor-grabbing dark:border-neutral-800 dark:bg-neutral-900"
+      className="absolute flex flex-col overflow-hidden rounded-md border border-black/5 bg-white/90 shadow-sm backdrop-blur-md select-none cursor-grab active:cursor-grabbing dark:border-white/10 dark:bg-neutral-900/90"
       style={{
-        transform: `translate(${x}px, ${y}px)`,
+        transform: `translate(${x}px, ${y}px) scale(${
+          isDragging ? 1.05 : isVisible ? 1 : 0.9
+        })`,
         width: `${width}px`,
         height: `${height}px`,
         zIndex: isDragging ? 1000 : zIndex,
         pointerEvents: "auto", // Re-enable pointer events for the window
-        opacity: isDragging ? 0.5 : isVisible ? 1 : 0,
-        transition: isVisible ? "opacity 0.6s ease-in-out" : "none",
+        opacity: isDragging ? 0.8 : isVisible ? 1 : 0,
+        transition: isDragging
+          ? "transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s"
+          : isVisible
+          ? "opacity 0.6s ease-out, box-shadow 0.2s, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)"
+          : "none",
+        boxShadow: isDragging
+          ? "0 25px 50px -12px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05)"
+          : "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0,0,0,0.05)",
       }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
     >
       {/* Window Header / Drag Handle */}
-      <div className="flex h-8 items-center justify-between border-b border-neutral-100 bg-neutral-50 px-3 dark:border-neutral-800 dark:bg-neutral-800/50">
-        <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400">
+      <div className="flex h-9 items-center justify-between border-b border-black/5 bg-white/50 px-3 backdrop-blur-sm dark:border-white/5 dark:bg-white/5">
+        <span className="ml-2 text-[10px] font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
           {title}
         </span>
-        <GripHorizontal className="h-4 w-4 text-neutral-400" />
+        <GripHorizontal className="h-4 w-4 text-neutral-300 dark:text-neutral-600" />
       </div>
 
       {/* Window Content */}

@@ -283,20 +283,20 @@ export function InfiniteCanvas() {
     <div className="relative h-full w-full overflow-hidden bg-neutral-100 dark:bg-neutral-950">
       {/* Loading Progress Indicator */}
       {isLoading && (
-        <div className="absolute top-4 left-4 z-50 rounded-lg bg-white/90 backdrop-blur-sm p-3 shadow-lg dark:bg-neutral-800/90">
+        <div className="absolute top-6 left-6 z-50 rounded-full bg-white/90 backdrop-blur-md px-4 py-2 shadow-xl ring-1 ring-black/5 dark:bg-neutral-900/90 dark:ring-white/10">
           <div className="flex items-center gap-3">
-            <div className="flex flex-col gap-1 min-w-[120px]">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-medium text-neutral-700 dark:text-neutral-300">
-                  Loading media
-                </span>
+            <div className="flex flex-col gap-0.5 min-w-[100px]">
+              <div className="flex items-center justify-between text-[10px] uppercase tracking-wider font-medium">
                 <span className="text-neutral-500 dark:text-neutral-400">
-                  {loadedCount}/{totalItems}
+                  Loading
+                </span>
+                <span className="text-neutral-400 dark:text-neutral-500">
+                  {Math.round(loadingProgress)}%
                 </span>
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-700">
+              <div className="h-1 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800">
                 <div
-                  className="h-full bg-neutral-600 dark:bg-neutral-400 transition-all duration-300 ease-out"
+                  className="h-full bg-neutral-900 dark:bg-white transition-all duration-300 ease-out"
                   style={{ width: `${loadingProgress}%` }}
                 />
               </div>
@@ -305,30 +305,31 @@ export function InfiniteCanvas() {
         </div>
       )}
 
-      <div className="absolute bottom-4 right-4 z-50 flex flex-col gap-2 rounded-lg bg-white p-2 shadow-lg dark:bg-neutral-800">
-        <div className="px-2 py-1 text-center text-xs font-medium text-neutral-600 dark:text-neutral-400">
+      <div className="absolute bottom-6 right-6 z-50 flex flex-col gap-1 rounded-xl bg-white/90 p-1.5 shadow-xl backdrop-blur-md ring-1 ring-black/5 dark:bg-neutral-900/90 dark:ring-white/10">
+        <div className="px-2 py-1 text-center text-[10px] font-medium text-neutral-500 dark:text-neutral-400 font-mono">
           {(scale * 100).toFixed(0)}%
         </div>
         <button
           onClick={() => setScale((s) => Math.min(s + 0.1, 2))}
-          className="rounded p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+          className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
           aria-label="Zoom in"
         >
           <Plus className="h-4 w-4" />
         </button>
         <button
           onClick={() => setScale((s) => Math.max(s - 0.1, 0.5))}
-          className="rounded p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+          className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
           aria-label="Zoom out"
         >
           <Minus className="h-4 w-4" />
         </button>
+        <div className="my-0.5 h-px bg-neutral-200 dark:bg-neutral-800" />
         <button
           onClick={() => {
             setScale(0.75);
             setOffset(initialOffsetRef.current);
           }}
-          className="rounded p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+          className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
           aria-label="Reset view"
         >
           <RotateCcw className="h-4 w-4" />
@@ -346,8 +347,8 @@ export function InfiniteCanvas() {
         data-canvas-background="true"
         style={{
           backgroundImage:
-            "radial-gradient(circle, #88888840 1px, transparent 1px)",
-          backgroundSize: `${20 * scale}px ${20 * scale}px`,
+            "radial-gradient(circle, #88888820 1px, transparent 1px)",
+          backgroundSize: `${40 * scale}px ${40 * scale}px`, // Larger grid spacing
           backgroundPosition: `${offset.x}px ${offset.y}px`,
         }}
       >

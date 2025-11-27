@@ -37,13 +37,15 @@ export default function LazyVideo({ src, onLoad }: LazyVideoProps) {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-full relative bg-neutral-900">
+    <div ref={containerRef} className="w-full h-full relative bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
       {shouldLoad ? (
         <>
           <video
             ref={videoRef}
             src={src}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+              isLoaded ? "opacity-100" : "opacity-0"
+            }`}
             loop
             muted
             playsInline
@@ -54,15 +56,11 @@ export default function LazyVideo({ src, onLoad }: LazyVideoProps) {
             }}
           />
           {!isLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center text-neutral-600 text-xs">
-              Loading...
-            </div>
+            <div className="absolute inset-0 animate-pulse bg-neutral-200 dark:bg-neutral-700" />
           )}
         </>
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-neutral-600 text-xs">
-          Loading...
-        </div>
+        <div className="absolute inset-0 animate-pulse bg-neutral-200 dark:bg-neutral-700" />
       )}
     </div>
   );
