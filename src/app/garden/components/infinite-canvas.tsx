@@ -190,7 +190,7 @@ export function InfiniteCanvas() {
 
         // Scale dimensions to fit nicely on screen (max width ~400px, maintaining aspect ratio)
         // Note: Window header is 20px (h-5), so we add that to the height
-        const maxWidth = 400;
+        const maxWidth = 500;
         const HEADER_HEIGHT = 20; // h-5 in Tailwind = 20px
         const scaledDimensions = dimensions.map((dim) => {
           const aspectRatio = dim.width / dim.height;

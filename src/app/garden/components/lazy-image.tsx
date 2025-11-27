@@ -86,6 +86,7 @@ export default function LazyImage({
             loading="lazy"
             unoptimized={unoptimized}
             onLoad={handleLoad}
+            // sizes="(max-width: 500px) 100vw, 500px"
           />
           {/* )} */}
           {!isLoaded && (
