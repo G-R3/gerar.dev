@@ -55,15 +55,19 @@ export default function LazyImage({
   };
 
   return (
-    <div ref={containerRef} className="w-full h-full relative bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
+    <div
+      ref={containerRef}
+      className="w-full h-full relative bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-md"
+    >
       {shouldLoad ? (
         <>
           {fill ? (
             <Image
               src={src}
               alt={alt}
-              fill
-              className={`object-cover transition-opacity duration-700 ease-in-out ${
+              width={width}
+              height={height}
+              className={`rounded-md transition-opacity duration-700 ease-in-out ${
                 isLoaded ? "opacity-100" : "opacity-0"
               }`}
               loading="lazy"
@@ -77,7 +81,7 @@ export default function LazyImage({
               alt={alt}
               width={width}
               height={height}
-              className={`object-cover w-full h-full transition-opacity duration-700 ease-in-out ${
+              className={`rounded-md transition-opacity duration-700 ease-in-out ${
                 isLoaded ? "opacity-100" : "opacity-0"
               }`}
               loading="lazy"

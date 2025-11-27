@@ -189,7 +189,9 @@ export function InfiniteCanvas() {
         if (cancelled) return;
 
         // Scale dimensions to fit nicely on screen (max width ~400px, maintaining aspect ratio)
+        // Note: Window header is 36px (h-9), so we add that to the height
         const maxWidth = 400;
+        const HEADER_HEIGHT = 36; // h-9 in Tailwind = 36px
         const scaledDimensions = dimensions.map((dim) => {
           const aspectRatio = dim.width / dim.height;
           let width = dim.width;
@@ -200,7 +202,11 @@ export function InfiniteCanvas() {
             height = width / aspectRatio;
           }
 
-          return { width: Math.round(width), height: Math.round(height) };
+          // Add header height to window height so content area matches image dimensions
+          return {
+            width: Math.round(width),
+            height: Math.round(height) + HEADER_HEIGHT,
+          };
         });
 
         const layout = generateLayout(RAW_WINDOWS, scaledDimensions);

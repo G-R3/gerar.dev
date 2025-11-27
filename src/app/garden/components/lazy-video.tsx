@@ -4,10 +4,17 @@ import { useState, useRef, useEffect } from "react";
 
 interface LazyVideoProps {
   src: string;
+  width: number;
+  height: number;
   onLoad?: () => void;
 }
 
-export default function LazyVideo({ src, onLoad }: LazyVideoProps) {
+export default function LazyVideo({
+  src,
+  width,
+  height,
+  onLoad,
+}: LazyVideoProps) {
   const [shouldLoad, setShouldLoad] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -37,13 +44,18 @@ export default function LazyVideo({ src, onLoad }: LazyVideoProps) {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-full relative bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
+    <div
+      ref={containerRef}
+      className="w-full h-full relative bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-md"
+    >
       {shouldLoad ? (
         <>
           <video
             ref={videoRef}
             src={src}
-            className={`w-full h-full object-cover transition-opacity duration-700 ease-in-out ${
+            width={width}
+            height={height}
+            className={`rounded-md transition-opacity duration-700 ease-in-out ${
               isLoaded ? "opacity-100" : "opacity-0"
             }`}
             loop
