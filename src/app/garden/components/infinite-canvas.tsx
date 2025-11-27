@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import Link from "next/link";
+import { Dialog } from "@base-ui-components/react/dialog";
 import { DraggableWindow } from "./draggable-window";
-import { Plus, Minus, RotateCcw } from "lucide-react";
+import { Plus, Minus, RotateCcw, ArrowLeft, Info } from "lucide-react";
 
 interface WindowData {
   id: string;
@@ -369,8 +371,10 @@ export function InfiniteCanvas() {
       )}
 
       <div className="absolute bottom-6 right-6 z-50 flex flex-col gap-1 rounded-xl bg-white/90 p-1.5 shadow-xl backdrop-blur-md ring-1 ring-black/5 dark:bg-neutral-900/90 dark:ring-white/10">
-        <div className="px-2 py-1 text-center text-[10px] font-medium text-neutral-500 dark:text-neutral-400 font-mono">
-          {(scale * 100).toFixed(0)}%
+        <div className="flex justify-center py-1">
+          <div className="w-8 text-center text-[10px] font-medium text-neutral-500 dark:text-neutral-400 font-mono">
+            {(scale * 100).toFixed(0)}%
+          </div>
         </div>
         <button
           onClick={() => setScale((s) => Math.min(s + 0.1, 2))}
@@ -397,6 +401,35 @@ export function InfiniteCanvas() {
         >
           <RotateCcw className="h-4 w-4" />
         </button>
+        <div className="my-0.5 h-px bg-neutral-200 dark:bg-neutral-800" />
+        <Dialog.Root>
+          <Dialog.Trigger className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white">
+            <Info className="h-4 w-4" />
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Backdrop className="fixed inset-0 z-[60] bg-black/20 backdrop-blur-sm transition-all duration-300 dark:bg-black/40" />
+            <Dialog.Popup className="fixed left-1/2 top-1/2 z-[61] w-full max-w-sm -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl bg-white/90 p-6 text-center shadow-2xl ring-1 ring-black/5 backdrop-blur-md focus:outline-none dark:bg-neutral-900/90 dark:ring-white/10">
+              <Dialog.Title className="mb-2 text-lg font-medium text-neutral-900 dark:text-neutral-100">
+                Digital Garden
+              </Dialog.Title>
+              <Dialog.Description className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+                A curated collection of visual images, motion, and aesthetics
+                that resonate with me :)
+              </Dialog.Description>
+              <Dialog.Close className="mt-6 w-full rounded-lg bg-neutral-900 py-2.5 text-sm font-medium text-white hover:bg-neutral-800 active:scale-95 transition-all dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200">
+                Close
+              </Dialog.Close>
+            </Dialog.Popup>
+          </Dialog.Portal>
+        </Dialog.Root>
+        <div className="my-0.5 h-px bg-neutral-200 dark:bg-neutral-800" />
+        <Link
+          href="/"
+          className="flex items-center justify-center rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
+          aria-label="Back to home"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </Link>
       </div>
 
       <div
