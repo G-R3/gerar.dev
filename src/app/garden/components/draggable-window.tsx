@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { GripHorizontal } from "lucide-react";
 import LazyImage from "./lazy-image";
 import LazyVideo from "./lazy-video";
@@ -34,8 +34,11 @@ export function DraggableWindow({
   onLoad,
 }: DraggableWindowProps) {
   const [isDragging, setIsDragging] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const dragStartRef = useRef({ x: 0, y: 0 });
   const initialPosRef = useRef({ x: 0, y: 0 });
+  const windowRef = useRef<HTMLDivElement | null>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     e.stopPropagation(); // Prevent canvas panning
@@ -67,15 +70,64 @@ export function DraggableWindow({
     (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
   };
 
+  useEffect(() => {
+    const node = windowRef.current;
+    if (!node || isVisible) return;
+
+    // Check if element is already in viewport immediately
+    const checkVisibility = () => {
+      const rect = node.getBoundingClientRect();
+      return (
+        rect.top < window.innerHeight + 100 &&
+        rect.bottom > -100 &&
+        rect.left < window.innerWidth + 100 &&
+        rect.right > -100
+      );
+    };
+
+    // Immediate check
+    if (checkVisibility()) {
+      setIsVisible(true);
+      return;
+    }
+
+    // Set up IntersectionObserver for future visibility changes
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: "100px",
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(node);
+    observerRef.current = observer;
+
+    return () => {
+      observer.disconnect();
+      observerRef.current = null;
+    };
+  }, [isVisible]);
+
   return (
     <div
+      ref={windowRef}
       className="absolute flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white shadow-xl select-none cursor-grab active:cursor-grabbing dark:border-neutral-800 dark:bg-neutral-900"
       style={{
         transform: `translate(${x}px, ${y}px)`,
         width: `${width}px`,
         height: `${height}px`,
-        zIndex: zIndex,
+        zIndex: isDragging ? 1000 : zIndex,
         pointerEvents: "auto", // Re-enable pointer events for the window
+        opacity: isDragging ? 0.5 : isVisible ? 1 : 0,
+        transition: isVisible ? "opacity 0.6s ease-in-out" : "none",
       }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
