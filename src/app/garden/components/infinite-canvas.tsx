@@ -114,6 +114,153 @@ const RAW_WINDOWS = [
     title: "Snaplytics 3",
     imageUrl: "/garden/snaplytics.io_1936x1080.mp4",
   },
+  {
+    id: "15",
+    width: 300,
+    height: 400,
+    title: "Inspiration 1",
+    imageUrl: "/garden/inspo-1.jpg",
+  },
+  {
+    id: "16",
+    width: 300,
+    height: 300,
+    title: "Inspiration 3",
+    imageUrl: "/garden/inspo-3.gif",
+  },
+  {
+    id: "17",
+    width: 400,
+    height: 225,
+    title: "Inspiration 6",
+    imageUrl: "/garden/inspo-6.mp4",
+  },
+  {
+    id: "18",
+    width: 380,
+    height: 280,
+    title: "Inspiration 11",
+    imageUrl: "/garden/inspo-11.jpg",
+  },
+  {
+    id: "19",
+    width: 350,
+    height: 350,
+    title: "Inspiration 4",
+    imageUrl: "/garden/inspo-4.gif",
+  },
+  {
+    id: "20",
+    width: 400,
+    height: 300,
+    title: "Inspiration 2",
+    imageUrl: "/garden/inspo-2.jpg",
+  },
+  {
+    id: "21",
+    width: 320,
+    height: 240,
+    title: "Inspiration 5",
+    imageUrl: "/garden/inspo-5.jpg",
+  },
+  {
+    id: "22",
+    width: 360,
+    height: 260,
+    title: "Inspiration 7",
+    imageUrl: "/garden/inspo-7.jpg",
+  },
+  {
+    id: "23",
+    width: 300,
+    height: 300,
+    title: "Inspiration 8",
+    imageUrl: "/garden/inspo-8.jpg",
+  },
+  {
+    id: "24",
+    width: 260,
+    height: 340,
+    title: "Inspiration 9",
+    imageUrl: "/garden/inspo-9.jpg",
+  },
+  {
+    id: "25",
+    width: 340,
+    height: 220,
+    title: "Inspiration 10",
+    imageUrl: "/garden/inspo-10.png",
+  },
+  {
+    id: "26",
+    width: 644,
+    height: 360,
+    title: "Snaplytics 1",
+    imageUrl: "/garden/snaplytics.io_644x360.mp4",
+  },
+  {
+    id: "27",
+    width: 645,
+    height: 360,
+    title: "Snaplytics 2",
+    imageUrl: "/garden/snaplytics.io_1290x720.mp4",
+  },
+  {
+    id: "28",
+    width: 484,
+    height: 270,
+    title: "Snaplytics 3",
+    imageUrl: "/garden/snaplytics.io_1936x1080.mp4",
+  },
+  {
+    id: "29",
+    width: 300,
+    height: 400,
+    title: "Inspiration 1",
+    imageUrl: "/garden/inspo-1.jpg",
+  },
+  {
+    id: "30",
+    width: 400,
+    height: 300,
+    title: "Inspiration 2",
+    imageUrl: "/garden/inspo-2.jpg",
+  },
+  {
+    id: "31",
+    width: 300,
+    height: 300,
+    title: "Inspiration 3",
+    imageUrl: "/garden/inspo-3.gif",
+  },
+  {
+    id: "32",
+    width: 400,
+    height: 225,
+    title: "Inspiration 6",
+    imageUrl: "/garden/inspo-6.mp4",
+  },
+  {
+    id: "33",
+    width: 360,
+    height: 260,
+    title: "Inspiration 7",
+    imageUrl: "/garden/inspo-7.jpg",
+  },
+  {
+    id: "34",
+    width: 380,
+    height: 280,
+    title: "Inspiration 11",
+    imageUrl: "/garden/inspo-11.jpg",
+  },
+  {
+    id: "35",
+    width: 350,
+    height: 350,
+    title: "Inspiration 4",
+    imageUrl: "/garden/inspo-4.gif",
+  },
 ];
 
 function generateLayout(windows: typeof RAW_WINDOWS): WindowData[] {
@@ -174,7 +321,7 @@ function generateLayout(windows: typeof RAW_WINDOWS): WindowData[] {
 }
 
 export function InfiniteCanvas() {
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(0.75);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isDraggingCanvas, setIsDraggingCanvas] = useState(false);
   const [windows, setWindows] = useState<WindowData[]>([]);
@@ -281,7 +428,7 @@ export function InfiniteCanvas() {
     const zoomSensitivity = 0.001;
     const delta = -e.deltaY * zoomSensitivity;
 
-    const newScale = Math.min(Math.max(0.1, scale * (1 + delta)), 5);
+    const newScale = Math.min(Math.max(0.5, scale * (1 + delta)), 2);
 
     const mouseX = e.clientX;
     const mouseY = e.clientY;
@@ -344,15 +491,18 @@ export function InfiniteCanvas() {
       )}
 
       <div className="absolute bottom-4 right-4 z-50 flex flex-col gap-2 rounded-lg bg-white p-2 shadow-lg dark:bg-neutral-800">
+        <div className="px-2 py-1 text-center text-xs font-medium text-neutral-600 dark:text-neutral-400">
+          {(scale * 100).toFixed(0)}%
+        </div>
         <button
-          onClick={() => setScale((s) => Math.min(s + 0.1, 5))}
+          onClick={() => setScale((s) => Math.min(s + 0.1, 2))}
           className="rounded p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700"
           aria-label="Zoom in"
         >
           <Plus className="h-4 w-4" />
         </button>
         <button
-          onClick={() => setScale((s) => Math.max(s - 0.1, 0.1))}
+          onClick={() => setScale((s) => Math.max(s - 0.1, 0.5))}
           className="rounded p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700"
           aria-label="Zoom out"
         >
