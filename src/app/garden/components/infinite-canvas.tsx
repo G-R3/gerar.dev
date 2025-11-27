@@ -16,68 +16,93 @@ interface WindowData {
 
 const RAW_WINDOWS = [
   {
-    width: 300,
-    height: 400,
     imageUrl: "/garden/inspo-1.jpg",
   },
   {
-    width: 400,
-    height: 300,
     imageUrl: "/garden/inspo-2.jpg",
   },
   {
-    width: 300,
-    height: 300,
     imageUrl: "/garden/inspo-3.gif",
   },
   {
-    width: 350,
-    height: 350,
     imageUrl: "/garden/inspo-4.gif",
   },
   {
-    width: 320,
-    height: 240,
     imageUrl: "/garden/inspo-5.jpg",
   },
   {
-    width: 400,
-    height: 225,
     imageUrl: "/garden/inspo-6.mp4",
   },
   {
-    width: 360,
-    height: 260,
     imageUrl: "/garden/inspo-7.jpg",
   },
   {
-    width: 300,
-    height: 300,
     imageUrl: "/garden/inspo-8.jpg",
   },
   {
-    width: 260,
-    height: 340,
     imageUrl: "/garden/inspo-9.jpg",
   },
   {
-    width: 340,
-    height: 220,
     imageUrl: "/garden/inspo-10.png",
   },
   {
-    width: 380,
-    height: 280,
     imageUrl: "/garden/inspo-11.jpg",
   },
 ];
 
-function generateLayout(windows: typeof RAW_WINDOWS): WindowData[] {
+// Helper function to load image dimensions
+function loadImageDimensions(
+  src: string
+): Promise<{ width: number; height: number }> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      resolve({ width: img.naturalWidth, height: img.naturalHeight });
+    };
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+// Helper function to load video dimensions
+function loadVideoDimensions(
+  src: string
+): Promise<{ width: number; height: number }> {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement("video");
+    video.onloadedmetadata = () => {
+      resolve({ width: video.videoWidth, height: video.videoHeight });
+    };
+    video.onerror = reject;
+    video.src = src;
+  });
+}
+
+// Load dimensions for all media files
+async function loadAllMediaDimensions(
+  windows: typeof RAW_WINDOWS
+): Promise<Array<{ width: number; height: number }>> {
+  const dimensionPromises = windows.map((win) => {
+    if (win.imageUrl.endsWith(".mp4")) {
+      return loadVideoDimensions(win.imageUrl);
+    } else {
+      return loadImageDimensions(win.imageUrl);
+    }
+  });
+  return Promise.all(dimensionPromises);
+}
+
+function generateLayout(
+  windows: typeof RAW_WINDOWS,
+  dimensions: Array<{ width: number; height: number }>
+): WindowData[] {
   const placed: WindowData[] = [];
-  // Create windows with ids based on original array index
+  // Create windows with ids and dimensions based on original array index
   const windowsWithIds = windows.map((win, index) => ({
     ...win,
     id: String(index),
+    width: dimensions[index].width,
+    height: dimensions[index].height,
   }));
   // Shuffle windows for random distribution
   const shuffled = [...windowsWithIds].sort(() => Math.random() - 0.5);
@@ -152,17 +177,55 @@ export function InfiniteCanvas() {
   const rAFRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const layout = generateLayout(RAW_WINDOWS);
-    setWindows(layout);
+    let cancelled = false;
 
-    const initialOffset = {
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-    };
-    setOffset(initialOffset);
-    initialOffsetRef.current = initialOffset;
+    async function initializeLayout() {
+      try {
+        // Load all media dimensions
+        const dimensions = await loadAllMediaDimensions(RAW_WINDOWS);
+
+        if (cancelled) return;
+
+        // Scale dimensions to fit nicely on screen (max width ~400px, maintaining aspect ratio)
+        const maxWidth = 400;
+        const scaledDimensions = dimensions.map((dim) => {
+          const aspectRatio = dim.width / dim.height;
+          let width = dim.width;
+          let height = dim.height;
+
+          if (width > maxWidth) {
+            width = maxWidth;
+            height = width / aspectRatio;
+          }
+
+          return { width: Math.round(width), height: Math.round(height) };
+        });
+
+        const layout = generateLayout(RAW_WINDOWS, scaledDimensions);
+        setWindows(layout);
+
+        const initialOffset = {
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2,
+        };
+        setOffset(initialOffset);
+        initialOffsetRef.current = initialOffset;
+      } catch (error) {
+        console.error("Failed to load media dimensions:", error);
+        // Fallback to default dimensions if loading fails
+        const defaultDimensions = RAW_WINDOWS.map(() => ({
+          width: 300,
+          height: 300,
+        }));
+        const layout = generateLayout(RAW_WINDOWS, defaultDimensions);
+        setWindows(layout);
+      }
+    }
+
+    initializeLayout();
 
     return () => {
+      cancelled = true;
       if (rAFRef.current) {
         cancelAnimationFrame(rAFRef.current);
       }
