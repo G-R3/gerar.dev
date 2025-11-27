@@ -93,27 +93,6 @@ const RAW_WINDOWS = [
     title: "Inspiration 11",
     imageUrl: "/garden/inspo-11.jpg",
   },
-  {
-    id: "12",
-    width: 644,
-    height: 360,
-    title: "Snaplytics 1",
-    imageUrl: "/garden/snaplytics.io_644x360.mp4",
-  },
-  {
-    id: "13",
-    width: 645,
-    height: 360,
-    title: "Snaplytics 2",
-    imageUrl: "/garden/snaplytics.io_1290x720.mp4",
-  },
-  {
-    id: "14",
-    width: 484,
-    height: 270,
-    title: "Snaplytics 3",
-    imageUrl: "/garden/snaplytics.io_1936x1080.mp4",
-  },
 ];
 
 function generateLayout(windows: typeof RAW_WINDOWS): WindowData[] {
