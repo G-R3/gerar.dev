@@ -2,7 +2,8 @@
 
 import React, { useState, useRef } from "react";
 import { GripHorizontal } from "lucide-react";
-import { OptimizedMedia } from "./optimized-media";
+import LazyImage from "./lazy-image";
+import LazyVideo from "./lazy-video";
 
 interface DraggableWindowProps {
   id: string;
@@ -90,13 +91,18 @@ export function DraggableWindow({
 
       {/* Window Content */}
       <div className="relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-950">
-        <OptimizedMedia
-          src={imageUrl}
-          alt={title}
-          width={width}
-          height={height}
-          onLoad={onLoad}
-        />
+        {imageUrl?.endsWith(".mp4") ? (
+          <LazyVideo src={imageUrl} onLoad={onLoad} />
+        ) : (
+          <LazyImage
+            src={imageUrl}
+            alt={title}
+            width={width}
+            height={height}
+            unoptimized={imageUrl?.endsWith(".gif")}
+            onLoad={onLoad}
+          />
+        )}
       </div>
     </div>
   );
