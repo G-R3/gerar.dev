@@ -46,7 +46,7 @@ export default function LazyVideo({
   return (
     <div
       ref={containerRef}
-      className="w-full h-full relative bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-md"
+      className="relative bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-xs"
     >
       {shouldLoad ? (
         <>
@@ -55,7 +55,7 @@ export default function LazyVideo({
             src={src}
             width={width}
             height={height}
-            className={`rounded-md transition-opacity duration-700 ease-in-out ${
+            className={`rounded-xs transition-opacity duration-700 ease-in-out ${
               isLoaded ? "opacity-100" : "opacity-0"
             }`}
             loop

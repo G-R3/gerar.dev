@@ -116,13 +116,13 @@ export function DraggableWindow({
   return (
     <div
       ref={windowRef}
-      className="absolute flex flex-col overflow-hidden rounded-md border border-black/5 bg-white/90 shadow-sm backdrop-blur-md select-none cursor-grab active:cursor-grabbing dark:border-white/10 dark:bg-neutral-900/90"
+      className="bg-white/50 backdrop-blur-sm dark:bg-white/10 absolute flex flex-col overflow-hidden rounded-md border border-black/5 shadow-sm select-none cursor-grab active:cursor-grabbing dark:border-white/10"
       style={{
         transform: `translate(${x}px, ${y}px) scale(${
           isDragging ? 1.05 : isVisible ? 1 : 0.9
         })`,
         width: `${width}px`,
-        height: `${height}px`,
+        height: "auto",
         zIndex: isDragging ? 1000 : zIndex,
         pointerEvents: "auto", // Re-enable pointer events for the window
         opacity: isDragging ? 0.8 : isVisible ? 1 : 0,
@@ -140,15 +140,16 @@ export function DraggableWindow({
       onPointerUp={handlePointerUp}
     >
       {/* Window Header / Drag Handle */}
-      <div className="flex h-5 items-center justify-between bg-white/50 px-2 backdrop-blur-sm dark:bg-white/5">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+      {/* backdrop-blur-sm */}
+      <div className="flex h-5 items-center justify-between px-2">
+        <span className="text-[10px] font-medium capitalize tracking-wider text-neutral-400 dark:text-neutral-500">
           {title}
         </span>
         <GripHorizontal className="h-4 w-4 text-neutral-300 dark:text-neutral-600" />
       </div>
 
       {/* Window Content */}
-      <div className="relative flex-1 overflow-hidden bg-neutral-100 dark:bg-white/5 p-2">
+      <div className="relative overflow-hidden p-1">
         {imageUrl?.endsWith(".mp4") ? (
           <LazyVideo
             src={imageUrl}

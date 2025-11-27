@@ -16,7 +16,6 @@ interface LazyImageProps {
 export default function LazyImage({
   src,
   alt,
-  fill = true,
   width,
   height,
   unoptimized = false,
@@ -57,17 +56,17 @@ export default function LazyImage({
   return (
     <div
       ref={containerRef}
-      className="w-full h-full relative bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-md"
+      className="w-full h-full relative bg-neutral-100 dark:bg-neutral-800 overflow-hidden rounded-sm"
     >
       {shouldLoad ? (
         <>
-          {fill ? (
+          {/* {fill ? (
             <Image
               src={src}
               alt={alt}
               width={width}
               height={height}
-              className={`rounded-md transition-opacity duration-700 ease-in-out ${
+              className={`rounded-sm transition-opacity duration-700 ease-in-out ${
                 isLoaded ? "opacity-100" : "opacity-0"
               }`}
               loading="lazy"
@@ -75,20 +74,20 @@ export default function LazyImage({
               sizes="(max-width: 400px) 100vw, 400px"
               onLoad={handleLoad}
             />
-          ) : (
-            <Image
-              src={src}
-              alt={alt}
-              width={width}
-              height={height}
-              className={`rounded-md transition-opacity duration-700 ease-in-out ${
-                isLoaded ? "opacity-100" : "opacity-0"
-              }`}
-              loading="lazy"
-              unoptimized={unoptimized}
-              onLoad={handleLoad}
-            />
-          )}
+          ) : ( */}
+          <Image
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            className={`rounded-sm transition-opacity duration-700 ease-in-out ${
+              isLoaded ? "opacity-100" : "opacity-0"
+            }`}
+            loading="lazy"
+            unoptimized={unoptimized}
+            onLoad={handleLoad}
+          />
+          {/* )} */}
           {!isLoaded && (
             <div className="absolute inset-0 animate-pulse bg-neutral-200 dark:bg-neutral-700" />
           )}
