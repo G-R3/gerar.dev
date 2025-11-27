@@ -10,95 +10,77 @@ interface WindowData {
   y: number;
   width: number;
   height: number;
-  title: string;
   imageUrl: string;
   zIndex: number;
 }
 
 const RAW_WINDOWS = [
   {
-    id: "1",
     width: 300,
     height: 400,
-    title: "Inspiration 1",
     imageUrl: "/garden/inspo-1.jpg",
   },
   {
-    id: "2",
     width: 400,
     height: 300,
-    title: "Inspiration 2",
     imageUrl: "/garden/inspo-2.jpg",
   },
   {
-    id: "3",
     width: 300,
     height: 300,
-    title: "Inspiration 3",
     imageUrl: "/garden/inspo-3.gif",
   },
   {
-    id: "4",
     width: 350,
     height: 350,
-    title: "Inspiration 4",
     imageUrl: "/garden/inspo-4.gif",
   },
   {
-    id: "5",
     width: 320,
     height: 240,
-    title: "Inspiration 5",
     imageUrl: "/garden/inspo-5.jpg",
   },
   {
-    id: "6",
     width: 400,
     height: 225,
-    title: "Inspiration 6",
     imageUrl: "/garden/inspo-6.mp4",
   },
   {
-    id: "7",
     width: 360,
     height: 260,
-    title: "Inspiration 7",
     imageUrl: "/garden/inspo-7.jpg",
   },
   {
-    id: "8",
     width: 300,
     height: 300,
-    title: "Inspiration 8",
     imageUrl: "/garden/inspo-8.jpg",
   },
   {
-    id: "9",
     width: 260,
     height: 340,
-    title: "Inspiration 9",
     imageUrl: "/garden/inspo-9.jpg",
   },
   {
-    id: "10",
     width: 340,
     height: 220,
-    title: "Inspiration 10",
     imageUrl: "/garden/inspo-10.png",
   },
   {
-    id: "11",
     width: 380,
     height: 280,
-    title: "Inspiration 11",
     imageUrl: "/garden/inspo-11.jpg",
   },
 ];
 
 function generateLayout(windows: typeof RAW_WINDOWS): WindowData[] {
   const placed: WindowData[] = [];
+  // Create windows with ids based on original array index
+  const windowsWithIds = windows.map((win, index) => ({
+    ...win,
+    id: String(index),
+  }));
   // Shuffle windows for random distribution
-  const shuffled = [...windows].sort(() => Math.random() - 0.5);
+  const shuffled = [...windowsWithIds].sort(() => Math.random() - 0.5);
 
   // Spiral parameters
   const angleStep = 0.5;
@@ -385,6 +367,7 @@ export function InfiniteCanvas() {
             <DraggableWindow
               key={window.id}
               {...window}
+              title={`Frame ${parseInt(window.id) + 1}`}
               scale={scale}
               onDrag={(x, y) => updateWindowPosition(window.id, x, y)}
               onFocus={() => bringToFront(window.id)}
