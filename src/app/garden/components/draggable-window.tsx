@@ -140,16 +140,16 @@ export function DraggableWindow({
       onPointerUp={handlePointerUp}
     >
       {/* Window Header / Drag Handle */}
-      {/* backdrop-blur-sm */}
-      <div className="flex h-5 items-center justify-between px-2">
-        <span className="text-[10px] font-medium capitalize tracking-wider text-neutral-400 dark:text-neutral-500">
+      {/* backdrop-blur-sm bg-white/50 dark:bg-white/5*/}
+      <div className="flex h-5 items-center justify-between px-3">
+        <span className="text-sm font-medium capitalize tracking-wider text-neutral-400 dark:text-neutral-500">
           {title}
         </span>
         <GripHorizontal className="h-4 w-4 text-neutral-300 dark:text-neutral-600" />
       </div>
 
       {/* Window Content */}
-      <div className="relative overflow-hidden p-1">
+      <div className="relative overflow-hidden p-1.5">
         {imageUrl?.endsWith(".mp4") ? (
           <LazyVideo
             src={imageUrl}
