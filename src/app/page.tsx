@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main className="space-y-16 py-16">
+    <main className="space-y-16 pt-24 pb-8 flex flex-col max-w-4xl mx-auto min-h-screen px-8">
       <section className="space-y-4">
         <h1 className="text-xl font-bold text-white">gerardo rodriguez</h1>
         <p className="text-gray-400 text-sm">software engineer</p>
@@ -35,6 +35,11 @@ export default function Home() {
           </a>
         </div>
       </section>
+
+      <footer className="mt-auto flex h-12 w-full items-center justify-between border-t border-t-neutral-800">
+        <p className="text-sm text-gray-400">undefined</p>
+        <p className="text-sm text-gray-400">new Date().getFullYear()</p>
+      </footer>
     </main>
   );
 }
