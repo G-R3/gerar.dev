@@ -343,15 +343,12 @@ export function InfiniteCanvas() {
         <div className="scanlines h-full w-full" />
       </div>
 
-      <div className="absolute bottom-6 right-6 z-50 flex items-center gap-2 rounded-2xl border border-neutral-800 bg-neutral-950/70 px-3 py-2 shadow-[0_20px_45px_rgba(0,0,0,0.45)] backdrop-blur">
+      <div className="absolute bottom-6 right-6 z-50 flex items-center gap-2 rounded-xl border border-neutral-800 bg-neutral-950/70 px-3 py-2 shadow-[0_20px_45px_rgba(0,0,0,0.45)] backdrop-blur">
         {isLoading && (
           <div className="flex items-center gap-3 pr-2">
             <div className="flex flex-col gap-0.5 min-w-[100px]">
-              <div className="flex items-center justify-between text-[10px] font-medium">
-                <span className="text-neutral-500">Loading</span>
-                <span className="text-neutral-400">
-                  {Math.round(loadingProgress)}%
-                </span>
+              <div className="text-[10px] font-medium text-neutral-400">
+                {loadedCount}/{totalItems} loaded
               </div>
               <div className="h-1 w-full overflow-hidden rounded-full bg-neutral-900">
                 <div
