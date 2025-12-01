@@ -19,8 +19,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "gerardo rodriguez",
-  description: "design engineer & software developer",
+  title: "Gerardo",
+  description: "software engineer",
 };
 
 export default function RootLayout({

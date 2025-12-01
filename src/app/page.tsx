@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { MasonryGallery } from "@/components/masonry-gallery";
 
@@ -41,15 +40,15 @@ export default function Home() {
             <div className="pt-8 space-y-2">
               <Link
                 href="/garden"
-                className="flex items-center gap-1 w-fit hover-inverse border-b border-neutral-800 hover:border-white transition-colors"
+                className="flex items-center gap-1 w-fit border-b border-neutral-800"
               >
-                garden <ArrowUpRight className="size-4 text-neutral-500" />
+                garden
               </Link>
               <a
                 href="https://github.com/G-R3"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-fit hover-inverse border-b border-neutral-800 hover:border-white transition-colors"
+                className="block w-fit border-b border-neutral-800"
               >
                 github.com/G-R3
               </a>
@@ -57,9 +56,9 @@ export default function Home() {
                 href="https://linkedin.com/in/gerardo-rodriguez"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-fit hover-inverse border-b border-neutral-800 hover:border-white transition-colors"
+                className="block w-fit border-b border-neutral-800"
               >
-                linkedin.com/in/gerardo-rodriguez
+                linkedin.com/in/gerardo-rodri/
               </a>
             </div>
           </div>

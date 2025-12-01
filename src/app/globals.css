@@ -72,14 +72,6 @@
   mix-blend-mode: luminosity;
 } */
 
-.hover-inverse {
-  transition: all 0.2s steps(2);
-}
-.hover-inverse:hover {
-  background-color: white;
-  color: black;
-}
-
 h1,
 h2,
 h3,
