@@ -1,6 +1,6 @@
-import { DitherImage } from "@/components/dither-image";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { MasonryGallery } from "@/components/masonry-gallery";
 
 export default function Home() {
   const images = [
@@ -73,19 +73,7 @@ export default function Home() {
 
       <section className="w-full lg:w-1/2 relative flex items-center justify-center">
         <div className="scanlines absolute inset-0 z-20 pointer-events-none opacity-20"></div>
-
-        <div className="columns-2 md:columns-3 gap-0 w-full max-w-full">
-          {images.map((src, i) => (
-            <div key={i} className="break-inside-avoid relative group">
-              <DitherImage
-                src={src}
-                alt={`Inspiration ${i + 1}`}
-                className="w-full"
-              />
-              <div className="absolute inset-0 bg-green-500/10 opacity-0 group-hover:opacity-100 mix-blend-color-dodge transition-opacity duration-100 pointer-events-none" />
-            </div>
-          ))}
-        </div>
+        <MasonryGallery images={images} />
       </section>
     </main>
   );
