@@ -116,7 +116,7 @@ export function DraggableWindow({
   return (
     <div
       ref={windowRef}
-      className="bg-white/50 backdrop-blur-sm dark:bg-white/10 absolute flex flex-col overflow-hidden rounded-md border border-black/5 shadow-sm select-none cursor-grab active:cursor-grabbing dark:border-white/10"
+      className="absolute flex flex-col overflow-hidden rounded-md border border-white/10 bg-neutral-900/70 text-white shadow-[0_20px_45px_rgba(0,0,0,0.6)] backdrop-blur-md transition-shadow select-none cursor-grab active:cursor-grabbing"
       style={{
         transform: `translate(${x}px, ${y}px) scale(${
           isDragging ? 1.05 : isVisible ? 1 : 0.9
@@ -124,7 +124,7 @@ export function DraggableWindow({
         width: `${width}px`,
         height: "auto",
         zIndex: isDragging ? 1000 : zIndex,
-        pointerEvents: "auto", // Re-enable pointer events for the window
+        pointerEvents: "auto",
         opacity: isDragging ? 0.8 : isVisible ? 1 : 0,
         transition: isDragging
           ? "transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s"
@@ -132,23 +132,20 @@ export function DraggableWindow({
           ? "opacity 0.6s ease-out, box-shadow 0.2s, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)"
           : "none",
         boxShadow: isDragging
-          ? "0 25px 50px -12px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.05)"
-          : "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0,0,0,0.05)",
+          ? "0 35px 65px rgba(0,0,0,0.65)"
+          : "0 18px 40px rgba(0,0,0,0.55)",
       }}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
     >
-      {/* Window Header / Drag Handle */}
-      {/* backdrop-blur-sm bg-white/50 dark:bg-white/5*/}
       <div className="flex h-5 items-center justify-between px-3">
-        <span className="text-sm font-medium capitalize tracking-wider text-neutral-400 dark:text-neutral-500">
+        <span className="text-[10px] uppercase tracking-[0.3em] text-neutral-400">
           {title}
         </span>
-        <GripHorizontal className="h-4 w-4 text-neutral-300 dark:text-neutral-600" />
+        <GripHorizontal className="h-4 w-4 text-neutral-600" />
       </div>
 
-      {/* Window Content */}
       <div className="relative overflow-hidden p-1.5">
         {imageUrl?.endsWith(".mp4") ? (
           <LazyVideo

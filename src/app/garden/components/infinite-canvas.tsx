@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Dialog } from "@base-ui-components/react/dialog";
 import { DraggableWindow } from "./draggable-window";
-import { Plus, Minus, RotateCcw, ArrowLeft, Info } from "lucide-react";
+import { Plus, Minus, RotateCcw, House, Info } from "lucide-react";
 
 interface WindowData {
   id: string;
@@ -329,96 +329,111 @@ export function InfiniteCanvas() {
   const isLoading = loadedCount < totalItems;
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-neutral-100 dark:bg-neutral-950">
-      {/* Loading Progress Indicator */}
-      {isLoading && (
-        <div className="absolute top-6 left-6 z-50 rounded-full bg-white/90 backdrop-blur-md px-4 py-2 shadow-xl ring-1 ring-black/5 dark:bg-neutral-900/90 dark:ring-white/10">
-          <div className="flex items-center gap-3">
+    <div className="relative h-full w-full overflow-hidden bg-black text-white">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 opacity-60"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 45%), radial-gradient(circle at 80% 0%, rgba(255,255,255,0.05), transparent 55%)",
+        }}
+      />
+
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.15]">
+        <div className="scanlines h-full w-full" />
+      </div>
+
+      <div className="absolute bottom-6 right-6 z-50 flex items-center gap-2 rounded-2xl border border-neutral-800 bg-neutral-950/70 px-3 py-2 shadow-[0_20px_45px_rgba(0,0,0,0.45)] backdrop-blur">
+        {isLoading && (
+          <div className="flex items-center gap-3 pr-2">
             <div className="flex flex-col gap-0.5 min-w-[100px]">
-              <div className="flex items-center justify-between text-[10px] uppercase tracking-wider font-medium">
-                <span className="text-neutral-500 dark:text-neutral-400">
-                  Loading
-                </span>
-                <span className="text-neutral-400 dark:text-neutral-500">
+              <div className="flex items-center justify-between text-[10px] font-medium">
+                <span className="text-neutral-500">Loading</span>
+                <span className="text-neutral-400">
                   {Math.round(loadingProgress)}%
                 </span>
               </div>
-              <div className="h-1 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800">
+              <div className="h-1 w-full overflow-hidden rounded-full bg-neutral-900">
                 <div
-                  className="h-full bg-neutral-900 dark:bg-white transition-all duration-300 ease-out"
+                  className="h-full origin-left bg-white transition-all duration-300 ease-out"
                   style={{ width: `${loadingProgress}%` }}
                 />
               </div>
             </div>
           </div>
-        </div>
-      )}
-
-      <div className="absolute bottom-6 right-6 z-50 flex flex-col gap-1 rounded-xl bg-white/90 p-1.5 shadow-xl backdrop-blur-md ring-1 ring-black/5 dark:bg-neutral-900/90 dark:ring-white/10">
-        <div className="flex justify-center py-1">
-          <div className="w-8 text-center text-[10px] font-medium text-neutral-500 dark:text-neutral-400 font-mono">
+        )}
+        {isLoading && <div className="h-6 w-px bg-neutral-800" />}
+        <div className="flex items-center justify-center px-2">
+          <div className="text-center text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-400">
             {(scale * 100).toFixed(0)}%
           </div>
         </div>
+        <div className="h-6 w-px bg-neutral-800" />
         <button
           onClick={() => setScale((s) => Math.min(s + 0.1, 2))}
-          className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
+          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
           aria-label="Zoom in"
         >
           <Plus className="h-4 w-4" />
         </button>
         <button
           onClick={() => setScale((s) => Math.max(s - 0.1, 0.5))}
-          className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
+          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
           aria-label="Zoom out"
         >
           <Minus className="h-4 w-4" />
         </button>
-        <div className="my-0.5 h-px bg-neutral-200 dark:bg-neutral-800" />
+        <div className="h-6 w-px bg-neutral-800" />
         <button
           onClick={() => {
             setScale(0.75);
             setOffset(initialOffsetRef.current);
           }}
-          className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
+          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
           aria-label="Reset view"
         >
           <RotateCcw className="h-4 w-4" />
         </button>
-        <div className="my-0.5 h-px bg-neutral-200 dark:bg-neutral-800" />
+        <div className="h-6 w-px bg-neutral-800" />
         <Dialog.Root>
-          <Dialog.Trigger className="rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white">
+          <Dialog.Trigger className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black">
             <Info className="h-4 w-4" />
           </Dialog.Trigger>
           <Dialog.Portal>
-            <Dialog.Backdrop className="fixed inset-0 z-[60] bg-black/20 backdrop-blur-sm transition-all duration-300 dark:bg-black/40" />
-            <Dialog.Popup className="fixed left-1/2 top-1/2 z-[61] w-full max-w-sm -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl bg-white/90 p-6 text-center shadow-2xl ring-1 ring-black/5 backdrop-blur-md focus:outline-none dark:bg-neutral-900/90 dark:ring-white/10">
-              <Dialog.Title className="mb-2 text-lg font-medium text-neutral-900 dark:text-neutral-100">
-                Digital Garden
-              </Dialog.Title>
-              <Dialog.Description className="text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
-                A curated collection of visual images, motion, and aesthetics
-                that resonate with me :)
+            <Dialog.Backdrop className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm transition-all duration-300" />
+            <Dialog.Popup className="fixed left-1/2 top-1/2 z-[61] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950/90 p-10 text-neutral-200 shadow-[0_30px_60px_rgba(0,0,0,0.7)] backdrop-blur-lg focus:outline-none">
+              <div className="space-y-3 text-left">
+                <Dialog.Title className="text-[10px] uppercase tracking-[0.5em] text-neutral-500">
+                  Digital Garden
+                </Dialog.Title>
+                <h1 className="text-4xl font-serif italic tracking-tight text-white mix-blend-difference lg:text-5xl">
+                  Infinite Moodboard
+                </h1>
+              </div>
+              <Dialog.Description className="mt-4 max-w-lg text-left text-xs text-neutral-400">
+                Living collage of 1-bit textures, motion studies, and visual
+                cues that fuel my work. A curated collection of visual images,
+                motion, and aesthetics that resonate with me :)
               </Dialog.Description>
-              <Dialog.Close className="mt-6 w-full rounded-lg bg-neutral-900 py-2.5 text-sm font-medium text-white hover:bg-neutral-800 active:scale-95 transition-all dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200">
+              <Dialog.Close className="mt-8 w-full rounded-lg bg-white py-2.5 text-sm font-medium text-black transition-all hover:bg-neutral-200 active:scale-95">
                 Close
               </Dialog.Close>
             </Dialog.Popup>
           </Dialog.Portal>
         </Dialog.Root>
-        <div className="my-0.5 h-px bg-neutral-200 dark:bg-neutral-800" />
+        <div className="h-6 w-px bg-neutral-800" />
         <Link
           href="/"
-          className="flex items-center justify-center rounded-lg p-2 text-neutral-600 hover:bg-neutral-100 hover:text-black active:scale-95 transition-all dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
+          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
           aria-label="Back to home"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <House className="h-4 w-4" />
         </Link>
       </div>
 
       <div
         ref={containerRef}
-        className="h-full w-full cursor-grab active:cursor-grabbing touch-none"
+        className="h-full w-full cursor-grab touch-none active:cursor-grabbing"
         onPointerDown={handleCanvasPointerDown}
         onPointerMove={handleCanvasPointerMove}
         onPointerUp={handleCanvasPointerUp}
@@ -428,7 +443,7 @@ export function InfiniteCanvas() {
         style={{
           backgroundImage:
             "radial-gradient(circle, #88888820 1px, transparent 1px)",
-          backgroundSize: `${40 * scale}px ${40 * scale}px`, // Larger grid spacing
+          backgroundSize: `${40 * scale}px ${40 * scale}px`,
           backgroundPosition: `${offset.x}px ${offset.y}px`,
         }}
       >
