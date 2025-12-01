@@ -16,10 +16,8 @@ interface MasonryGalleryProps {
 
 export function MasonryGallery({ images }: MasonryGalleryProps) {
   const [imageData, setImageData] = useState<ImageData[]>([]);
-  const [showImages, setShowImages] = useState(false);
 
   useEffect(() => {
-    // Preload all images and get their dimensions
     const loadImages = async () => {
       const promises = images.map((src) => {
         return new Promise<ImageData>((resolve) => {
@@ -38,8 +36,6 @@ export function MasonryGallery({ images }: MasonryGalleryProps) {
 
       const loadedImages = await Promise.all(promises);
       setImageData(loadedImages);
-      // Small delay before showing images to allow for smooth transition
-      setTimeout(() => setShowImages(true), 50);
     };
 
     loadImages();
@@ -52,15 +48,7 @@ export function MasonryGallery({ images }: MasonryGalleryProps) {
   return (
     <div className="columns-2 md:columns-3 gap-0 w-full max-w-full">
       {imageData.map((image, i) => (
-        <div
-          key={`image-${i}`}
-          className={`break-inside-avoid relative group transition-opacity duration-700 ease-out ${
-            showImages ? "opacity-100" : "opacity-0"
-          }`}
-          style={{
-            transitionDelay: `${i * 30}ms`,
-          }}
-        >
+        <div key={`image-${i}`} className="break-inside-avoid relative group">
           <DitherImage
             src={image.src}
             alt={image.alt}
