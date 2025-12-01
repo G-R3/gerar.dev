@@ -33,9 +33,9 @@ export default function Home() {
             <p>welcome to my little corner on the internet.</p>
             <p>
               i love building cool things on the web, learning as much as
-              possible, and obessing over pixels. when i'm not staring at a
-              screen, i'm jamming to jazz fusion, skateboarding, or learning
-              film photography.
+              possible, and obessing over pixels. when i&apos;m not staring at a
+              screen, i&apos;m jamming to jazz fusion, skateboarding, or
+              learning film photography.
             </p>
 
             <div className="pt-8 space-y-2">
