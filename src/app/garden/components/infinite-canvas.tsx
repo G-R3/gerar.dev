@@ -17,39 +17,17 @@ interface WindowData {
 }
 
 const RAW_WINDOWS = [
-  {
-    imageUrl: "/garden/inspo-1.jpg",
-  },
-  {
-    imageUrl: "/garden/inspo-2.jpg",
-  },
-  {
-    imageUrl: "/garden/inspo-3.gif",
-  },
-  {
-    imageUrl: "/garden/inspo-4.gif",
-  },
-  {
-    imageUrl: "/garden/inspo-5.jpg",
-  },
-  {
-    imageUrl: "/garden/inspo-6.mp4",
-  },
-  {
-    imageUrl: "/garden/inspo-7.jpg",
-  },
-  {
-    imageUrl: "/garden/inspo-8.jpg",
-  },
-  {
-    imageUrl: "/garden/inspo-9.jpg",
-  },
-  {
-    imageUrl: "/garden/inspo-10.png",
-  },
-  {
-    imageUrl: "/garden/inspo-11.jpg",
-  },
+  { imageUrl: "/garden/1.jpeg" },
+  { imageUrl: "/garden/2.gif" },
+  { imageUrl: "/garden/3.jpg" },
+  { imageUrl: "/garden/4.jpg" },
+  { imageUrl: "/garden/5.jpg" },
+  { imageUrl: "/garden/6.png" },
+  { imageUrl: "/garden/7.webp" },
+  { imageUrl: "/garden/9.webp" },
+  { imageUrl: "/garden/10.jpg" },
+  { imageUrl: "/garden/11.jpg" },
+  { imageUrl: "/garden/12.png" },
 ];
 
 // Helper function to load image dimensions
