@@ -17,17 +17,17 @@ interface WindowData {
 }
 
 const RAW_WINDOWS = [
-  { imageUrl: "/garden/1.jpeg" },
+  { imageUrl: "/garden/1.webp" },
   { imageUrl: "/garden/2.gif" },
-  { imageUrl: "/garden/3.jpg" },
-  { imageUrl: "/garden/4.jpg" },
-  { imageUrl: "/garden/5.jpg" },
+  { imageUrl: "/garden/3.webp" },
+  { imageUrl: "/garden/4.webp" },
+  { imageUrl: "/garden/5.webp" },
   { imageUrl: "/garden/6.png" },
   { imageUrl: "/garden/7.webp" },
   { imageUrl: "/garden/9.webp" },
-  { imageUrl: "/garden/10.jpg" },
-  { imageUrl: "/garden/11.jpg" },
-  { imageUrl: "/garden/12.png" },
+  { imageUrl: "/garden/10.webp" },
+  { imageUrl: "/garden/11.webp" },
+  { imageUrl: "/garden/12.webp" },
 ];
 
 // Helper function to load image dimensions
