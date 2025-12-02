@@ -53,7 +53,7 @@ export default function Home() {
                 github.com/G-R3
               </a>
               <a
-                href="https://linkedin.com/in/gerardo-rodriguez"
+                href="https://linkedin.com/in/gerardo-rodri/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-fit border-b border-neutral-800"
