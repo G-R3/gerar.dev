@@ -412,7 +412,7 @@ export function InfiniteCanvas() {
                 cues that fuel me. A curated collection of visual images,
                 motion, and aesthetics that resonate with me :)
               </Dialog.Description>
-              <Dialog.Close className="mt-8 w-full rounded-lg bg-white py-2.5 text-sm font-medium text-black transition-all hover:bg-neutral-200 active:scale-95">
+              <Dialog.Close className="mt-8 w-full rounded-lg bg-white py-2.5 text-sm font-medium text-black transition-all hover:bg-neutral-200 active:scale-[98%]">
                 Close
               </Dialog.Close>
             </Dialog.Popup>
