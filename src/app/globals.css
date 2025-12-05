@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* Berkeley Mono Font */
 @font-face {
   font-family: "Berkeley Mono Regular";
   src: url("/fonts/BerkeleyMono-Regular.woff2") format("woff2");
@@ -10,7 +9,6 @@
 }
 
 @theme {
-  /* --berkeley-mono: "Berkeley Mono Regular"; */
   --font-mono: "Berkeley Mono Regular", ui-monospace, SFMono-Regular, "SF Mono",
     Menlo, Consolas, "Liberation Mono", monospace;
 }
