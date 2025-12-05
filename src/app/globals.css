@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+/* Berkeley Mono Font */
+@font-face {
+  font-family: "Berkeley Mono Regular";
+  src: url("/fonts/BerkeleyMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* --berkeley-mono: "Berkeley Mono Regular"; */
+  --font-mono: "Berkeley Mono Regular", ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
+}
+
 /* ::-webkit-scrollbar {
   width: 8px;
 }
@@ -83,9 +98,9 @@ h6 {
   letter-spacing: -0.02em;
 }
 
-p,
+/* p,
 a,
 span,
 li {
-  font-family: var(--font-geist-mono), monospace;
-}
+  font-family: var(--berkeley-mono), monospace;
+} */

@@ -23,12 +23,12 @@ export default function Home() {
             <h1 className="-ml-2 lg:-ml-3 text-6xl lg:text-8xl font-serif italic tracking-tighter text-white mix-blend-difference">
               Gerardo
             </h1>
-            <p className="text-xs font-mono uppercase tracking-widest text-neutral-500 mt-4">
+            <p className="text-xs uppercase tracking-widest text-neutral-500 mt-4">
               Software Engineer
             </p>
           </header>
 
-          <div className="space-y-8 font-mono text-sm leading-relaxed text-neutral-300">
+          <div className="space-y-8 text-sm leading-relaxed text-neutral-300">
             <p>welcome to my little corner on the internet.</p>
             <p>
               i love building cool things on the web, learning as much as
@@ -64,7 +64,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* <footer className="mt-12 lg:mt-0 text-[10px] text-neutral-600 font-mono flex justify-between uppercase tracking-widest">
+        {/* <footer className="mt-12 lg:mt-0 text-[10px] text-neutral-600 flex justify-between uppercase tracking-widest">
           <span>System Status: Online</span>
           <span>{new Date().getFullYear()} ©</span>
         </footer> */}
