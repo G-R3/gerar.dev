@@ -408,9 +408,9 @@ export function InfiniteCanvas() {
                 </h1>
               </div>
               <Dialog.Description className="mt-4 max-w-lg text-left text-xs text-neutral-400">
-                Living collage of 1-bit textures, motion studies, and visual
-                cues that fuel me. A curated collection of visual images,
-                motion, and aesthetics that resonate with me :)
+                A curated collection of visuals, motion, and aesthetic pieces
+                that resonate with me :). An evolving garden I continue to tend
+                as I discover new pieces.
               </Dialog.Description>
               <Dialog.Close className="mt-8 w-full rounded-lg bg-white py-2.5 text-sm font-medium text-black transition-all hover:bg-neutral-200 active:scale-[98%]">
                 Close
