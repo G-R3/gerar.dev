@@ -28,11 +28,17 @@ const RAW_WINDOWS = [
   { imageUrl: "/garden/10.webp" },
   { imageUrl: "/garden/11.webp" },
   { imageUrl: "/garden/12.webp" },
+  { imageUrl: "/garden/13.webp" },
+  { imageUrl: "/garden/14.webp" },
+  { imageUrl: "/garden/15.webp" },
+  { imageUrl: "/garden/16.webp" },
+  { imageUrl: "/garden/17.webp" },
+  { imageUrl: "/garden/18.webp" },
 ];
 
 // Helper function to load image dimensions
 function loadImageDimensions(
-  src: string
+  src: string,
 ): Promise<{ width: number; height: number }> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -46,7 +52,7 @@ function loadImageDimensions(
 
 // Helper function to load video dimensions
 function loadVideoDimensions(
-  src: string
+  src: string,
 ): Promise<{ width: number; height: number }> {
   return new Promise((resolve, reject) => {
     const video = document.createElement("video");
@@ -60,7 +66,7 @@ function loadVideoDimensions(
 
 // Load dimensions for all media files
 async function loadAllMediaDimensions(
-  windows: typeof RAW_WINDOWS
+  windows: typeof RAW_WINDOWS,
 ): Promise<Array<{ width: number; height: number }>> {
   const dimensionPromises = windows.map((win) => {
     if (win.imageUrl.endsWith(".mp4")) {
@@ -74,7 +80,7 @@ async function loadAllMediaDimensions(
 
 function generateLayout(
   windows: typeof RAW_WINDOWS,
-  dimensions: Array<{ width: number; height: number }>
+  dimensions: Array<{ width: number; height: number }>,
 ): WindowData[] {
   const placed: WindowData[] = [];
   // Create windows with ids and dimensions based on original array index
@@ -317,7 +323,7 @@ export function InfiniteCanvas() {
     const newMax = maxZIndex + 1;
     setMaxZIndex(newMax);
     setWindows((windows) =>
-      windows.map((w) => (w.id === id ? { ...w, zIndex: newMax } : w))
+      windows.map((w) => (w.id === id ? { ...w, zIndex: newMax } : w)),
     );
   };
 
