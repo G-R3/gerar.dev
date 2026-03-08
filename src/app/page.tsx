@@ -23,9 +23,6 @@ export default function Home() {
             <h1 className="-ml-2 lg:-ml-3 text-6xl lg:text-8xl font-serif italic tracking-tighter text-white mix-blend-difference">
               Gerardo
             </h1>
-            <p className="text-xs uppercase tracking-widest text-neutral-500 mt-4">
-              Software Engineer
-            </p>
           </header>
 
           <div className="space-y-8 text-sm leading-relaxed text-neutral-300">
