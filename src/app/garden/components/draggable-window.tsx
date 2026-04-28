@@ -103,7 +103,7 @@ export function DraggableWindow({
       {
         rootMargin: "100px",
         threshold: 0.1,
-      }
+      },
     );
 
     observer.observe(node);
@@ -129,8 +129,8 @@ export function DraggableWindow({
         transition: isDragging
           ? "transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s"
           : isVisible
-          ? "opacity 0.6s ease-out, box-shadow 0.2s, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)"
-          : "none",
+            ? "opacity 0.6s ease-out, box-shadow 0.2s, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)"
+            : "none",
         boxShadow: isDragging
           ? "0 35px 65px rgba(0,0,0,0.65)"
           : "0 18px 40px rgba(0,0,0,0.55)",
@@ -139,14 +139,15 @@ export function DraggableWindow({
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
     >
-      <div className="flex h-5 items-center justify-between px-3">
-        <span className="text-[10px] uppercase tracking-[0.3em] text-neutral-400">
+      <div className="flex h-5 items-center justify-between px-2">
+        {/* TODO: mess around with the tracking value. */}
+        <span className="text-[10px] uppercase tracking-[0.1em] text-neutral-400">
           {title}
         </span>
         <GripHorizontal className="h-4 w-4 text-neutral-600" />
       </div>
 
-      <div className="relative overflow-hidden p-1.5">
+      <div className="relative overflow-hidden px-1.5 pb-1.5">
         {imageUrl?.endsWith(".mp4") ? (
           <LazyVideo
             src={imageUrl}
