@@ -37,6 +37,7 @@ const RAW_WINDOWS = [
   { imageUrl: "/garden/18.webp" },
   { imageUrl: "/garden/19.webp" },
   { imageUrl: "/garden/20.webp" },
+  { imageUrl: "/garden/21.webp" },
 ];
 
 // Helper function to load image dimensions
