@@ -26,7 +26,7 @@ export function DitherImage({
         alt={alt}
         width={width}
         height={height}
-        className="object-contain w-full h-auto grayscale contrast-125 brightness-90 group-hover:contrast-100 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-500 ease-out"
+        className="h-auto w-full object-contain grayscale contrast-125 brightness-90 transition-[filter] duration-500 ease-out [will-change:filter] group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100 motion-reduce:transition-none"
       />
       {/* optional Scanline overlay. idk if should remove. I kind of like it */}
       <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] z-20 opacity-40" />
