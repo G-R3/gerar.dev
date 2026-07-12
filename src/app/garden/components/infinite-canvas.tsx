@@ -19,6 +19,7 @@ interface WindowData {
 const RAW_WINDOWS = [
   { imageUrl: "/garden/1.webp" },
   { imageUrl: "/garden/2.gif" },
+  { imageUrl: "/garden/21.webp" },
   { imageUrl: "/garden/3.webp" },
   { imageUrl: "/garden/4.webp" },
   { imageUrl: "/garden/5.webp" },
@@ -37,8 +38,32 @@ const RAW_WINDOWS = [
   { imageUrl: "/garden/18.webp" },
   { imageUrl: "/garden/19.webp" },
   { imageUrl: "/garden/20.webp" },
-  { imageUrl: "/garden/21.webp" },
 ];
+
+const LAYOUT_SEED = 12345;
+
+function createSeededRandom(seed: number) {
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+
+    let value = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    value ^= value + Math.imul(value ^ (value >>> 7), 61 | value);
+
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function shuffle<T>(items: T[], random: () => number): T[] {
+  const result = [...items];
+
+  for (let index = result.length - 1; index > 0; index--) {
+    const target = Math.floor(random() * (index + 1));
+    [result[index], result[target]] = [result[target], result[index]];
+  }
+
+  return result;
+}
 
 // Helper function to load image dimensions
 function loadImageDimensions(
@@ -87,6 +112,7 @@ function generateLayout(
   dimensions: Array<{ width: number; height: number }>,
 ): WindowData[] {
   const placed: WindowData[] = [];
+  const random = createSeededRandom(LAYOUT_SEED);
   // Create windows with ids and dimensions based on original array index
   const windowsWithIds = windows.map((win, index) => ({
     ...win,
@@ -94,8 +120,8 @@ function generateLayout(
     width: dimensions[index].width,
     height: dimensions[index].height,
   }));
-  // Shuffle windows for random distribution
-  const shuffled = [...windowsWithIds].sort(() => Math.random() - 0.5);
+  // Shuffle windows deterministically so the layout remains stable across reloads.
+  const shuffled = shuffle(windowsWithIds, random);
 
   // Spiral parameters
   const angleStep = 0.5;
@@ -114,8 +140,8 @@ function generateLayout(
     while (collision) {
       // Convert polar to cartesian
       // Add some random jitter to make it look less perfect
-      const jitterX = (Math.random() - 0.5) * 20;
-      const jitterY = (Math.random() - 0.5) * 20;
+      const jitterX = (random() - 0.5) * 20;
+      const jitterY = (random() - 0.5) * 20;
 
       x = radius * Math.cos(angle) + jitterX - win.width / 2;
       y = radius * Math.sin(angle) + jitterY - win.height / 2;
