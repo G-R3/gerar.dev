@@ -436,7 +436,7 @@ export function InfiniteCanvas() {
             <Dialog.Backdrop className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm transition-all duration-300" />
             <Dialog.Popup className="fixed left-1/2 top-1/2 z-[61] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950/90 p-10 text-neutral-200 shadow-[0_30px_60px_rgba(0,0,0,0.7)] backdrop-blur-lg focus:outline-none">
               <div className="space-y-3 text-left">
-                <Dialog.Title className="text-[10px] uppercase tracking-[0.5em] text-neutral-500">
+                <Dialog.Title className="text-[10px] uppercase tracking-[0.5em] text-neutral-400/75">
                   Digital Garden
                 </Dialog.Title>
                 <h1 className="text-4xl font-serif italic tracking-tight text-white mix-blend-difference lg:text-5xl">
