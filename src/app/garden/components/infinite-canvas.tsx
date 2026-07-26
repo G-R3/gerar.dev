@@ -32,7 +32,6 @@ const ZOOM_STEP = 0.1;
 const WHEEL_ZOOM_SENSITIVITY = 0.001;
 const GRID_SIZE = 40;
 const WORLD_ORIGIN_X = 0.5;
-const COLLAGE_POSITION_SCALE = 0.95;
 const MOMENTUM_FRICTION = 0.95;
 const MOMENTUM_STOP_THRESHOLD = 0.1;
 
@@ -96,7 +95,7 @@ const MediaTile = memo(function MediaTile({ media }: { media: GardenMedia }) {
       className="absolute flex flex-col overflow-hidden rounded-md border border-white/10 bg-neutral-900/70 text-white shadow-[0_18px_40px_rgba(0,0,0,0.55)] backdrop-blur-md"
       style={{
         width: size.width,
-        transform: `translate(${media.x * COLLAGE_POSITION_SCALE}px, ${media.y * COLLAGE_POSITION_SCALE}px)`,
+        transform: `translate(${media.x}px, ${media.y}px)`,
       }}
     >
       <div className="flex h-5 items-center justify-between px-2">
@@ -126,14 +125,8 @@ const MediaTile = memo(function MediaTile({ media }: { media: GardenMedia }) {
             draggable={false}
             height={size.height}
             loading="eager"
-            quality={90}
-            sizes="1000px"
             src={media.src}
-            // GIFs must bypass the optimizer or they lose their animation. Stills
-            // go through it: they render at a fraction of their natural size, and
-            // a high-quality server-side downscale avoids the moire that the
-            // compositor produces when it shrinks fine detail itself.
-            unoptimized={media.type === "gif"}
+            unoptimized
             width={size.width}
           />
         )}
