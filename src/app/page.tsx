@@ -143,7 +143,6 @@ export default function Home() {
       </section>
 
       <section className="w-full lg:w-1/2 relative flex items-center justify-center">
-        <div className="scanlines absolute inset-0 z-20 pointer-events-none opacity-20"></div>
         <MasonryGallery media={HOME_GARDEN_MEDIA} />
       </section>
     </main>

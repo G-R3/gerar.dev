@@ -17,7 +17,6 @@ export function MasonryGallery({ media }: MasonryGalleryProps) {
             height={item.height}
             className="w-full"
           />
-          <div className="absolute inset-0 bg-green-500/10 opacity-0 group-hover:opacity-100 mix-blend-color-dodge transition-opacity duration-100 pointer-events-none" />
         </div>
       ))}
     </div>
