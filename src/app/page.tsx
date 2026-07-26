@@ -1,20 +1,8 @@
 import Link from "next/link";
 import { MasonryGallery } from "@/components/masonry-gallery";
+import { HOME_GARDEN_MEDIA } from "@/lib/garden-media";
 
 export default function Home() {
-  const images = [
-    "/garden/1.webp",
-    "/garden/5.webp",
-    "/garden/6.png",
-    "/garden/7.webp",
-    "/garden/14.webp",
-    "/garden/4.webp",
-    "/garden/2.gif",
-    "/garden/3.webp",
-    // "/garden/11.webp",
-    "/garden/11.webp",
-  ];
-
   return (
     <main className="min-h-screen w-full flex flex-col lg:flex-row">
       <section className="w-full lg:w-1/2 p-8 lg:p-16 flex flex-col justify-between bg-black z-10 relative">
@@ -156,7 +144,7 @@ export default function Home() {
 
       <section className="w-full lg:w-1/2 relative flex items-center justify-center">
         <div className="scanlines absolute inset-0 z-20 pointer-events-none opacity-20"></div>
-        <MasonryGallery images={images} />
+        <MasonryGallery media={HOME_GARDEN_MEDIA} />
       </section>
     </main>
   );

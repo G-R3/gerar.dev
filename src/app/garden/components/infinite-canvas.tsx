@@ -1,368 +1,365 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type PointerEvent,
+} from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Dialog } from "@base-ui-components/react/dialog";
-import { DraggableWindow } from "./draggable-window";
-import { Plus, Minus, RotateCcw, House, Info } from "lucide-react";
+import {
+  GripHorizontal,
+  House,
+  Info,
+  Minus,
+  Plus,
+  RotateCcw,
+} from "lucide-react";
+import {
+  GARDEN_MEDIA,
+  getGardenMediaSize,
+  type GardenMedia,
+} from "@/lib/garden-media";
 
-interface WindowData {
-  id: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  imageUrl: string;
-  zIndex: number;
+const INITIAL_SCALE = 0.4;
+const MIN_SCALE = 0.4;
+const MAX_SCALE = 2;
+const ZOOM_STEP = 0.1;
+const WHEEL_ZOOM_SENSITIVITY = 0.001;
+const GRID_SIZE = 40;
+const WORLD_ORIGIN_X = 0.5;
+const COLLAGE_POSITION_SCALE = 0.95;
+const MOMENTUM_FRICTION = 0.95;
+const MOMENTUM_STOP_THRESHOLD = 0.1;
+
+type Point = { x: number; y: number };
+type Viewport = Point & { scale: number };
+
+function clampScale(scale: number) {
+  return Math.min(Math.max(scale, MIN_SCALE), MAX_SCALE);
 }
 
-const RAW_WINDOWS = [
-  { imageUrl: "/garden/1.webp" },
-  { imageUrl: "/garden/2.gif" },
-  { imageUrl: "/garden/21.webp" },
-  { imageUrl: "/garden/3.webp" },
-  { imageUrl: "/garden/4.webp" },
-  { imageUrl: "/garden/5.webp" },
-  { imageUrl: "/garden/6.png" },
-  { imageUrl: "/garden/7.webp" },
-  { imageUrl: "/garden/8.webp" },
-  { imageUrl: "/garden/9.webp" },
-  { imageUrl: "/garden/10.webp" },
-  { imageUrl: "/garden/11.webp" },
-  { imageUrl: "/garden/12.webp" },
-  { imageUrl: "/garden/13.webp" },
-  { imageUrl: "/garden/14.webp" },
-  { imageUrl: "/garden/15.webp" },
-  { imageUrl: "/garden/16.webp" },
-  { imageUrl: "/garden/17.webp" },
-  { imageUrl: "/garden/18.webp" },
-  { imageUrl: "/garden/19.webp" },
-  { imageUrl: "/garden/20.webp" },
-];
+function getDistance(first: Point, second: Point) {
+  return Math.hypot(second.x - first.x, second.y - first.y);
+}
 
-const LAYOUT_SEED = 12345;
-
-function createSeededRandom(seed: number) {
-  return () => {
-    seed |= 0;
-    seed = (seed + 0x6d2b79f5) | 0;
-
-    let value = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-    value ^= value + Math.imul(value ^ (value >>> 7), 61 | value);
-
-    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+function getMidpoint(first: Point, second: Point): Point {
+  return {
+    x: (first.x + second.x) / 2,
+    y: (first.y + second.y) / 2,
   };
 }
 
-function shuffle<T>(items: T[], random: () => number): T[] {
-  const result = [...items];
+function getCenterOffset(element: HTMLElement, point: Point): Point {
+  const rect = element.getBoundingClientRect();
 
-  for (let index = result.length - 1; index > 0; index--) {
-    const target = Math.floor(random() * (index + 1));
-    [result[index], result[target]] = [result[target], result[index]];
+  return {
+    x: point.x - (rect.left + rect.width * WORLD_ORIGIN_X),
+    y: point.y - (rect.top + rect.height / 2),
+  };
+}
+
+function snapToPixel(value: number) {
+  return Math.round(value);
+}
+
+// Deliberate camera position, independent of the hand-authored media layout.
+const INITIAL_VIEWPORT: Viewport = { x: -58, y: -27, scale: INITIAL_SCALE };
+
+// Zooms so the world point under `anchor` stays under `anchor`.
+function zoomViewport(
+  viewport: Viewport,
+  anchor: Point,
+  targetScale: number,
+): Viewport {
+  const scale = clampScale(targetScale);
+  const worldX = (anchor.x - viewport.x) / viewport.scale;
+  const worldY = (anchor.y - viewport.y) / viewport.scale;
+
+  return {
+    x: anchor.x - worldX * scale,
+    y: anchor.y - worldY * scale,
+    scale,
+  };
+}
+
+const MediaTile = memo(function MediaTile({ media }: { media: GardenMedia }) {
+  const size = getGardenMediaSize(media);
+  const fileName = media.src.split("/").pop();
+
+  return (
+    <div
+      className="absolute flex flex-col overflow-hidden rounded-md border border-white/10 bg-neutral-900/70 text-white shadow-[0_18px_40px_rgba(0,0,0,0.55)] backdrop-blur-md"
+      style={{
+        width: size.width,
+        transform: `translate(${media.x * COLLAGE_POSITION_SCALE}px, ${media.y * COLLAGE_POSITION_SCALE}px)`,
+      }}
+    >
+      <div className="flex h-5 items-center justify-between px-2">
+        <span className="text-[10px] uppercase tracking-[0.1em] text-neutral-400">
+          {fileName}
+        </span>
+        <GripHorizontal className="h-4 w-4 text-neutral-600" />
+      </div>
+      <div className="px-1.5 pb-1.5">
+        {media.type === "video" ? (
+          <video
+            aria-hidden="true"
+            autoPlay
+            className="block h-auto w-full rounded-sm"
+            height={size.height}
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            src={media.src}
+            width={size.width}
+          />
+        ) : (
+          <Image
+            alt=""
+            className="block h-auto w-full rounded-sm"
+            draggable={false}
+            height={size.height}
+            loading="eager"
+            quality={90}
+            sizes="1000px"
+            src={media.src}
+            // GIFs must bypass the optimizer or they lose their animation. Stills
+            // go through it: they render at a fraction of their natural size, and
+            // a high-quality server-side downscale avoids the moire that the
+            // compositor produces when it shrinks fine detail itself.
+            unoptimized={media.type === "gif"}
+            width={size.width}
+          />
+        )}
+      </div>
+    </div>
+  );
+});
+
+export function InfiniteCanvas() {
+  const [viewport, setViewport] = useState<Viewport>(INITIAL_VIEWPORT);
+  const viewportRef = useRef(viewport);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const pointersRef = useRef(new Map<number, Point>());
+  const panRef = useRef<{ startPoint: Point; startViewport: Viewport } | null>(
+    null,
+  );
+  const pinchRef = useRef<
+    | {
+        distance: number;
+        anchor: Point;
+        viewport: Viewport;
+      }
+    | undefined
+  >(undefined);
+  const velocityRef = useRef<Point>({ x: 0, y: 0 });
+  const momentumFrameRef = useRef<number | undefined>(undefined);
+
+  const updateViewport = useCallback((nextViewport: Viewport) => {
+    viewportRef.current = nextViewport;
+    setViewport(nextViewport);
+  }, []);
+
+  function cancelMomentum() {
+    if (momentumFrameRef.current !== undefined) {
+      cancelAnimationFrame(momentumFrameRef.current);
+      momentumFrameRef.current = undefined;
+    }
   }
 
-  return result;
-}
+  function startMomentum() {
+    cancelMomentum();
 
-// Helper function to load image dimensions
-function loadImageDimensions(
-  src: string,
-): Promise<{ width: number; height: number }> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => {
-      resolve({ width: img.naturalWidth, height: img.naturalHeight });
-    };
-    img.onerror = reject;
-    img.src = src;
-  });
-}
+    function animate() {
+      const velocity = velocityRef.current;
+      const nextVelocity = {
+        x: velocity.x * MOMENTUM_FRICTION,
+        y: velocity.y * MOMENTUM_FRICTION,
+      };
 
-// Helper function to load video dimensions
-function loadVideoDimensions(
-  src: string,
-): Promise<{ width: number; height: number }> {
-  return new Promise((resolve, reject) => {
-    const video = document.createElement("video");
-    video.onloadedmetadata = () => {
-      resolve({ width: video.videoWidth, height: video.videoHeight });
-    };
-    video.onerror = reject;
-    video.src = src;
-  });
-}
+      velocityRef.current = nextVelocity;
 
-// Load dimensions for all media files
-async function loadAllMediaDimensions(
-  windows: typeof RAW_WINDOWS,
-): Promise<Array<{ width: number; height: number }>> {
-  const dimensionPromises = windows.map((win) => {
-    if (win.imageUrl.endsWith(".mp4")) {
-      return loadVideoDimensions(win.imageUrl);
-    } else {
-      return loadImageDimensions(win.imageUrl);
-    }
-  });
-  return Promise.all(dimensionPromises);
-}
-
-function generateLayout(
-  windows: typeof RAW_WINDOWS,
-  dimensions: Array<{ width: number; height: number }>,
-): WindowData[] {
-  const placed: WindowData[] = [];
-  const random = createSeededRandom(LAYOUT_SEED);
-  // Create windows with ids and dimensions based on original array index
-  const windowsWithIds = windows.map((win, index) => ({
-    ...win,
-    id: String(index),
-    width: dimensions[index].width,
-    height: dimensions[index].height,
-  }));
-  // Shuffle windows deterministically so the layout remains stable across reloads.
-  const shuffled = shuffle(windowsWithIds, random);
-
-  // Spiral parameters
-  const angleStep = 0.5;
-  const spiralGrowth = 50;
-  const padding = 40; // Space between windows
-
-  for (let i = 0; i < shuffled.length; i++) {
-    const win = shuffled[i];
-    let angle = 0;
-    let radius = 0;
-    let x = 0;
-    let y = 0;
-    let collision = true;
-
-    // Try to place window
-    while (collision) {
-      // Convert polar to cartesian
-      // Add some random jitter to make it look less perfect
-      const jitterX = (random() - 0.5) * 20;
-      const jitterY = (random() - 0.5) * 20;
-
-      x = radius * Math.cos(angle) + jitterX - win.width / 2;
-      y = radius * Math.sin(angle) + jitterY - win.height / 2;
-
-      // Check collision with all placed windows
-      collision = placed.some((p) => {
-        // Simple AABB collision detection with padding
-        return (
-          x < p.x + p.width + padding &&
-          x + win.width + padding > p.x &&
-          y < p.y + p.height + padding &&
-          y + win.height + padding > p.y
-        );
-      });
-
-      if (collision) {
-        angle += angleStep;
-        // Archimedean spiral: r = a + b * theta
-        radius = spiralGrowth * angle;
+      if (
+        Math.abs(nextVelocity.x) < MOMENTUM_STOP_THRESHOLD &&
+        Math.abs(nextVelocity.y) < MOMENTUM_STOP_THRESHOLD
+      ) {
+        momentumFrameRef.current = undefined;
+        return;
       }
+
+      const currentViewport = viewportRef.current;
+      updateViewport({
+        ...currentViewport,
+        x: currentViewport.x + nextVelocity.x,
+        y: currentViewport.y + nextVelocity.y,
+      });
+      momentumFrameRef.current = requestAnimationFrame(animate);
     }
 
-    placed.push({
-      ...win,
-      x,
-      y,
-      zIndex: i + 1,
+    momentumFrameRef.current = requestAnimationFrame(animate);
+  }
+
+  function startPan(point: Point) {
+    panRef.current = {
+      startPoint: point,
+      startViewport: viewportRef.current,
+    };
+    pinchRef.current = undefined;
+    velocityRef.current = { x: 0, y: 0 };
+  }
+
+  function startPinch() {
+    const points = [...pointersRef.current.values()];
+    if (points.length < 2 || !canvasRef.current) return;
+
+    const [first, second] = points;
+    pinchRef.current = {
+      distance: getDistance(first, second),
+      anchor: getCenterOffset(canvasRef.current, getMidpoint(first, second)),
+      viewport: viewportRef.current,
+    };
+    panRef.current = null;
+    velocityRef.current = { x: 0, y: 0 };
+  }
+
+  // Zooms around the middle of the viewport, which is the world origin's
+  // anchor, so no measurement is needed.
+  function zoomFromCenter(targetScale: number) {
+    const currentViewport = viewportRef.current;
+    updateViewport(zoomViewport(currentViewport, { x: 0, y: 0 }, targetScale));
+  }
+
+  function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
+    event.currentTarget.setPointerCapture(event.pointerId);
+    pointersRef.current.set(event.pointerId, {
+      x: event.clientX,
+      y: event.clientY,
+    });
+    cancelMomentum();
+
+    if (pointersRef.current.size === 1) {
+      startPan({ x: event.clientX, y: event.clientY });
+    } else {
+      startPinch();
+    }
+  }
+
+  function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
+    if (!pointersRef.current.has(event.pointerId)) return;
+
+    const point = { x: event.clientX, y: event.clientY };
+    const previousPoint = pointersRef.current.get(event.pointerId)!;
+    pointersRef.current.set(event.pointerId, point);
+
+    if (pinchRef.current) {
+      const points = [...pointersRef.current.values()];
+      if (points.length < 2 || !canvasRef.current) return;
+
+      const [first, second] = points;
+      const pinch = pinchRef.current;
+      const anchor = getCenterOffset(
+        canvasRef.current,
+        getMidpoint(first, second),
+      );
+      const scale = clampScale(
+        pinch.viewport.scale * (getDistance(first, second) / pinch.distance),
+      );
+      // Anchor on the gesture's starting midpoint so the pinch zooms around the
+      // content the fingers grabbed, then follow the midpoint as it drifts.
+      const zoomed = zoomViewport(pinch.viewport, pinch.anchor, scale);
+
+      updateViewport({
+        x: zoomed.x + (anchor.x - pinch.anchor.x),
+        y: zoomed.y + (anchor.y - pinch.anchor.y),
+        scale: zoomed.scale,
+      });
+      return;
+    }
+
+    if (!panRef.current) return;
+
+    velocityRef.current = {
+      x: point.x - previousPoint.x,
+      y: point.y - previousPoint.y,
+    };
+
+    const { startPoint, startViewport } = panRef.current;
+    updateViewport({
+      ...startViewport,
+      x: startViewport.x + (point.x - startPoint.x),
+      y: startViewport.y + (point.y - startPoint.y),
     });
   }
 
-  return placed;
-}
+  function handlePointerEnd(
+    event: PointerEvent<HTMLDivElement>,
+    shouldApplyMomentum: boolean,
+  ) {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
 
-export function InfiniteCanvas() {
-  const [scale, setScale] = useState(0.75);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
-  const [isDraggingCanvas, setIsDraggingCanvas] = useState(false);
-  const [windows, setWindows] = useState<WindowData[]>([]);
-  const [maxZIndex, setMaxZIndex] = useState(RAW_WINDOWS.length);
-  const [loadedCount, setLoadedCount] = useState(0);
-  const totalItems = RAW_WINDOWS.length;
+    const wasPanning = panRef.current !== null;
+    pointersRef.current.delete(event.pointerId);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dragStartRef = useRef({ x: 0, y: 0 });
-  const initialOffsetRef = useRef({ x: 0, y: 0 });
+    if (pointersRef.current.size === 0) {
+      panRef.current = null;
+      pinchRef.current = undefined;
 
-  const lastMousePosRef = useRef({ x: 0, y: 0 });
-  const velocityRef = useRef({ x: 0, y: 0 });
-  const rAFRef = useRef<number | null>(null);
+      if (wasPanning && shouldApplyMomentum) startMomentum();
+      return;
+    }
+
+    if (pointersRef.current.size === 1) {
+      startPan([...pointersRef.current.values()][0]);
+      return;
+    }
+
+    startPinch();
+  }
+
+  // Registered natively because React attaches `wheel` passively, which makes
+  // preventDefault a no-op and lets trackpad pinch zoom the whole page.
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+
+      const currentViewport = viewportRef.current;
+      updateViewport(
+        zoomViewport(
+          currentViewport,
+          getCenterOffset(canvas, { x: event.clientX, y: event.clientY }),
+          currentViewport.scale * (1 - event.deltaY * WHEEL_ZOOM_SENSITIVITY),
+        ),
+      );
+    };
+
+    canvas.addEventListener("wheel", handleWheel, { passive: false });
+    return () => canvas.removeEventListener("wheel", handleWheel);
+  }, [updateViewport]);
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function initializeLayout() {
-      try {
-        // Load all media dimensions
-        const dimensions = await loadAllMediaDimensions(RAW_WINDOWS);
-        console.log(dimensions);
-        if (cancelled) return;
-
-        // Scale dimensions to fit nicely on screen (max width ~400px, maintaining aspect ratio)
-        // Note: Window header is 20px (h-5), so we add that to the height
-        const maxWidth = 500;
-        const HEADER_HEIGHT = 20; // h-5 in Tailwind = 20px
-        const scaledDimensions = dimensions.map((dim) => {
-          const aspectRatio = dim.width / dim.height;
-          let width = dim.width;
-          let height = dim.height;
-
-          if (width > maxWidth) {
-            width = maxWidth;
-            height = width / aspectRatio;
-          }
-
-          // Add header height to window height so content area matches image dimensions
-          return {
-            width: Math.round(width),
-            height: Math.round(height) + HEADER_HEIGHT,
-          };
-        });
-
-        const layout = generateLayout(RAW_WINDOWS, scaledDimensions);
-        setWindows(layout);
-
-        const initialOffset = {
-          x: window.innerWidth / 2,
-          y: window.innerHeight / 2,
-        };
-        setOffset(initialOffset);
-        initialOffsetRef.current = initialOffset;
-      } catch (error) {
-        console.error("Failed to load media dimensions:", error);
-        // Fallback to default dimensions if loading fails
-        const defaultDimensions = RAW_WINDOWS.map(() => ({
-          width: 300,
-          height: 300,
-        }));
-        const layout = generateLayout(RAW_WINDOWS, defaultDimensions);
-        setWindows(layout);
-      }
-    }
-
-    initializeLayout();
-
     return () => {
-      cancelled = true;
-      if (rAFRef.current) {
-        cancelAnimationFrame(rAFRef.current);
+      if (momentumFrameRef.current !== undefined) {
+        cancelAnimationFrame(momentumFrameRef.current);
       }
     };
   }, []);
 
-  const applyMomentum = useCallback(() => {
-    const friction = 0.95;
-    const stopThreshold = 0.1;
-
-    const animate = () => {
-      velocityRef.current.x *= friction;
-      velocityRef.current.y *= friction;
-
-      setOffset((prev) => ({
-        x: prev.x + velocityRef.current.x,
-        y: prev.y + velocityRef.current.y,
-      }));
-
-      if (
-        Math.abs(velocityRef.current.x) > stopThreshold ||
-        Math.abs(velocityRef.current.y) > stopThreshold
-      ) {
-        rAFRef.current = requestAnimationFrame(animate);
-      } else {
-        rAFRef.current = null;
-      }
-    };
-
-    rAFRef.current = requestAnimationFrame(animate);
-  }, []);
-
-  const handleCanvasPointerDown = (e: React.PointerEvent) => {
-    if (
-      e.target === containerRef.current ||
-      (e.target as HTMLElement).dataset.canvasBackground
-    ) {
-      if (rAFRef.current) {
-        cancelAnimationFrame(rAFRef.current);
-        rAFRef.current = null;
-      }
-
-      setIsDraggingCanvas(true);
-      dragStartRef.current = {
-        x: e.clientX - offset.x,
-        y: e.clientY - offset.y,
-      };
-      lastMousePosRef.current = { x: e.clientX, y: e.clientY };
-      velocityRef.current = { x: 0, y: 0 };
-      (e.target as HTMLElement).setPointerCapture(e.pointerId);
-    }
+  const renderedViewport = {
+    ...viewport,
+    x: snapToPixel(viewport.x),
+    y: snapToPixel(viewport.y),
   };
-
-  const handleCanvasPointerMove = (e: React.PointerEvent) => {
-    if (isDraggingCanvas) {
-      const deltaX = e.clientX - lastMousePosRef.current.x;
-      const deltaY = e.clientY - lastMousePosRef.current.y;
-      lastMousePosRef.current = { x: e.clientX, y: e.clientY };
-
-      velocityRef.current = { x: deltaX, y: deltaY };
-
-      setOffset({
-        x: e.clientX - dragStartRef.current.x,
-        y: e.clientY - dragStartRef.current.y,
-      });
-    }
-  };
-
-  const handleCanvasPointerUp = (e: React.PointerEvent) => {
-    if (isDraggingCanvas) {
-      setIsDraggingCanvas(false);
-      (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-      applyMomentum();
-    }
-  };
-
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-
-    const zoomSensitivity = 0.001;
-    const delta = -e.deltaY * zoomSensitivity;
-
-    const newScale = Math.min(Math.max(0.5, scale * (1 + delta)), 2);
-
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-
-    const canvasX = (mouseX - offset.x) / scale;
-    const canvasY = (mouseY - offset.y) / scale;
-
-    const newOffsetX = mouseX - canvasX * newScale;
-    const newOffsetY = mouseY - canvasY * newScale;
-
-    setScale(newScale);
-    setOffset({ x: newOffsetX, y: newOffsetY });
-  };
-
-  const updateWindowPosition = (id: string, x: number, y: number) => {
-    setWindows((prev) => prev.map((w) => (w.id === id ? { ...w, x, y } : w)));
-  };
-
-  const bringToFront = (id: string) => {
-    const newMax = maxZIndex + 1;
-    setMaxZIndex(newMax);
-    setWindows((windows) =>
-      windows.map((w) => (w.id === id ? { ...w, zIndex: newMax } : w)),
-    );
-  };
-
-  const handleMediaLoad = () => {
-    setLoadedCount((prev) => Math.min(prev + 1, totalItems));
-  };
-
-  const loadingProgress = totalItems > 0 ? (loadedCount / totalItems) * 100 : 0;
-  const isLoading = loadedCount < totalItems;
 
   return (
     <div className="relative h-full w-full overflow-hidden bg-black text-white">
@@ -380,56 +377,43 @@ export function InfiniteCanvas() {
       </div>
 
       <div className="absolute bottom-6 right-6 z-50 flex items-center gap-2 rounded-xl border border-neutral-800 bg-neutral-950/70 px-3 py-2 shadow-[0_20px_45px_rgba(0,0,0,0.45)] backdrop-blur">
-        {isLoading && (
-          <div className="flex items-center gap-3 pr-2">
-            <div className="flex flex-col gap-0.5 min-w-[100px]">
-              <div className="text-[10px] font-medium text-neutral-400">
-                {loadedCount}/{totalItems} loaded
-              </div>
-              <div className="h-1 w-full overflow-hidden rounded-full bg-neutral-900">
-                <div
-                  className="h-full origin-left bg-white transition-all duration-300 ease-out"
-                  style={{ width: `${loadingProgress}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-        {isLoading && <div className="h-6 w-px bg-neutral-800" />}
         <div className="flex items-center justify-center px-2">
           <div className="text-center text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-400">
-            {(scale * 100).toFixed(0)}%
+            {(viewport.scale * 100).toFixed(0)}%
           </div>
         </div>
         <div className="h-6 w-px bg-neutral-800" />
         <button
-          onClick={() => setScale((s) => Math.min(s + 0.1, 2))}
-          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
           aria-label="Zoom in"
+          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
+          onClick={() => zoomFromCenter(viewportRef.current.scale + ZOOM_STEP)}
         >
           <Plus className="h-4 w-4" />
         </button>
         <button
-          onClick={() => setScale((s) => Math.max(s - 0.1, 0.5))}
-          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
           aria-label="Zoom out"
+          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
+          onClick={() => zoomFromCenter(viewportRef.current.scale - ZOOM_STEP)}
         >
           <Minus className="h-4 w-4" />
         </button>
         <div className="h-6 w-px bg-neutral-800" />
         <button
-          onClick={() => {
-            setScale(0.75);
-            setOffset(initialOffsetRef.current);
-          }}
-          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
           aria-label="Reset view"
+          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
+          onClick={() => {
+            cancelMomentum();
+            updateViewport(INITIAL_VIEWPORT);
+          }}
         >
           <RotateCcw className="h-4 w-4" />
         </button>
         <div className="h-6 w-px bg-neutral-800" />
         <Dialog.Root>
-          <Dialog.Trigger className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black">
+          <Dialog.Trigger
+            aria-label="About this garden"
+            className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
+          >
             <Info className="h-4 w-4" />
           </Dialog.Trigger>
           <Dialog.Portal>
@@ -456,52 +440,41 @@ export function InfiniteCanvas() {
         </Dialog.Root>
         <div className="h-6 w-px bg-neutral-800" />
         <Link
-          href="/"
-          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
           aria-label="Back to home"
+          className="flex items-center justify-center rounded-md border border-transparent p-1 text-neutral-300 transition-all hover:border-white/20 hover:bg-white hover:text-black"
+          href="/"
         >
           <House className="h-4 w-4" />
         </Link>
       </div>
 
       <div
-        ref={containerRef}
-        className="h-full w-full cursor-grab touch-none active:cursor-grabbing"
-        onPointerDown={handleCanvasPointerDown}
-        onPointerMove={handleCanvasPointerMove}
-        onPointerUp={handleCanvasPointerUp}
-        onPointerLeave={handleCanvasPointerUp}
-        onWheel={handleWheel}
-        data-canvas-background="true"
+        aria-label="Interactive moodboard"
+        className="h-full w-full touch-none cursor-grab active:cursor-grabbing"
+        onPointerCancel={(event) => handlePointerEnd(event, false)}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={(event) => handlePointerEnd(event, true)}
+        ref={canvasRef}
+        role="application"
         style={{
           backgroundImage:
             "radial-gradient(circle, #88888820 1px, transparent 1px)",
-          backgroundSize: `${40 * scale}px ${40 * scale}px`,
-          backgroundPosition: `${offset.x}px ${offset.y}px`,
+          backgroundPosition: `calc(${WORLD_ORIGIN_X * 100}% + ${renderedViewport.x}px) calc(50% + ${renderedViewport.y}px)`,
+          backgroundSize: `${GRID_SIZE * viewport.scale}px ${GRID_SIZE * viewport.scale}px`,
         }}
       >
         <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2"
           style={{
-            transform: `translate(${offset.x}px, ${offset.y}px) scale(${scale})`,
+            left: `${WORLD_ORIGIN_X * 100}%`,
+            transform: `translate(${renderedViewport.x}px, ${renderedViewport.y}px) scale(${viewport.scale})`,
             transformOrigin: "0 0",
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            pointerEvents: "none",
           }}
         >
-          {windows.map((window) => (
-            <DraggableWindow
-              key={window.id}
-              {...window}
-              title={`Frame ${parseInt(window.id) + 1}`}
-              scale={scale}
-              onDrag={(x, y) => updateWindowPosition(window.id, x, y)}
-              onFocus={() => bringToFront(window.id)}
-              onLoad={handleMediaLoad}
-            />
+          {GARDEN_MEDIA.map((media) => (
+            <MediaTile key={media.id} media={media} />
           ))}
         </div>
       </div>
