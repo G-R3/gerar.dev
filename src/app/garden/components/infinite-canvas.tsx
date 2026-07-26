@@ -25,7 +25,7 @@ import {
   type GardenMedia,
 } from "@/lib/garden-media";
 
-const INITIAL_SCALE = 0.4;
+const INITIAL_SCALE = 0.75;
 const MIN_SCALE = 0.4;
 const MAX_SCALE = 2;
 const ZOOM_STEP = 0.1;
@@ -67,7 +67,7 @@ function snapToPixel(value: number) {
 }
 
 // Deliberate camera position, independent of the hand-authored media layout.
-const INITIAL_VIEWPORT: Viewport = { x: -58, y: -27, scale: INITIAL_SCALE };
+const INITIAL_VIEWPORT: Viewport = { x: -120, y: -27, scale: INITIAL_SCALE };
 
 // Zooms so the world point under `anchor` stays under `anchor`.
 function zoomViewport(
@@ -92,44 +92,49 @@ const MediaTile = memo(function MediaTile({ media }: { media: GardenMedia }) {
 
   return (
     <div
-      className="absolute flex flex-col overflow-hidden rounded-md border border-white/10 bg-neutral-900/70 text-white shadow-[0_18px_40px_rgba(0,0,0,0.55)] backdrop-blur-md"
+      className="absolute"
       style={{
         width: size.width,
         transform: `translate(${media.x}px, ${media.y}px)`,
       }}
     >
-      <div className="flex h-5 items-center justify-between px-2">
-        <span className="text-[10px] uppercase tracking-[0.1em] text-neutral-400">
-          {fileName}
-        </span>
-        <GripHorizontal className="h-4 w-4 text-neutral-600" />
-      </div>
-      <div className="px-1.5 pb-1.5">
-        {media.type === "video" ? (
-          <video
-            aria-hidden="true"
-            autoPlay
-            className="block h-auto w-full rounded-sm"
-            height={size.height}
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            src={media.src}
-            width={size.width}
-          />
-        ) : (
-          <Image
-            alt=""
-            className="block h-auto w-full rounded-sm"
-            draggable={false}
-            height={size.height}
-            loading="eager"
-            src={media.src}
-            unoptimized
-            width={size.width}
-          />
-        )}
+      <div
+        className="flex scale-90 flex-col overflow-hidden rounded-md border border-white/10 bg-neutral-900/70 text-white opacity-0 shadow-[0_18px_40px_rgba(0,0,0,0.55)] backdrop-blur-md transition-[opacity,scale] duration-[600ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] data-[visible=true]:scale-100 data-[visible=true]:opacity-100 motion-reduce:scale-100 motion-reduce:opacity-100 motion-reduce:transition-none"
+        data-garden-tile
+      >
+        <div className="flex h-5 items-center justify-between px-2">
+          <span className="text-[10px] uppercase tracking-[0.1em] text-neutral-400">
+            {fileName}
+          </span>
+          <GripHorizontal className="h-4 w-4 text-neutral-600" />
+        </div>
+        <div className="px-1.5 pb-1.5">
+          {media.type === "video" ? (
+            <video
+              aria-hidden="true"
+              autoPlay
+              className="block h-auto w-full rounded-sm"
+              height={size.height}
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              src={media.src}
+              width={size.width}
+            />
+          ) : (
+            <Image
+              alt=""
+              className="block h-auto w-full rounded-sm"
+              draggable={false}
+              height={size.height}
+              loading="eager"
+              src={media.src}
+              unoptimized
+              width={size.width}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
@@ -339,6 +344,31 @@ export function InfiniteCanvas() {
     canvas.addEventListener("wheel", handleWheel, { passive: false });
     return () => canvas.removeEventListener("wheel", handleWheel);
   }, [updateViewport]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+
+          const tile = entry.target as HTMLElement;
+          observer.unobserve(tile);
+          requestAnimationFrame(() => {
+            tile.dataset.visible = "true";
+          });
+        }
+      },
+      { rootMargin: "100px", threshold: 0.1 },
+    );
+
+    const tiles = canvas.querySelectorAll<HTMLElement>("[data-garden-tile]");
+    tiles.forEach((tile) => observer.observe(tile));
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     return () => {

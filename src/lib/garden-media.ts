@@ -26,13 +26,13 @@ export function getGardenMediaSize({ width, height }: GardenMedia) {
 
 export const GARDEN_MEDIA = [
   {
-    id: "1",
-    src: "/garden/1.webp",
+    id: "19",
+    src: "/garden/19.webp",
     type: "image",
-    width: 604,
-    height: 604,
-    x: -1330,
-    y: -902.5,
+    width: 1500,
+    height: 1051,
+    x: -650,
+    y: -700,
   },
   {
     id: "2",
@@ -40,8 +40,8 @@ export const GARDEN_MEDIA = [
     type: "gif",
     width: 800,
     height: 600,
-    x: -684,
-    y: -779,
+    x: -1330,
+    y: -902.5,
   },
   {
     id: "3",
@@ -76,7 +76,7 @@ export const GARDEN_MEDIA = [
     type: "image",
     width: 1230,
     height: 555,
-    x: -1263.5,
+    x: -1100.5,
     y: -285,
   },
   {
@@ -85,8 +85,8 @@ export const GARDEN_MEDIA = [
     type: "image",
     width: 350,
     height: 437,
-    x: -655.5,
-    y: -247,
+    x: -500,
+    y: -100,
   },
   {
     id: "8",
@@ -94,6 +94,16 @@ export const GARDEN_MEDIA = [
     type: "image",
     width: 829,
     height: 829,
+    x: 646,
+    y: 855,
+  },
+  {
+    id: "1",
+    src: "/garden/1.webp",
+    type: "image",
+    width: 604,
+    height: 604,
+
     x: -95,
     y: -332.5,
   },
@@ -131,7 +141,7 @@ export const GARDEN_MEDIA = [
     width: 639,
     height: 424,
     x: -760,
-    y: 437,
+    y: 600,
   },
   {
     id: "13",
@@ -176,7 +186,7 @@ export const GARDEN_MEDIA = [
     width: 1024,
     height: 1024,
     x: -570,
-    y: 950,
+    y: 1000,
   },
   {
     id: "18",
@@ -186,15 +196,6 @@ export const GARDEN_MEDIA = [
     height: 500,
     x: 47.5,
     y: 893,
-  },
-  {
-    id: "19",
-    src: "/garden/19.webp",
-    type: "image",
-    width: 1500,
-    height: 1051,
-    x: 646,
-    y: 855,
   },
   {
     id: "20",
@@ -211,8 +212,8 @@ export const GARDEN_MEDIA = [
     type: "image",
     width: 1740,
     height: 1478,
-    x: 47.5,
-    y: 1140,
+    x: -1050.5,
+    y: 0,
   },
 ] satisfies readonly GardenMedia[];
 
