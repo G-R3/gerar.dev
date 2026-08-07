@@ -67,7 +67,7 @@ export default function Home() {
                   </div>
                   <div className="flex items-baseline gap-3">
                     <a
-                      href="https://github.com/G-R3/diode"
+                      href="https://diode-rust.vercel.app/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-fit border-b border-neutral-800 text-white transition-colors hover:border-white"
