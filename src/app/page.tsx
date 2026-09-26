@@ -135,11 +135,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* <footer className="mt-12 lg:mt-0 text-[10px] text-neutral-600 flex justify-between uppercase tracking-widest">
-          <span>System Status: Online</span>
-          <span>{new Date().getFullYear()} ©</span>
-        </footer> */}
       </section>
 
       <section className="w-full lg:w-1/2 relative flex items-center justify-center">

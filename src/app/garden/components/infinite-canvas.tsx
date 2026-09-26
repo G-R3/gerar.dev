@@ -31,6 +31,7 @@ const MAX_SCALE = 2;
 const ZOOM_STEP = 0.1;
 const WHEEL_ZOOM_SENSITIVITY = 0.001;
 const GRID_SIZE = 40;
+const TILE_OVERSCAN = 100;
 const WORLD_ORIGIN_X = 0.5;
 const MOMENTUM_FRICTION = 0.95;
 const MOMENTUM_STOP_THRESHOLD = 0.1;
@@ -68,6 +69,8 @@ function snapToPixel(value: number) {
 
 // Deliberate camera position, independent of the hand-authored media layout.
 const INITIAL_VIEWPORT: Viewport = { x: -120, y: -27, scale: INITIAL_SCALE };
+// The focal tile renders on the server before the viewport can be measured.
+const INITIAL_MEDIA = GARDEN_MEDIA.filter((media) => media.id === "1");
 
 // Zooms so the world point under `anchor` stays under `anchor`.
 function zoomViewport(
@@ -86,7 +89,13 @@ function zoomViewport(
   };
 }
 
-const MediaTile = memo(function MediaTile({ media }: { media: GardenMedia }) {
+const MediaTile = memo(function MediaTile({
+  media,
+  scale,
+}: {
+  media: GardenMedia;
+  scale: number;
+}) {
   const size = getGardenMediaSize(media);
   const fileName = media.src.split("/").pop();
 
@@ -101,6 +110,8 @@ const MediaTile = memo(function MediaTile({ media }: { media: GardenMedia }) {
       <div
         className="flex scale-90 flex-col overflow-hidden rounded-md border border-white/10 bg-neutral-900/70 text-white opacity-0 shadow-[0_18px_40px_rgba(0,0,0,0.55)] backdrop-blur-md transition-[opacity,scale] duration-[600ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] data-[visible=true]:scale-100 data-[visible=true]:opacity-100 motion-reduce:scale-100 motion-reduce:opacity-100 motion-reduce:transition-none"
         data-garden-tile
+        data-media-id={media.id}
+        data-visible={media.id === "1" ? "true" : undefined}
       >
         <div className="flex h-5 items-center justify-between px-2">
           <span className="text-[10px] uppercase tracking-[0.1em] text-neutral-400">
@@ -129,8 +140,9 @@ const MediaTile = memo(function MediaTile({ media }: { media: GardenMedia }) {
               draggable={false}
               height={size.height}
               loading="eager"
-              src={media.src}
-              unoptimized
+              sizes={`${Math.ceil(size.width * scale)}px`}
+              src={scale > 1 ? (media.fullSrc ?? media.src) : media.src}
+              unoptimized={media.type === "animated"}
               width={size.width}
             />
           )}
@@ -142,8 +154,13 @@ const MediaTile = memo(function MediaTile({ media }: { media: GardenMedia }) {
 
 export function InfiniteCanvas() {
   const [viewport, setViewport] = useState<Viewport>(INITIAL_VIEWPORT);
+  const [canvasSize, setCanvasSize] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
   const viewportRef = useRef(viewport);
   const canvasRef = useRef<HTMLDivElement>(null);
+  const seenTilesRef = useRef(new Set<string>());
   const pointersRef = useRef(new Map<number, Point>());
   const panRef = useRef<{ startPoint: Point; startViewport: Viewport } | null>(
     null,
@@ -158,6 +175,25 @@ export function InfiniteCanvas() {
   >(undefined);
   const velocityRef = useRef<Point>({ x: 0, y: 0 });
   const momentumFrameRef = useRef<number | undefined>(undefined);
+  // Only nearby tiles request media; the focal tile covers the server render.
+  const visibleMedia = canvasSize
+    ? GARDEN_MEDIA.filter((media) => {
+        const size = getGardenMediaSize(media);
+        const x =
+          canvasSize.width * WORLD_ORIGIN_X +
+          viewport.x +
+          media.x * viewport.scale;
+        const y = canvasSize.height / 2 + viewport.y + media.y * viewport.scale;
+
+        return (
+          x + size.width * viewport.scale > -TILE_OVERSCAN &&
+          x < canvasSize.width + TILE_OVERSCAN &&
+          y + size.height * viewport.scale > -TILE_OVERSCAN &&
+          y < canvasSize.height + TILE_OVERSCAN
+        );
+      })
+    : INITIAL_MEDIA;
+  const visibleMediaIds = visibleMedia.map((media) => media.id).join(",");
 
   const updateViewport = useCallback((nextViewport: Viewport) => {
     viewportRef.current = nextViewport;
@@ -322,6 +358,17 @@ export function InfiniteCanvas() {
     startPinch();
   }
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const observer = new ResizeObserver(() => {
+      setCanvasSize({ width: canvas.clientWidth, height: canvas.clientHeight });
+    });
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, []);
+
   // Registered natively because React attaches `wheel` passively, which makes
   // preventDefault a no-op and lets trackpad pinch zoom the whole page.
   useEffect(() => {
@@ -356,6 +403,7 @@ export function InfiniteCanvas() {
 
           const tile = entry.target as HTMLElement;
           observer.unobserve(tile);
+          if (tile.dataset.mediaId) seenTilesRef.current.add(tile.dataset.mediaId);
           requestAnimationFrame(() => {
             tile.dataset.visible = "true";
           });
@@ -365,10 +413,14 @@ export function InfiniteCanvas() {
     );
 
     const tiles = canvas.querySelectorAll<HTMLElement>("[data-garden-tile]");
-    tiles.forEach((tile) => observer.observe(tile));
+    tiles.forEach((tile) => {
+      const id = tile.dataset.mediaId;
+      if (id && seenTilesRef.current.has(id)) tile.dataset.visible = "true";
+      else observer.observe(tile);
+    });
 
     return () => observer.disconnect();
-  }, []);
+  }, [visibleMediaIds]);
 
   useEffect(() => {
     return () => {
@@ -383,9 +435,11 @@ export function InfiniteCanvas() {
     x: snapToPixel(viewport.x),
     y: snapToPixel(viewport.y),
   };
+  // Prevent image width and srcset changes on every small zoom movement.
+  const mediaScale = Math.round(viewport.scale * 8) / 8;
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-black text-white">
+    <main className="relative h-screen w-screen overflow-hidden bg-black text-white">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 opacity-60"
@@ -395,15 +449,14 @@ export function InfiniteCanvas() {
         }}
       />
 
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.15]">
-        <div className="scanlines h-full w-full" />
-      </div>
+      <div
+        aria-hidden="true"
+        className="scanlines pointer-events-none absolute inset-0 z-0 opacity-[0.15]"
+      />
 
       <div className="absolute bottom-6 right-6 z-50 flex items-center gap-2 rounded-xl border border-neutral-800 bg-neutral-950/70 px-3 py-2 shadow-[0_20px_45px_rgba(0,0,0,0.45)] backdrop-blur">
-        <div className="flex items-center justify-center px-2">
-          <div className="text-center text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-400">
-            {(viewport.scale * 100).toFixed(0)}%
-          </div>
+        <div className="px-2 text-center text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-400">
+          {(viewport.scale * 100).toFixed(0)}%
         </div>
         <div className="h-6 w-px bg-neutral-800" />
         <button
@@ -496,11 +549,15 @@ export function InfiniteCanvas() {
             transformOrigin: "0 0",
           }}
         >
-          {GARDEN_MEDIA.map((media) => (
-            <MediaTile key={media.id} media={media} />
+          {visibleMedia.map((media) => (
+            <MediaTile
+              key={media.id}
+              media={media}
+              scale={mediaScale}
+            />
           ))}
         </div>
       </div>
-    </div>
+    </main>
   );
 }

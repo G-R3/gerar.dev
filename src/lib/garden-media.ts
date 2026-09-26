@@ -1,7 +1,8 @@
 export type GardenMedia = {
   id: string;
   src: string;
-  type: "image" | "gif" | "video";
+  fullSrc?: string;
+  type: "image" | "animated" | "video";
   width: number;
   height: number;
   x: number;
@@ -36,8 +37,9 @@ export const GARDEN_MEDIA = [
   },
   {
     id: "2",
-    src: "/garden/2.gif",
-    type: "gif",
+    src: "/garden/2.webp",
+    fullSrc: "/garden/2-full.webp",
+    type: "animated",
     width: 800,
     height: 600,
     x: -1330,
@@ -217,8 +219,7 @@ export const GARDEN_MEDIA = [
   },
 ] satisfies readonly GardenMedia[];
 
-// Order is art-directed: it decides which column each image lands in within the
-// home page's CSS column layout. Do not sort or reorder to match GARDEN_MEDIA.
+// This determines what images we show in the home page and in what order
 const HOME_MEDIA_ORDER = ["1", "5", "6", "7", "14", "4", "2", "3", "11"];
 
 export const HOME_GARDEN_MEDIA = HOME_MEDIA_ORDER.map((id) => {

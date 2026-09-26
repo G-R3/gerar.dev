@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { VisualEffects } from "@/components/visual-effects";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -23,7 +22,6 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} antialiased flex flex-col min-h-screen bg-black text-gray-100 font-mono selection:bg-white selection:text-black `}
       >
-        <VisualEffects />
         {children}
       </body>
     </html>
